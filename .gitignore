@@ -13,3 +13,4 @@ dist/
 .gfl2_runtime/
 .venv*/
 .idea
+release/

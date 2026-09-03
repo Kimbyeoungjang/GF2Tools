@@ -102,18 +102,6 @@
     "tools/package_release.py": "b6ca074dd7135b31b0f6fb22dc554638a235e7ffd3a5fefbf30255517819e4f7"
   },
   "owned": [
-    "docs/APPLICATION_UPDATE.md",
-    "docs/ARCHITECTURE.md",
-    "docs/BOOTSTRAP.md",
-    "docs/CODEBASE_BASELINE.md",
-    "docs/DATA_INTEGRITY.md",
-    "docs/FORMATION_OPTIMIZER.md",
-    "docs/PROGRAM_DATA_DELIVERY.md",
-    "docs/REMOLDING_ALLOCATION.md",
-    "docs/REMOLDING_RECOMMENDATION_DATA.md",
-    "docs/SETTINGS_AND_BACKUP.md",
-    "docs/TACTIC_OVERLAY.md",
-    "docs/UI_CONVENTIONS.md",
     "src/gfl2tool/__init__.py",
     "src/gfl2tool/_version.py",
     "src/gfl2tool/atomic_io.py",
