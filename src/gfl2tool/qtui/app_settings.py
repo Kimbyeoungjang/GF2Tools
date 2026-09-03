@@ -15,6 +15,7 @@ from ..settings import (
 
 ORGANIZATION = "GFL2 Tools"
 APPLICATION = "GFL2 Tools"
+DEFAULT_PROGRAM_UPDATE_RELEASE_URL = "https://github.com/Kimbyeoungjang/GF2Tools/releases"
 
 
 class AppSettings:
@@ -24,6 +25,7 @@ class AppSettings:
     DEFAULT_HOTKEYS = DEFAULT_HOTKEYS
     DEFAULT_OVERLAY_APPEARANCE = DEFAULT_OVERLAY_APPEARANCE
     DEFAULT_TACTIC_VISUALS = DEFAULT_TACTIC_VISUALS
+    DEFAULT_PROGRAM_UPDATE_RELEASE_URL = DEFAULT_PROGRAM_UPDATE_RELEASE_URL
 
     _KEY_THEME = "appearance/theme"
     _KEY_APP_UPDATE_RELEASE_URL = "updates/program_release_url"
@@ -59,7 +61,13 @@ class AppSettings:
 
 
     def program_update_release_url(self) -> str:
-        return str(self._settings.value(self._KEY_APP_UPDATE_RELEASE_URL, "") or "").strip()
+        return str(
+            self._settings.value(
+                self._KEY_APP_UPDATE_RELEASE_URL,
+                self.DEFAULT_PROGRAM_UPDATE_RELEASE_URL,
+            )
+            or self.DEFAULT_PROGRAM_UPDATE_RELEASE_URL
+        ).strip()
 
     def set_program_update_release_url(self, value: str) -> None:
         self._settings.setValue(self._KEY_APP_UPDATE_RELEASE_URL, str(value or "").strip())
@@ -138,7 +146,7 @@ class AppSettings:
 
     def reset(self) -> None:
         self.set_theme(self.DEFAULT_THEME)
-        self.set_program_update_release_url("")
+        self.set_program_update_release_url(self.DEFAULT_PROGRAM_UPDATE_RELEASE_URL)
         self.set_program_update_auto_check(True)
         self.set_overlay_hotkeys(self.DEFAULT_HOTKEYS)
         self.set_overlay_appearance(self.DEFAULT_OVERLAY_APPEARANCE)

@@ -58,14 +58,14 @@ class SettingsPage(DeferredRefreshPage):
     def _build_program_update_panel(self):
         panel, layout = section_panel(
             "프로그램 업데이트",
-            "GitHub Release의 최신 GFL2 Tools 버전을 확인합니다. 주소는 배포 저장소가 확정될 때까지 비워둘 수 있습니다.",
+            "GitHub Release의 최신 GFL2 Tools 버전을 확인합니다. 공식 Release 저장소가 기본값으로 설정되어 있습니다.",
         )
         form = QFormLayout()
         form.setHorizontalSpacing(18)
         form.setVerticalSpacing(10)
 
         self.program_update_url = QLineEdit()
-        self.program_update_url.setPlaceholderText("예: https://github.com/owner/repository/releases · 현재 기본값 없음")
+        self.program_update_url.setPlaceholderText(AppSettings.DEFAULT_PROGRAM_UPDATE_RELEASE_URL)
         self.program_update_url.setClearButtonEnabled(True)
         form.addRow("Release 주소", self.program_update_url)
 
@@ -183,7 +183,7 @@ class SettingsPage(DeferredRefreshPage):
         if answer != QMessageBox.StandardButton.Yes:
             return
         self.settings.set_theme(AppSettings.DEFAULT_THEME)
-        self.settings.set_program_update_release_url("")
+        self.settings.set_program_update_release_url(AppSettings.DEFAULT_PROGRAM_UPDATE_RELEASE_URL)
         self.settings.set_program_update_auto_check(True)
         self.settings.set_overlay_hotkeys(AppSettings.DEFAULT_HOTKEYS)
         self.settings.sync()

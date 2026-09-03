@@ -14,7 +14,7 @@
     "src/gfl2tool/models.py": "c6839c5a3c646813d3a1e34772de51642c70096e88090fa9b172007ddd27fb93",
     "src/gfl2tool/qtgui.py": "7ac93cbfc33dd1457883948acda2a25063451c9f5bf6a3a760d2c54f2e518b1a",
     "src/gfl2tool/qtui/__init__.py": "ab24b4d8903194e62127f2e72d74e15149ff6276aadf35a9290ee75a8893fe2a",
-    "src/gfl2tool/qtui/app_settings.py": "18bfd387de84b505ca472bcda601323797aa925263849050fe5362522565b189",
+    "src/gfl2tool/qtui/app_settings.py": "3274a536f25f50186ec87810156556e0271ee9afc209815ae6eeeba8b18f5814",
     "src/gfl2tool/qtui/data.py": "d3bcfad5d0ff69a1b50db4d5117bc9a7be046535e17fa96742e5f988c3e1ed3d",
     "src/gfl2tool/qtui/data_entry.py": "a798218b5d6e6ff541e3a401919877418a7edabdbea84f514c6845f42ba69b01",
     "src/gfl2tool/qtui/dialogs/__init__.py": "d663de54dc9481b5358bf58274cea2c6e6cd80780766cd20b65f44df3ece5acd",
@@ -52,7 +52,7 @@
     "src/gfl2tool/qtui/pages/formation.py": "20af23cebed2b9545effd2e7876daeae79d38ed6f956be8f994ad5519930e1da",
     "src/gfl2tool/qtui/pages/inventory.py": "94090d0baaaed618765ae8bf7cfdf2b5e96fdbf23d01fec14b29f2e1e09e3d52",
     "src/gfl2tool/qtui/pages/remolding_optimizer.py": "ecdc2925c8a3381d5d7e5b0a70b8ce728ed40889da4633d80b83749a5545babe",
-    "src/gfl2tool/qtui/pages/settings.py": "a61d6ded7f180bad389e439a0f5c0a184da4229f62f87dbb783e558391e2d409",
+    "src/gfl2tool/qtui/pages/settings.py": "9f2c790f7188404d442b73967f589c076656a47319fdf6b913150649df008ead",
     "src/gfl2tool/qtui/pages/tactics.py": "a12bf151836bfda5f9d146f5fd5bb1b4c2e17a431550eff6aff5c22e2ad50000",
     "src/gfl2tool/qtui/rich_text.py": "53723903bcda485f119775c6a3e1d1f6648a21cbb5d52bc7c16e689451c7eb27",
     "src/gfl2tool/qtui/screen_region.py": "cc0ff4625db1335a26d54e8be73bcf3588c510c4a05bf4e720744210bb32764b",
@@ -99,7 +99,7 @@
     "tools/apply_program_update.py": "fc3ab313f0c6ddd9d38ae490d79b38f97ea4aaa5400e98488c6a30f847606000",
     "tools/build_executable.py": "4a9b4317c7d16302b82f7cf051976f93efbe0b45e1e308d6d03d7a9b2d78d708",
     "tools/frozen_main.py": "c4f3f807a575c161bfd21ef25ae2f872fd56fbadfdeb53fa640bcba962fa4698",
-    "tools/package_release.py": "5a2bfa5ea66bbcd699c265829de2f0f859ad711bf2b1c7dfadbe5838de95e51e"
+    "tools/package_release.py": "b6ca074dd7135b31b0f6fb22dc554638a235e7ffd3a5fefbf30255517819e4f7"
   },
   "owned": [
     "docs/APPLICATION_UPDATE.md",

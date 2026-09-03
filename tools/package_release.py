@@ -57,7 +57,6 @@ REQUIRED_RELEASE_DOCS = (
     "README.md",
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
-    "docs/APPLICATION_UPDATE.md",
 )
 
 
