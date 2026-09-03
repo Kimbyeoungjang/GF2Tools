@@ -1,0 +1,4744 @@
+{
+  "schema_version": 2,
+  "source": "community-remolding-reference",
+  "grades": {
+    "S": 200,
+    "A": 100,
+    "B": 50,
+    "C": 30,
+    "D": 15,
+    "E": 0,
+    "F": -10
+  },
+  "factor_names": {
+    "sentinel": "센티널",
+    "vanguard": "뱅가드",
+    "bulwark": "불워크",
+    "support": "서포트"
+  },
+  "element_names": {
+    "physical": "물리",
+    "burn": "연소",
+    "corrosion": "산성",
+    "hydro": "탁류",
+    "electric": "전도",
+    "freeze": "빙결",
+    "omni": "공명"
+  },
+  "options": [
+    {
+      "key": "sentinel_1",
+      "nameKR": "공격 강화",
+      "codes": [
+        "a5 ba 55",
+        "a6 ba 55",
+        "a7 ba 55"
+      ],
+      "isMajor": true,
+      "factorType": "sentinel",
+      "maxLevel": 6,
+      "values": [
+        0.8,
+        1.2,
+        2,
+        2.4,
+        3.2,
+        3.6
+      ],
+      "weight": 200,
+      "elementType": null,
+      "baseRank": "A",
+      "description": "공격력 +{0}%.",
+      "nickname": "궁륭의 꽃"
+    },
+    {
+      "key": "sentinel_2",
+      "nameKR": "왕좌 분쇄",
+      "codes": [
+        "89 bb 55",
+        "8a bb 55",
+        "8b bb 55"
+      ],
+      "isMajor": true,
+      "factorType": "sentinel",
+      "maxLevel": 6,
+      "values": [
+        2,
+        2.5,
+        3.5,
+        4,
+        5,
+        5.5
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": "A",
+      "description": "보스 유닛에게 주는 피해 +{0}%.",
+      "nickname": "육관의 꽃"
+    },
+    {
+      "key": "sentinel_3",
+      "nameKR": "단일 특화",
+      "codes": [
+        "ed bb 55",
+        "ee bb 55",
+        "ef bb 55"
+      ],
+      "isMajor": true,
+      "factorType": "sentinel",
+      "maxLevel": 6,
+      "values": [
+        2,
+        2.5,
+        3.5,
+        4,
+        5,
+        5.5
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "단일 피해 +{0}%.",
+      "nickname": "판초의 꽃"
+    },
+    {
+      "key": "sentinel_4",
+      "nameKR": "범위 특화",
+      "codes": [
+        "d1 bc 55",
+        "d2 bc 55",
+        "d3 bc 55"
+      ],
+      "isMajor": true,
+      "factorType": "sentinel",
+      "maxLevel": 6,
+      "values": [
+        2,
+        2.5,
+        3.5,
+        4,
+        5,
+        5.5
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "범위 피해 +{0}%.",
+      "nickname": "열꽃받침의 꽃"
+    },
+    {
+      "key": "vanguard_1",
+      "nameKR": "강타 강화",
+      "codes": [
+        "e5 9f 49",
+        "e6 9f 49",
+        "e7 9f 49"
+      ],
+      "isMajor": true,
+      "factorType": "vanguard",
+      "maxLevel": 6,
+      "values": [
+        1.2,
+        1.6,
+        2.4,
+        2.8,
+        3.6,
+        4
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": "A",
+      "description": "치명피해 +{0}%.",
+      "nickname": "겹엔트로피의 줄기"
+    },
+    {
+      "key": "vanguard_2",
+      "nameKR": "참수 칼날",
+      "codes": [
+        "c9 a0 49",
+        "ca a0 49",
+        "cb a0 49"
+      ],
+      "isMajor": true,
+      "factorType": "vanguard",
+      "maxLevel": 6,
+      "values": [
+        1.5,
+        2,
+        3,
+        3.5,
+        4.5,
+        5
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": "A",
+      "description": "보스 유닛에게 주는 치명피해 +{0}%.",
+      "nickname": "칼집못의 줄기"
+    },
+    {
+      "key": "vanguard_3",
+      "nameKR": "단일 중격",
+      "codes": [
+        "ad a1 49",
+        "ae a1 49",
+        "af a1 49"
+      ],
+      "isMajor": true,
+      "factorType": "vanguard",
+      "maxLevel": 6,
+      "values": [
+        1.5,
+        2,
+        3,
+        3.5,
+        4.5,
+        5
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "단일 피해를 줄 때, 치명피해 +{0}%.",
+      "nickname": "예리의 줄기"
+    },
+    {
+      "key": "vanguard_4",
+      "nameKR": "범위 강타",
+      "codes": [
+        "91 a2 49",
+        "92 a2 49",
+        "93 a2 49"
+      ],
+      "isMajor": true,
+      "factorType": "vanguard",
+      "maxLevel": 6,
+      "values": [
+        1.5,
+        2,
+        3,
+        3.5,
+        4.5,
+        5
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "범위 피해를 줄 때, 치명피해 +{0}%.",
+      "nickname": "균열의 줄기"
+    },
+    {
+      "key": "bulwark_1",
+      "nameKR": "생명 강화",
+      "codes": [
+        "c5 92 43",
+        "c6 92 43",
+        "c7 92 43"
+      ],
+      "isMajor": true,
+      "factorType": "bulwark",
+      "maxLevel": 6,
+      "values": [
+        0.8,
+        1.2,
+        2,
+        2.4,
+        3.2,
+        3.6
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "최대 체력 +{0}%.",
+      "nickname": "암맥의 뿌리"
+    },
+    {
+      "key": "bulwark_2",
+      "nameKR": "방어 강화",
+      "codes": [
+        "a9 93 43",
+        "aa 93 43",
+        "ab 93 43"
+      ],
+      "isMajor": true,
+      "factorType": "bulwark",
+      "maxLevel": 6,
+      "values": [
+        0.8,
+        1.2,
+        2,
+        2.4,
+        3.2,
+        3.6
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "방어력 +{0}%.",
+      "nickname": "겹암의 뿌리"
+    },
+    {
+      "key": "bulwark_3",
+      "nameKR": "단일 방어",
+      "codes": [
+        "8d 94 43",
+        "8e 94 43",
+        "8f 94 43"
+      ],
+      "isMajor": true,
+      "factorType": "bulwark",
+      "maxLevel": 6,
+      "values": [
+        2,
+        2.5,
+        3.5,
+        4,
+        5,
+        5.5
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "받는 단일 피해 -{0}%.",
+      "nickname": "골수기둥의 뿌리"
+    },
+    {
+      "key": "bulwark_4",
+      "nameKR": "환형 수호",
+      "codes": [
+        "f1 94 43",
+        "f2 94 43",
+        "f3 94 43"
+      ],
+      "isMajor": true,
+      "factorType": "bulwark",
+      "maxLevel": 6,
+      "values": [
+        2,
+        2.5,
+        3.5,
+        4,
+        5,
+        5.5
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "받는 범위 피해 -{0}%.",
+      "nickname": "천수염의 뿌리"
+    },
+    {
+      "key": "support_1",
+      "nameKR": "공격 협동",
+      "codes": [
+        "85 ad 4f",
+        "86 ad 4f",
+        "87 ad 4f"
+      ],
+      "isMajor": true,
+      "factorType": "support",
+      "maxLevel": 6,
+      "values": [
+        0.3,
+        0.4,
+        0.6,
+        0.7,
+        0.9,
+        1
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "모든 아군 유닛의 공격력 +{0}%, 중첩 불가.",
+      "nickname": "벽락의 잎"
+    },
+    {
+      "key": "support_2",
+      "nameKR": "생명 협동",
+      "codes": [
+        "e9 ad 4f",
+        "ea ad 4f",
+        "eb ad 4f"
+      ],
+      "isMajor": true,
+      "factorType": "support",
+      "maxLevel": 6,
+      "values": [
+        0.3,
+        0.4,
+        0.6,
+        0.7,
+        0.9,
+        1
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "모든 아군 유닛의 최대 체력 +{0}%, 중첩 불가.",
+      "nickname": "원책의 잎"
+    },
+    {
+      "key": "support_3",
+      "nameKR": "치료 강화",
+      "codes": [
+        "cd ae 4f",
+        "ce ae 4f",
+        "cf ae 4f"
+      ],
+      "isMajor": true,
+      "factorType": "support",
+      "maxLevel": 6,
+      "values": [
+        1.5,
+        2,
+        3,
+        3.5,
+        4.5,
+        5
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": null,
+      "description": "자신의 치료 및 보호막 부여 효과 +{0}%.",
+      "nickname": "새벽이슬의 잎"
+    },
+    {
+      "key": "support_4",
+      "nameKR": "전의 고양",
+      "codes": [
+        "b1 af 4f",
+        "b2 af 4f",
+        "b3 af 4f"
+      ],
+      "isMajor": true,
+      "factorType": "support",
+      "maxLevel": 6,
+      "values": [
+        0.4,
+        0.6,
+        1,
+        1.2,
+        1.6,
+        1.8
+      ],
+      "weight": 100,
+      "elementType": null,
+      "baseRank": "A",
+      "description": "공격력과 최대 체력 +{0}%.",
+      "nickname": "역가시의 잎"
+    },
+    {
+      "key": "sentinel_5",
+      "nameKR": "급습 태세",
+      "codes": [
+        "a1 c4 92",
+        "a2 c4 92",
+        "a3 c4 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.6,
+        1,
+        1.4,
+        1.8
+      ],
+      "weight": 10,
+      "elementType": null,
+      "baseRank": null,
+      "description": "턴 외 공격으로 주는 피해 +{0}%.",
+      "nickname": "엄습"
+    },
+    {
+      "key": "sentinel_6",
+      "nameKR": "강공 태세",
+      "codes": [
+        "bd c3 92",
+        "be c3 92",
+        "bf c3 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.6,
+        1,
+        1.4,
+        1.8
+      ],
+      "weight": 10,
+      "elementType": null,
+      "baseRank": null,
+      "description": "액티브 공격으로 주는 피해 +{0}%.",
+      "nickname": "강공"
+    },
+    {
+      "key": "sentinel_7",
+      "nameKR": "탁류 강화",
+      "codes": [
+        "91 c1 92",
+        "92 c1 92",
+        "93 c1 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 10,
+      "elementType": "hydro",
+      "baseRank": "C",
+      "description": "주는 탁류 피해 +{0}%.",
+      "nickname": "탁류"
+    },
+    {
+      "key": "sentinel_8",
+      "nameKR": "연소 강화",
+      "codes": [
+        "e5 be 92",
+        "e6 be 92",
+        "e7 be 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 10,
+      "elementType": "burn",
+      "baseRank": "C",
+      "description": "주는 연소 피해 +{0}%.",
+      "nickname": "연소"
+    },
+    {
+      "key": "sentinel_9",
+      "nameKR": "빙결 강화",
+      "codes": [
+        "c9 bf 92",
+        "ca bf 92",
+        "cb bf 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 10,
+      "elementType": "freeze",
+      "baseRank": "C",
+      "description": "주는 빙결 피해 +{0}%.",
+      "nickname": "빙결"
+    },
+    {
+      "key": "sentinel_10",
+      "nameKR": "전도 강화",
+      "codes": [
+        "f5 c1 92",
+        "f6 c1 92",
+        "f7 c1 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 10,
+      "elementType": "electric",
+      "baseRank": "C",
+      "description": "주는 전도 피해 +{0}%.",
+      "nickname": "전도"
+    },
+    {
+      "key": "sentinel_11",
+      "nameKR": "산성 강화",
+      "codes": [
+        "ad c0 92",
+        "ae c0 92",
+        "af c0 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 10,
+      "elementType": "corrosion",
+      "baseRank": "C",
+      "description": "주는 산성 피해 +{0}%.",
+      "nickname": "산성"
+    },
+    {
+      "key": "sentinel_12",
+      "nameKR": "물리 강화",
+      "codes": [
+        "d9 c2 92",
+        "da c2 92",
+        "db c2 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 10,
+      "elementType": "physical",
+      "baseRank": "C",
+      "description": "주는 물리 피해 +{0}%.",
+      "nickname": "실탄"
+    },
+    {
+      "key": "sentinel_13",
+      "nameKR": "치명 강화",
+      "codes": [
+        "cd c6 92",
+        "ce c6 92",
+        "cf c6 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 3,
+      "values": [
+        1,
+        2,
+        3
+      ],
+      "weight": 10,
+      "elementType": null,
+      "baseRank": null,
+      "description": "치명률 +{0}%.",
+      "nickname": null
+    },
+    {
+      "key": "sentinel_14",
+      "nameKR": "저격 엘리트",
+      "codes": [
+        "e9 c5 92",
+        "ea c5 92",
+        "eb c5 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 3,
+      "values": [
+        0.4,
+        0.8,
+        1.2
+      ],
+      "weight": 10,
+      "elementType": null,
+      "baseRank": null,
+      "description": "자신 주위 반경 6칸 밖에 있는 적에게 주는 피해 +{0}%.",
+      "nickname": null
+    },
+    {
+      "key": "sentinel_15",
+      "nameKR": "균형 파괴 추격",
+      "codes": [
+        "85 c5 92",
+        "86 c5 92"
+      ],
+      "isMajor": false,
+      "factorType": "sentinel",
+      "maxLevel": 2,
+      "values": [
+        0.5,
+        1
+      ],
+      "weight": 10,
+      "elementType": null,
+      "baseRank": null,
+      "description": "안정 붕괴 상태인 적에게 주는 피해 +{0}%.",
+      "nickname": null
+    },
+    {
+      "key": "vanguard_5",
+      "nameKR": "급습 마스터",
+      "codes": [
+        "e1 a9 86",
+        "e2 a9 86",
+        "e3 a9 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 30,
+      "elementType": null,
+      "baseRank": null,
+      "description": "턴 이외 공격 시, 치명피해 +{0}%.",
+      "nickname": "기습"
+    },
+    {
+      "key": "vanguard_6",
+      "nameKR": "강공 마스터",
+      "codes": [
+        "fd a8 86",
+        "fe a8 86",
+        "ff a8 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 30,
+      "elementType": null,
+      "baseRank": null,
+      "description": "액티브 공격 시, 치명피해 +{0}%.",
+      "nickname": "돌격"
+    },
+    {
+      "key": "vanguard_7",
+      "nameKR": "탁류 강타",
+      "codes": [
+        "d1 a6 86",
+        "d2 a6 86",
+        "d3 a6 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 30,
+      "elementType": "hydro",
+      "baseRank": "B",
+      "description": "탁류 피해를 줄 때, 치명피해 +{0}%.",
+      "nickname": "혼류"
+    },
+    {
+      "key": "vanguard_8",
+      "nameKR": "연소 강타",
+      "codes": [
+        "a5 a4 86",
+        "a6 a4 86",
+        "a7 a4 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 30,
+      "elementType": "burn",
+      "baseRank": "B",
+      "description": "연소 피해를 줄 때, 치명피해 +{0}%.",
+      "nickname": "연소방출"
+    },
+    {
+      "key": "vanguard_9",
+      "nameKR": "빙결 강타",
+      "codes": [
+        "89 a5 86",
+        "8a a5 86",
+        "8b a5 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 30,
+      "elementType": "freeze",
+      "baseRank": "B",
+      "description": "빙결 피해를 줄 때, 치명피해 +{0}%.",
+      "nickname": "빙괴"
+    },
+    {
+      "key": "vanguard_10",
+      "nameKR": "전도 강타",
+      "codes": [
+        "b5 a7 86",
+        "b6 a7 86",
+        "b7 a7 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 30,
+      "elementType": "electric",
+      "baseRank": "B",
+      "description": "전도 피해를 줄 때, 치명피해 +{0}%.",
+      "nickname": "과부하"
+    },
+    {
+      "key": "vanguard_11",
+      "nameKR": "산성 강타",
+      "codes": [
+        "ed a5 86",
+        "ee a5 86",
+        "ef a5 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 30,
+      "elementType": "corrosion",
+      "baseRank": "B",
+      "description": "산성 피해를 줄 때, 치명피해 +{0}%.",
+      "nickname": "용해"
+    },
+    {
+      "key": "vanguard_12",
+      "nameKR": "물리 강타",
+      "codes": [
+        "99 a8 86",
+        "9a a8 86",
+        "9b a8 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 30,
+      "elementType": "physical",
+      "baseRank": "B",
+      "description": "물리 피해를 줄 때, 치명피해 +{0}%.",
+      "nickname": "강습"
+    },
+    {
+      "key": "vanguard_13",
+      "nameKR": "백병전 엘리트",
+      "codes": [
+        "a9 ab 86",
+        "aa ab 86",
+        "ab ab 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 3,
+      "values": [
+        0.4,
+        0.8,
+        1.2
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "자신 주위 반경 3칸 안의 적에게 주는 피해 +{0}%.",
+      "nickname": null
+    },
+    {
+      "key": "vanguard_14",
+      "nameKR": "피에 굶주린 칼날",
+      "codes": [
+        "8d ac 86",
+        "8e ac 86",
+        "8f ac 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 3,
+      "values": [
+        2,
+        4,
+        6
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "공격 시 자신은 공격력 {0}%만큼 체력을 회복한다.",
+      "nickname": null
+    },
+    {
+      "key": "vanguard_15",
+      "nameKR": "진동 충격",
+      "codes": [
+        "c5 aa 86",
+        "c6 aa 86"
+      ],
+      "isMajor": false,
+      "factorType": "vanguard",
+      "maxLevel": 2,
+      "values": [
+        1,
+        2
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "첫 적에게 피해를 줄 때 추가로 {0}점 고정 안정 피해를 준다, 턴마다 1회 적용.",
+      "nickname": null
+    },
+    {
+      "key": "bulwark_5",
+      "nameKR": "각개 대책",
+      "codes": [
+        "c1 9c 80",
+        "c2 9c 80",
+        "c3 9c 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "자신 주위 반경 3칸 안에 적 유닛이 하나뿐일 경우, 받는 피해 -{0}%.",
+      "nickname": "포위 섬멸"
+    },
+    {
+      "key": "bulwark_6",
+      "nameKR": "돌파 대책",
+      "codes": [
+        "dd 9b 80",
+        "de 9b 80",
+        "df 9b 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.5,
+        0.8,
+        1.1,
+        1.4
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "자신 주위 반경 3칸 안에 적 유닛이 2기 이상 존재할 경우, 받는 피해 -{0}%.",
+      "nickname": "단기"
+    },
+    {
+      "key": "bulwark_7",
+      "nameKR": "탁류 내성",
+      "codes": [
+        "b1 99 80",
+        "b2 99 80",
+        "b3 99 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 20,
+      "elementType": "hydro",
+      "baseRank": null,
+      "description": "받는 탁류 피해 -{0}%.",
+      "nickname": "제습"
+    },
+    {
+      "key": "bulwark_8",
+      "nameKR": "연소 내성",
+      "codes": [
+        "85 97 80",
+        "86 97 80",
+        "87 97 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 20,
+      "elementType": "burn",
+      "baseRank": null,
+      "description": "받는 연소 피해 -{0}%.",
+      "nickname": "방화"
+    },
+    {
+      "key": "bulwark_9",
+      "nameKR": "빙결 내성",
+      "codes": [
+        "e9 97 80",
+        "ea 97 80",
+        "eb 97 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 20,
+      "elementType": "freeze",
+      "baseRank": null,
+      "description": "받는 빙결 피해 -{0}%.",
+      "nickname": "내한"
+    },
+    {
+      "key": "bulwark_10",
+      "nameKR": "전도 내성",
+      "codes": [
+        "95 9a 80",
+        "96 9a 80",
+        "97 9a 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 20,
+      "elementType": "electric",
+      "baseRank": null,
+      "description": "받는 전도 피해 -{0}%.",
+      "nickname": "절연"
+    },
+    {
+      "key": "bulwark_11",
+      "nameKR": "산성 내성",
+      "codes": [
+        "cd 98 80",
+        "ce 98 80",
+        "cf 98 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 20,
+      "elementType": "corrosion",
+      "baseRank": null,
+      "description": "받는 산성 피해 -{0}%.",
+      "nickname": "해독"
+    },
+    {
+      "key": "bulwark_12",
+      "nameKR": "물리 저항",
+      "codes": [
+        "f9 9a 80",
+        "fa 9a 80",
+        "fb 9a 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 20,
+      "elementType": "physical",
+      "baseRank": null,
+      "description": "받는 물리 피해 -{0}%.",
+      "nickname": "견벽"
+    },
+    {
+      "key": "bulwark_13",
+      "nameKR": "백병전 대책",
+      "codes": [
+        "89 9e 80",
+        "8a 9e 80",
+        "8b 9e 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 3,
+      "values": [
+        0.3,
+        0.6,
+        0.9
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "자신 주위 반경 3칸 안의 적에게서 받는 피해 -{0}%.",
+      "nickname": null
+    },
+    {
+      "key": "bulwark_14",
+      "nameKR": "눈에는 눈",
+      "codes": [
+        "ed 9e 80",
+        "ee 9e 80",
+        "ef 9e 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 3,
+      "values": [
+        2,
+        4,
+        6
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "피해를 받으면 공격자에게 자신 최대 체력 {0}%만큼의 고정 피해를 준다. 피해량은 자신의 공격력 100%를 넘지 않는다.",
+      "nickname": null
+    },
+    {
+      "key": "bulwark_15",
+      "nameKR": "보스 대책",
+      "codes": [
+        "a5 9d 80",
+        "a6 9d 80",
+        "a7 9d 80"
+      ],
+      "isMajor": false,
+      "factorType": "bulwark",
+      "maxLevel": 2,
+      "values": [
+        0.4,
+        0.8
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "보스 유닛에게서 받는 피해 -{0}%.",
+      "nickname": null
+    },
+    {
+      "key": "support_5",
+      "nameKR": "피와 칼의 전환",
+      "codes": [
+        "9d b6 8c",
+        "9e b6 8c",
+        "9f b6 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "초기 최대 체력의{0}%만큼 공격력 상승.",
+      "nickname": "혈공"
+    },
+    {
+      "key": "support_6",
+      "nameKR": "칼과 피의 공명",
+      "codes": [
+        "81 b7 8c",
+        "82 b7 8c",
+        "83 b7 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 5,
+      "values": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "초기 공격력의 {0}%만큼 최대 체력 상승.",
+      "nickname": "매립치료"
+    },
+    {
+      "key": "support_7",
+      "nameKR": "탁류 협동",
+      "codes": [
+        "f1 b3 8c",
+        "f2 b3 8c",
+        "f3 b3 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 5,
+      "values": [
+        0.1,
+        0.3,
+        0.5,
+        0.7,
+        0.9
+      ],
+      "weight": 20,
+      "elementType": "hydro",
+      "baseRank": "B",
+      "description": "모든 아군 유닛이 주는 탁류 피해 {0}%, 중첩 불가.",
+      "nickname": "밀물"
+    },
+    {
+      "key": "support_8",
+      "nameKR": "연소 협동",
+      "codes": [
+        "c5 b1 8c",
+        "c6 b1 8c",
+        "c7 b1 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 5,
+      "values": [
+        0.1,
+        0.3,
+        0.5,
+        0.7,
+        0.9
+      ],
+      "weight": 20,
+      "elementType": "burn",
+      "baseRank": "B",
+      "description": "모든 아군 유닛이 주는 연소 피해 {0}%, 중첩 불가.",
+      "nickname": "점화"
+    },
+    {
+      "key": "support_9",
+      "nameKR": "빙결 협동",
+      "codes": [
+        "a9 b2 8c",
+        "aa b2 8c",
+        "ab b2 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 5,
+      "values": [
+        0.1,
+        0.3,
+        0.5,
+        0.7,
+        0.9
+      ],
+      "weight": 20,
+      "elementType": "freeze",
+      "baseRank": "B",
+      "description": "모든 아군 유닛이 주는 빙결 피해 {0}%, 중첩 불가.",
+      "nickname": "서리고리"
+    },
+    {
+      "key": "support_10",
+      "nameKR": "전도 협동",
+      "codes": [
+        "d5 b4 8c",
+        "d6 b4 8c",
+        "d7 b4 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 5,
+      "values": [
+        0.1,
+        0.3,
+        0.5,
+        0.7,
+        0.9
+      ],
+      "weight": 20,
+      "elementType": "electric",
+      "baseRank": "B",
+      "description": "모든 아군 유닛이 주는 전도 피해 {0}%, 중첩 불가.",
+      "nickname": "자기장"
+    },
+    {
+      "key": "support_11",
+      "nameKR": "산성 협동",
+      "codes": [
+        "8d b3 8c",
+        "8e b3 8c",
+        "8f b3 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 5,
+      "values": [
+        0.1,
+        0.3,
+        0.5,
+        0.7,
+        0.9
+      ],
+      "weight": 20,
+      "elementType": "corrosion",
+      "baseRank": "B",
+      "description": "모든 아군 유닛이 주는 산성 피해 {0}%, 중첩 불가.",
+      "nickname": "촉진"
+    },
+    {
+      "key": "support_12",
+      "nameKR": "물리 협동",
+      "codes": [
+        "b9 b5 8c",
+        "ba b5 8c",
+        "bb b5 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 5,
+      "values": [
+        0.1,
+        0.3,
+        0.5,
+        0.7,
+        0.9
+      ],
+      "weight": 20,
+      "elementType": "physical",
+      "baseRank": "B",
+      "description": "모든 아군 유닛이 주는 물리 피해 {0}%, 중첩 불가.",
+      "nickname": "위치에너지"
+    },
+    {
+      "key": "support_13",
+      "nameKR": "생명 휴식",
+      "codes": [
+        "c9 b8 8c",
+        "ca b8 8c",
+        "cb b8 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 3,
+      "values": [
+        0.5,
+        1,
+        1.5
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "행동 종료 시, 자신의 최대 체력 {0}%만큼 회복한다. 턴당 최대 1회 적용.",
+      "nickname": null
+    },
+    {
+      "key": "support_14",
+      "nameKR": "정화 환류",
+      "codes": [
+        "ad b9 8c",
+        "ae b9 8c",
+        "af b9 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 3,
+      "values": [
+        1,
+        2,
+        3
+      ],
+      "weight": 30,
+      "elementType": null,
+      "baseRank": null,
+      "description": "아군 유닛의 디버프를 정화한 후, 자신의 공격력과 최대 체력 +{0}%, 지속시간 2개 전체턴.",
+      "nickname": null
+    },
+    {
+      "key": "support_15",
+      "nameKR": "안정 휴식",
+      "codes": [
+        "e5 b7 8c",
+        "e6 b7 8c"
+      ],
+      "isMajor": false,
+      "factorType": "support",
+      "maxLevel": 2,
+      "values": [
+        1,
+        2
+      ],
+      "weight": 20,
+      "elementType": null,
+      "baseRank": null,
+      "description": "행동 종료 시, 자신의 안정 지수를 {0}점 회복한다. 턴당 최대 1회 적용.",
+      "nickname": null
+    }
+  ],
+  "characters": [
+    {
+      "id": 1,
+      "key": "nemesis",
+      "nameKR": "네메시스",
+      "dollType": "sentinel",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "액티브주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 4,
+          "sentinel": 9
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 6,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 8,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 2,
+      "key": "sharkry",
+      "nameKR": "샤크리",
+      "dollType": "sentinel",
+      "elementType": "burn",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "단일형",
+        "턴외주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 4
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 3,
+          "sentinel": 6
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 5,
+          "sentinel": 7
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 6,
+          "sentinel": 9
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 6,
+          "sentinel": 13
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 9,
+          "sentinel": 15
+        }
+      }
+    },
+    {
+      "id": 3,
+      "key": "littara",
+      "nameKR": "리타라",
+      "dollType": "sentinel",
+      "elementType": "physical",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "광역형",
+        "액티브주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 4
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 3,
+          "sentinel": 6
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 5,
+          "sentinel": 7
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 6,
+          "sentinel": 9
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 6,
+          "sentinel": 13
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 9,
+          "sentinel": 15
+        }
+      }
+    },
+    {
+      "id": 4,
+      "key": "lotta",
+      "nameKR": "롯타",
+      "dollType": "sentinel",
+      "elementType": "freeze",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "광역형",
+        "액티브주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 1,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 2,
+          "sentinel": 7
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 4,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 4,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 6,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 5,
+      "key": "peritya",
+      "nameKR": "페리티아",
+      "dollType": "sentinel",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 4
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 3,
+          "sentinel": 6
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 5,
+          "sentinel": 7
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 6,
+          "sentinel": 9
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 6,
+          "sentinel": 13
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 9,
+          "sentinel": 15
+        }
+      }
+    },
+    {
+      "id": 6,
+      "key": "tololo",
+      "nameKR": "토로롱",
+      "dollType": "sentinel",
+      "elementType": "hydro",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "액티브주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 1,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 2,
+          "sentinel": 7
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 4,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 4,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 6,
+          "sentinel": 18
+        }
+      },
+      "phenomenonSourceName": "토로로"
+    },
+    {
+      "id": 7,
+      "key": "qiongjiu",
+      "nameKR": "경구",
+      "dollType": "sentinel",
+      "elementType": "burn",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "단일형",
+        "턴외주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 4
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 3,
+          "sentinel": 6
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 5,
+          "sentinel": 7
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 6,
+          "sentinel": 9
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 6,
+          "sentinel": 13
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 9,
+          "sentinel": 15
+        }
+      }
+    },
+    {
+      "id": 8,
+      "key": "mosinnagant",
+      "nameKR": "모신나강",
+      "dollType": "sentinel",
+      "elementType": "electric",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 4,
+          "sentinel": 9
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 6,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 8,
+          "sentinel": 18
+        }
+      },
+      "phenomenonSourceName": "모신 나강"
+    },
+    {
+      "id": 9,
+      "key": "papasha",
+      "nameKR": "파파샤",
+      "dollType": "sentinel",
+      "elementType": "physical",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "단일형",
+        "액티브주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 4
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 3,
+          "sentinel": 6
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 5,
+          "sentinel": 7
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 6,
+          "sentinel": 9
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 6,
+          "sentinel": 13
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 9,
+          "sentinel": 15
+        }
+      }
+    },
+    {
+      "id": 10,
+      "key": "makiatto",
+      "nameKR": "마키아토",
+      "dollType": "sentinel",
+      "elementType": "freeze",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "혼합주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 4,
+          "sentinel": 9
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 6,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 8,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 11,
+      "key": "klukai",
+      "nameKR": "클루카이",
+      "dollType": "sentinel",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 1,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 2,
+          "sentinel": 7
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 4,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 4,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 6,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 12,
+      "key": "nikketa",
+      "nameKR": "니키타",
+      "dollType": "sentinel",
+      "elementType": "hydro",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 4,
+          "sentinel": 9
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 6,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 8,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 13,
+      "key": "lind",
+      "nameKR": "린드",
+      "dollType": "sentinel",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 1,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 2,
+          "sentinel": 7
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 4,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 4,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 6,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 14,
+      "key": "leva",
+      "nameKR": "리바",
+      "dollType": "sentinel",
+      "elementType": "electric",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "혼합형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 4,
+          "sentinel": 9
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 6,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 8,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 15,
+      "key": "robella",
+      "nameKR": "로벨라",
+      "dollType": "sentinel",
+      "elementType": "freeze",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "혼합형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 1,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 2,
+          "sentinel": 7
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 4,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 4,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 6,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 16,
+      "key": "lewis",
+      "nameKR": "루이스",
+      "dollType": "sentinel",
+      "elementType": "burn",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 4
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 3,
+          "sentinel": 6
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 5,
+          "sentinel": 7
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 6,
+          "sentinel": 9
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 6,
+          "sentinel": 13
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 9,
+          "sentinel": 15
+        }
+      }
+    },
+    {
+      "id": 17,
+      "key": "lainie",
+      "nameKR": "레이니",
+      "dollType": "sentinel",
+      "elementType": "physical",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411_2",
+      "tags": [
+        "혼합형",
+        "액티브주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 4
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 3,
+          "sentinel": 6
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 5,
+          "sentinel": 7
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 6,
+          "sentinel": 9
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 6,
+          "sentinel": 13
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 9,
+          "sentinel": 15
+        }
+      }
+    },
+    {
+      "id": 18,
+      "key": "voymastina",
+      "nameKR": "보이마스티나",
+      "dollType": "sentinel",
+      "elementType": "physical",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "광역형",
+        "액티브주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 1,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 2,
+          "sentinel": 7
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 4,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 4,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 6,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 19,
+      "key": "phaetusa",
+      "nameKR": "파에투사",
+      "dollType": "sentinel",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420_2",
+      "tags": [
+        "단일형",
+        "액티브주력",
+        "공격계수",
+        "근접"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 1,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 2,
+          "sentinel": 7
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 4,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 4,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 6,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 20,
+      "key": "cheyanne",
+      "nameKR": "샤이엔",
+      "dollType": "sentinel",
+      "elementType": "physical",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "액티브주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 4,
+          "sentinel": 9
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 6,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 8,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 21,
+      "key": "krolik",
+      "nameKR": "캐롤릭",
+      "dollType": "vanguard",
+      "elementType": "burn",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "액티브주력",
+        "공격계수",
+        "근접"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 5,
+          "sentinel": 1
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 7,
+          "sentinel": 2
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 8,
+          "sentinel": 3
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 11,
+          "sentinel": 4
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 15,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 18,
+          "sentinel": 6
+        }
+      }
+    },
+    {
+      "id": 22,
+      "key": "vepley",
+      "nameKR": "베프리",
+      "dollType": "vanguard",
+      "elementType": "physical",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 4,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 6,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 5
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 9,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 13,
+          "sentinel": 6
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 15,
+          "sentinel": 9
+        }
+      }
+    },
+    {
+      "id": 23,
+      "key": "ullrid",
+      "nameKR": "울리드",
+      "dollType": "vanguard",
+      "elementType": "physical",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "액티브주력",
+        "공격계수",
+        "근접"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 5,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "vanguard": 8,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 9,
+          "sentinel": 4
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 11,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 15,
+          "sentinel": 7
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 18,
+          "sentinel": 8
+        }
+      }
+    },
+    {
+      "id": 24,
+      "key": "daiyan",
+      "nameKR": "대연",
+      "dollType": "vanguard",
+      "elementType": "physical",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 5,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "vanguard": 8,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 9,
+          "sentinel": 4
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 11,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 15,
+          "sentinel": 7
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 18,
+          "sentinel": 8
+        }
+      }
+    },
+    {
+      "id": 25,
+      "key": "zhaohui",
+      "nameKR": "조휘",
+      "dollType": "vanguard",
+      "elementType": "hydro",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 5,
+          "sentinel": 1
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 7,
+          "sentinel": 2
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 8,
+          "sentinel": 3
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 11,
+          "sentinel": 4
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 15,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 18,
+          "sentinel": 6
+        }
+      }
+    },
+    {
+      "id": 26,
+      "key": "faye",
+      "nameKR": "페이",
+      "dollType": "vanguard",
+      "elementType": "physical",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "혼합형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 5,
+          "sentinel": 1
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 7,
+          "sentinel": 2
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 8,
+          "sentinel": 3
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 11,
+          "sentinel": 4
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 15,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 18,
+          "sentinel": 6
+        }
+      }
+    },
+    {
+      "id": 27,
+      "key": "qiuhua",
+      "nameKR": "추화",
+      "dollType": "vanguard",
+      "elementType": "burn",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 5,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "vanguard": 8,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 9,
+          "sentinel": 4
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 11,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 15,
+          "sentinel": 7
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 18,
+          "sentinel": 8
+        }
+      }
+    },
+    {
+      "id": 28,
+      "key": "belka",
+      "nameKR": "벨카",
+      "dollType": "vanguard",
+      "elementType": "electric",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 4,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 6,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 5
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 9,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 13,
+          "sentinel": 6
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 15,
+          "sentinel": 9
+        }
+      },
+      "phenomenonSourceName": "비욜카"
+    },
+    {
+      "id": 29,
+      "key": "sakura",
+      "nameKR": "사쿠라",
+      "dollType": "vanguard",
+      "elementType": "burn",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "혼합형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 4,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 6,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 5
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 9,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 13,
+          "sentinel": 6
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 15,
+          "sentinel": 9
+        }
+      }
+    },
+    {
+      "id": 30,
+      "key": "harpsy",
+      "nameKR": "하프시",
+      "dollType": "vanguard",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "vanguard",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 4,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 6,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 5
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 9,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 13,
+          "sentinel": 6
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 15,
+          "sentinel": 9
+        }
+      }
+    },
+    {
+      "id": 31,
+      "key": "colphne",
+      "nameKR": "콜펜",
+      "dollType": "support",
+      "elementType": "hydro",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 2,
+          "support": 5
+        },
+        "떡잎": {
+          "bulwark": 3,
+          "support": 8
+        },
+        "꽃눈": {
+          "bulwark": 4,
+          "support": 8,
+          "sentinel": 1
+        },
+        "꽃봉오리": {
+          "bulwark": 6,
+          "support": 11,
+          "sentinel": 2
+        },
+        "꽃망울": {
+          "bulwark": 7,
+          "support": 15,
+          "sentinel": 2
+        },
+        "꽃": {
+          "bulwark": 8,
+          "support": 18,
+          "sentinel": 3
+        }
+      }
+    },
+    {
+      "id": 32,
+      "key": "cheeta",
+      "nameKR": "치타",
+      "dollType": "support",
+      "elementType": "burn",
+      "slotTypes": [
+        "support",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "support": 5,
+          "sentinel": 1
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "support": 8,
+          "sentinel": 3
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "support": 11,
+          "sentinel": 4
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "support": 15,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 5,
+          "support": 18,
+          "sentinel": 6
+        }
+      }
+    },
+    {
+      "id": 33,
+      "key": "nagant",
+      "nameKR": "나강",
+      "dollType": "support",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 2,
+          "support": 4
+        },
+        "떡잎": {
+          "bulwark": 3,
+          "support": 6,
+          "sentinel": 1
+        },
+        "꽃눈": {
+          "bulwark": 5,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃봉오리": {
+          "bulwark": 6,
+          "support": 9,
+          "sentinel": 3
+        },
+        "꽃망울": {
+          "bulwark": 6,
+          "support": 13,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 9,
+          "support": 15,
+          "sentinel": 5
+        }
+      }
+    },
+    {
+      "id": 34,
+      "key": "ksenia",
+      "nameKR": "크세니아",
+      "dollType": "support",
+      "elementType": "burn",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 2,
+          "support": 4
+        },
+        "떡잎": {
+          "bulwark": 3,
+          "support": 6,
+          "sentinel": 1
+        },
+        "꽃눈": {
+          "bulwark": 5,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃봉오리": {
+          "bulwark": 6,
+          "support": 9,
+          "sentinel": 3
+        },
+        "꽃망울": {
+          "bulwark": 6,
+          "support": 13,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 9,
+          "support": 15,
+          "sentinel": 5
+        }
+      }
+    },
+    {
+      "id": 35,
+      "key": "suomi",
+      "nameKR": "수오미",
+      "dollType": "support",
+      "elementType": "freeze",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "혼합형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 2,
+          "support": 5
+        },
+        "떡잎": {
+          "bulwark": 3,
+          "support": 8
+        },
+        "꽃눈": {
+          "bulwark": 4,
+          "support": 9,
+          "sentinel": 1
+        },
+        "꽃봉오리": {
+          "bulwark": 6,
+          "support": 11,
+          "sentinel": 2
+        },
+        "꽃망울": {
+          "bulwark": 7,
+          "support": 15,
+          "sentinel": 2
+        },
+        "꽃": {
+          "bulwark": 8,
+          "support": 18,
+          "sentinel": 3
+        }
+      }
+    },
+    {
+      "id": 36,
+      "key": "dushevnaya",
+      "nameKR": "드셰브니",
+      "dollType": "support",
+      "elementType": "freeze",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "support": 5,
+          "sentinel": 1
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "support": 8,
+          "sentinel": 3
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "support": 11,
+          "sentinel": 4
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "support": 15,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 5,
+          "support": 18,
+          "sentinel": 6
+        }
+      }
+    },
+    {
+      "id": 37,
+      "key": "centaureissi",
+      "nameKR": "센타우레이시",
+      "dollType": "support",
+      "elementType": "burn",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 2,
+          "support": 5
+        },
+        "떡잎": {
+          "bulwark": 3,
+          "support": 8
+        },
+        "꽃눈": {
+          "bulwark": 4,
+          "support": 9,
+          "sentinel": 1
+        },
+        "꽃봉오리": {
+          "bulwark": 6,
+          "support": 11,
+          "sentinel": 2
+        },
+        "꽃망울": {
+          "bulwark": 7,
+          "support": 15,
+          "sentinel": 2
+        },
+        "꽃": {
+          "bulwark": 8,
+          "support": 18,
+          "sentinel": 3
+        }
+      }
+    },
+    {
+      "id": 38,
+      "key": "mechty",
+      "nameKR": "미슈티",
+      "dollType": "support",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 2,
+          "support": 4
+        },
+        "떡잎": {
+          "bulwark": 3,
+          "support": 6,
+          "sentinel": 1
+        },
+        "꽃눈": {
+          "bulwark": 5,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃봉오리": {
+          "bulwark": 6,
+          "support": 9,
+          "sentinel": 3
+        },
+        "꽃망울": {
+          "bulwark": 6,
+          "support": 13,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 9,
+          "support": 15,
+          "sentinel": 5
+        }
+      }
+    },
+    {
+      "id": 39,
+      "key": "vector",
+      "nameKR": "벡터",
+      "dollType": "support",
+      "elementType": "burn",
+      "slotTypes": [
+        "support",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "혼합주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "support": 5,
+          "sentinel": 1
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "support": 8,
+          "sentinel": 3
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "support": 11,
+          "sentinel": 4
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "support": 15,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 5,
+          "support": 18,
+          "sentinel": 6
+        }
+      }
+    },
+    {
+      "id": 40,
+      "key": "yoohee",
+      "nameKR": "유희",
+      "dollType": "support",
+      "elementType": "physical",
+      "slotTypes": [
+        "support",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "액티브주력",
+        "공격계수",
+        "정화"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "support": 5,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "support": 8,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "support": 9,
+          "sentinel": 4
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "support": 11,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "support": 15,
+          "sentinel": 7
+        },
+        "꽃": {
+          "bulwark": 3,
+          "support": 18,
+          "sentinel": 8
+        }
+      }
+    },
+    {
+      "id": 41,
+      "key": "springfield",
+      "nameKR": "스프링필드",
+      "dollType": "support",
+      "elementType": "hydro",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "혼합형",
+        "턴외주력",
+        "체력계수",
+        "정화"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 2,
+          "support": 5
+        },
+        "떡잎": {
+          "bulwark": 3,
+          "support": 8
+        },
+        "꽃눈": {
+          "bulwark": 4,
+          "support": 9,
+          "sentinel": 1
+        },
+        "꽃봉오리": {
+          "bulwark": 6,
+          "support": 11,
+          "sentinel": 2
+        },
+        "꽃망울": {
+          "bulwark": 7,
+          "support": 15,
+          "sentinel": 2
+        },
+        "꽃": {
+          "bulwark": 8,
+          "support": 18,
+          "sentinel": 3
+        }
+      }
+    },
+    {
+      "id": 42,
+      "key": "jiangyu",
+      "nameKR": "강우",
+      "dollType": "support",
+      "elementType": "electric",
+      "slotTypes": [
+        "support",
+        "vanguard",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "액티브주력",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "support": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "support": 8
+        },
+        "꽃눈": {
+          "vanguard": 4,
+          "support": 9,
+          "sentinel": 1
+        },
+        "꽃봉오리": {
+          "vanguard": 6,
+          "support": 11,
+          "sentinel": 2
+        },
+        "꽃망울": {
+          "vanguard": 7,
+          "support": 15,
+          "sentinel": 2
+        },
+        "꽃": {
+          "vanguard": 8,
+          "support": 18,
+          "sentinel": 3
+        }
+      }
+    },
+    {
+      "id": 43,
+      "key": "florence",
+      "nameKR": "플로렌스",
+      "dollType": "support",
+      "elementType": "hydro",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "혼합형",
+        "공격계수",
+        "정화"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 2,
+          "support": 4
+        },
+        "떡잎": {
+          "bulwark": 3,
+          "support": 6,
+          "sentinel": 1
+        },
+        "꽃눈": {
+          "bulwark": 5,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃봉오리": {
+          "bulwark": 6,
+          "support": 9,
+          "sentinel": 3
+        },
+        "꽃망울": {
+          "bulwark": 6,
+          "support": 13,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 9,
+          "support": 15,
+          "sentinel": 5
+        }
+      }
+    },
+    {
+      "id": 44,
+      "key": "lenna",
+      "nameKR": "레나",
+      "dollType": "support",
+      "elementType": "electric",
+      "slotTypes": [
+        "support",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "support": 5,
+          "sentinel": 1
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "support": 8,
+          "sentinel": 3
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "support": 11,
+          "sentinel": 4
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "support": 15,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 5,
+          "support": 18,
+          "sentinel": 6
+        }
+      }
+    },
+    {
+      "id": 45,
+      "key": "bathilde",
+      "nameKR": "바틸다",
+      "dollType": "support",
+      "elementType": "physical",
+      "slotTypes": [
+        "support",
+        "bulwark",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_411_3",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 2,
+          "support": 5
+        },
+        "떡잎": {
+          "bulwark": 3,
+          "support": 8
+        },
+        "꽃눈": {
+          "bulwark": 4,
+          "support": 9,
+          "sentinel": 1
+        },
+        "꽃봉오리": {
+          "bulwark": 6,
+          "support": 11,
+          "sentinel": 2
+        },
+        "꽃망울": {
+          "bulwark": 7,
+          "support": 15,
+          "sentinel": 2
+        },
+        "꽃": {
+          "bulwark": 8,
+          "support": 18,
+          "sentinel": 3
+        }
+      }
+    },
+    {
+      "id": 46,
+      "key": "alva",
+      "nameKR": "앨바",
+      "dollType": "support",
+      "elementType": "freeze",
+      "slotTypes": [
+        "support",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "support": 5,
+          "sentinel": 1
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "support": 8,
+          "sentinel": 3
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "support": 11,
+          "sentinel": 4
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "support": 15,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 5,
+          "support": 18,
+          "sentinel": 6
+        }
+      }
+    },
+    {
+      "id": 47,
+      "key": "loreley",
+      "nameKR": "로렐라이",
+      "dollType": "support",
+      "elementType": "burn",
+      "slotTypes": [
+        "support",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "support": 5,
+          "sentinel": 1
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "support": 8,
+          "sentinel": 3
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "support": 11,
+          "sentinel": 4
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "support": 15,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 5,
+          "support": 18,
+          "sentinel": 6
+        }
+      }
+    },
+    {
+      "id": 48,
+      "key": "basti",
+      "nameKR": "바스티",
+      "dollType": "support",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "support",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "support": 6,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "support": 8,
+          "sentinel": 5
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "support": 9,
+          "sentinel": 4
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "support": 11,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "support": 15,
+          "sentinel": 7
+        },
+        "꽃": {
+          "bulwark": 3,
+          "support": 18,
+          "sentinel": 8
+        }
+      }
+    },
+    {
+      "id": 49,
+      "key": "groza",
+      "nameKR": "그로자",
+      "dollType": "bulwark",
+      "elementType": "physical",
+      "slotTypes": [
+        "bulwark",
+        "support",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 5,
+          "support": 2
+        },
+        "떡잎": {
+          "bulwark": 8,
+          "support": 3
+        },
+        "꽃눈": {
+          "bulwark": 9,
+          "support": 4,
+          "sentinel": 1
+        },
+        "꽃봉오리": {
+          "bulwark": 11,
+          "support": 6,
+          "sentinel": 2
+        },
+        "꽃망울": {
+          "bulwark": 15,
+          "support": 7,
+          "sentinel": 2
+        },
+        "꽃": {
+          "bulwark": 18,
+          "support": 8,
+          "sentinel": 3
+        }
+      }
+    },
+    {
+      "id": 50,
+      "key": "sabrina",
+      "nameKR": "사브리나",
+      "dollType": "bulwark",
+      "elementType": "hydro",
+      "slotTypes": [
+        "bulwark",
+        "support",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "광역형",
+        "방어계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 4,
+          "support": 2
+        },
+        "떡잎": {
+          "bulwark": 6,
+          "support": 3,
+          "sentinel": 1
+        },
+        "꽃눈": {
+          "bulwark": 7,
+          "support": 5,
+          "sentinel": 2
+        },
+        "꽃봉오리": {
+          "bulwark": 9,
+          "support": 6,
+          "sentinel": 3
+        },
+        "꽃망울": {
+          "bulwark": 13,
+          "support": 6,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 15,
+          "support": 9,
+          "sentinel": 5
+        }
+      }
+    },
+    {
+      "id": 51,
+      "key": "peri",
+      "nameKR": "페리",
+      "dollType": "bulwark",
+      "elementType": "burn",
+      "slotTypes": [
+        "bulwark",
+        "sentinel",
+        "support"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "단일형",
+        "체력계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 4,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "bulwark": 6,
+          "support": 1,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 7,
+          "support": 2,
+          "sentinel": 5
+        },
+        "꽃봉오리": {
+          "bulwark": 9,
+          "support": 3,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 13,
+          "support": 4,
+          "sentinel": 6
+        },
+        "꽃": {
+          "bulwark": 15,
+          "support": 5,
+          "sentinel": 9
+        }
+      }
+    },
+    {
+      "id": 52,
+      "key": "andoris",
+      "nameKR": "안도리스",
+      "dollType": "bulwark",
+      "elementType": "electric",
+      "slotTypes": [
+        "bulwark",
+        "support",
+        "sentinel"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 5,
+          "support": 1
+        },
+        "떡잎": {
+          "bulwark": 7,
+          "support": 2,
+          "sentinel": 1
+        },
+        "꽃눈": {
+          "bulwark": 8,
+          "support": 3,
+          "sentinel": 2
+        },
+        "꽃봉오리": {
+          "bulwark": 11,
+          "support": 4,
+          "sentinel": 3
+        },
+        "꽃망울": {
+          "bulwark": 15,
+          "support": 4,
+          "sentinel": 4
+        },
+        "꽃": {
+          "bulwark": 18,
+          "support": 6,
+          "sentinel": 5
+        }
+      }
+    },
+    {
+      "id": 53,
+      "key": "helen",
+      "nameKR": "헬렌",
+      "dollType": "bulwark",
+      "elementType": "freeze",
+      "slotTypes": [
+        "bulwark",
+        "sentinel",
+        "support"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "단일형",
+        "방어계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 4,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "bulwark": 6,
+          "support": 1,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 7,
+          "support": 2,
+          "sentinel": 5
+        },
+        "꽃봉오리": {
+          "bulwark": 9,
+          "support": 3,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 13,
+          "support": 4,
+          "sentinel": 6
+        },
+        "꽃": {
+          "bulwark": 15,
+          "support": 5,
+          "sentinel": 9
+        }
+      }
+    },
+    {
+      "id": 54,
+      "key": "liushih",
+      "nameKR": "류시",
+      "dollType": "sentinel",
+      "elementType": "hydro",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "전환형체력계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 1,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 2,
+          "sentinel": 7
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 4,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 4,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 6,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 55,
+      "key": "sextans",
+      "nameKR": "섹스턴스",
+      "dollType": "support",
+      "elementType": "electric",
+      "slotTypes": [
+        "support",
+        "sentinel",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "support": 5,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "support": 8,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "support": 9,
+          "sentinel": 4
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "support": 11,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "support": 15,
+          "sentinel": 7
+        },
+        "꽃": {
+          "bulwark": 3,
+          "support": 18,
+          "sentinel": 8
+        }
+      }
+    },
+    {
+      "id": 56,
+      "key": "ots_14",
+      "nameKR": "OTs-14",
+      "dollType": "sentinel",
+      "elementType": "omni",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 4,
+          "sentinel": 9
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 6,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 8,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 57,
+      "key": "nemesis_gnosis",
+      "nameKR": "네메시스(연광)",
+      "dollType": "sentinel",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "혼합형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 4,
+          "sentinel": 9
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 6,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 8,
+          "sentinel": 18
+        }
+      },
+      "phenomenonSourceName": "네메시스·연광"
+    },
+    {
+      "id": 58,
+      "key": "soppo",
+      "nameKR": "소프",
+      "dollType": "sentinel",
+      "elementType": "freeze",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_420",
+      "tags": [
+        "광역형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 2,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃눈": {
+          "bulwark": 1,
+          "vanguard": 4,
+          "sentinel": 9
+        },
+        "꽃봉오리": {
+          "bulwark": 2,
+          "vanguard": 6,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 2,
+          "vanguard": 7,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 3,
+          "vanguard": 8,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 59,
+      "key": "mityl",
+      "nameKR": "미틸",
+      "dollType": "sentinel",
+      "elementType": "hydro",
+      "slotTypes": [
+        "sentinel",
+        "vanguard",
+        "bulwark"
+      ],
+      "imagoformType": "imagoform_411",
+      "tags": [
+        "단일형",
+        "공격계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "vanguard": 1,
+          "sentinel": 5
+        },
+        "떡잎": {
+          "bulwark": 1,
+          "vanguard": 2,
+          "sentinel": 7
+        },
+        "꽃눈": {
+          "bulwark": 2,
+          "vanguard": 3,
+          "sentinel": 8
+        },
+        "꽃봉오리": {
+          "bulwark": 3,
+          "vanguard": 4,
+          "sentinel": 11
+        },
+        "꽃망울": {
+          "bulwark": 4,
+          "vanguard": 4,
+          "sentinel": 15
+        },
+        "꽃": {
+          "bulwark": 5,
+          "vanguard": 6,
+          "sentinel": 18
+        }
+      }
+    },
+    {
+      "id": 60,
+      "key": "welrod",
+      "nameKR": "웰로드",
+      "dollType": "bulwark",
+      "elementType": "corrosion",
+      "slotTypes": [
+        "bulwark",
+        "sentinel",
+        "support"
+      ],
+      "imagoformType": "imagoform_321",
+      "tags": [
+        "혼합형",
+        "체공계수"
+      ],
+      "phenomenonStages": {
+        "배아": {
+          "bulwark": 4,
+          "sentinel": 2
+        },
+        "떡잎": {
+          "bulwark": 6,
+          "support": 1,
+          "sentinel": 3
+        },
+        "꽃눈": {
+          "bulwark": 7,
+          "support": 2,
+          "sentinel": 5
+        },
+        "꽃봉오리": {
+          "bulwark": 9,
+          "support": 3,
+          "sentinel": 6
+        },
+        "꽃망울": {
+          "bulwark": 13,
+          "support": 4,
+          "sentinel": 6
+        },
+        "꽃": {
+          "bulwark": 15,
+          "support": 5,
+          "sentinel": 9
+        }
+      }
+    }
+  ],
+  "tag_rules": {
+    "광역형": {
+      "desc": "범위 옵션을 가진 스탯이 유효",
+      "ranks": {
+        "A": [
+          "sentinel_4",
+          "vanguard_4"
+        ]
+      }
+    },
+    "단일형": {
+      "desc": "단일 옵션을 가진 스탯이 유효",
+      "ranks": {
+        "A": [
+          "sentinel_3",
+          "vanguard_3"
+        ]
+      }
+    },
+    "혼합형": {
+      "desc": "",
+      "ranks": {
+        "A": [
+          "sentinel_2",
+          "vanguard_1",
+          "vanguard_2"
+        ]
+      }
+    },
+    "턴외주력": {
+      "desc": "턴외 공격 옵션을 가진 스탯이 유효",
+      "ranks": {
+        "B": [
+          "vanguard_5"
+        ],
+        "C": [
+          "sentinel_5"
+        ]
+      }
+    },
+    "액티브주력": {
+      "desc": "액티브 스킬 사용 옵션을 가진 스탯이 유효",
+      "ranks": {
+        "B": [
+          "vanguard_6"
+        ],
+        "C": [
+          "sentinel_6"
+        ]
+      }
+    },
+    "혼합주력": {
+      "desc": "적당히 섞인 느낌",
+      "ranks": {
+        "C": [
+          "sentinel_5",
+          "sentinel_6",
+          "vanguard_5",
+          "vanguard_6"
+        ]
+      }
+    },
+    "체력계수": {
+      "desc": "체력 옵션을 가진 스탯 우선",
+      "ranks": {
+        "S": [
+          "bulwark_1",
+          "support_4"
+        ]
+      }
+    },
+    "공격계수": {
+      "desc": "공격력 증가 옵션을 가진 스탯 유효",
+      "ranks": {
+        "S": [
+          "sentinel_1",
+          "support_4"
+        ],
+        "B": [
+          "support_5"
+        ]
+      }
+    },
+    "방어계수": {
+      "desc": "방어 증가 옵션을 가진 스탯 유효",
+      "ranks": {
+        "S": [
+          "bulwark_2"
+        ]
+      }
+    },
+    "전환형체력계수": {
+      "desc": "체력 옵션을 가진 스탯 우선",
+      "ranks": {
+        "S": [
+          "bulwark_1",
+          "support_4"
+        ],
+        "B": [
+          "support_6"
+        ],
+        "F": [
+          "sentinel_1"
+        ]
+      }
+    },
+    "체공계수": {
+      "desc": "체력 옵션을 우선, 그 후 공격력 옵션 우선",
+      "ranks": {
+        "S": [
+          "bulwark_1",
+          "support_4",
+          "sentinel_1"
+        ],
+        "B": [
+          "support_6"
+        ]
+      }
+    },
+    "정화": {
+      "desc": "정화환류 같은 특수옵이 유효",
+      "ranks": {
+        "B": [
+          "support_14"
+        ]
+      }
+    },
+    "근접": {
+      "desc": "사거리 짧은 스탯 배제",
+      "ranks": {
+        "F": [
+          "sentinel_14"
+        ]
+      }
+    }
+  },
+  "imagoforms": [
+    {
+      "key": "imagoform_411",
+      "slotCounts": [
+        4,
+        1,
+        1
+      ],
+      "values": [
+        [
+          5,
+          1,
+          0
+        ],
+        [
+          7,
+          2,
+          1
+        ],
+        [
+          8,
+          3,
+          2
+        ],
+        [
+          11,
+          4,
+          3
+        ],
+        [
+          15,
+          4,
+          4
+        ],
+        [
+          18,
+          6,
+          5
+        ]
+      ],
+      "comment": null
+    },
+    {
+      "key": "imagoform_420",
+      "slotCounts": [
+        4,
+        2,
+        0
+      ],
+      "values": [
+        [
+          5,
+          2,
+          0
+        ],
+        [
+          8,
+          3,
+          0
+        ],
+        [
+          9,
+          4,
+          1
+        ],
+        [
+          11,
+          6,
+          2
+        ],
+        [
+          15,
+          7,
+          2
+        ],
+        [
+          18,
+          8,
+          3
+        ]
+      ],
+      "comment": null
+    },
+    {
+      "key": "imagoform_321",
+      "slotCounts": [
+        3,
+        2,
+        1
+      ],
+      "values": [
+        [
+          4,
+          2,
+          0
+        ],
+        [
+          6,
+          3,
+          1
+        ],
+        [
+          7,
+          5,
+          2
+        ],
+        [
+          9,
+          6,
+          3
+        ],
+        [
+          13,
+          6,
+          4
+        ],
+        [
+          15,
+          9,
+          5
+        ]
+      ],
+      "comment": null
+    },
+    {
+      "key": "imagoform_420_2",
+      "slotCounts": [
+        4,
+        2,
+        0
+      ],
+      "values": [
+        [
+          5,
+          1,
+          0
+        ],
+        [
+          7,
+          2,
+          1
+        ],
+        [
+          8,
+          3,
+          2
+        ],
+        [
+          11,
+          4,
+          3
+        ],
+        [
+          15,
+          4,
+          4
+        ],
+        [
+          18,
+          6,
+          5
+        ]
+      ],
+      "comment": "파에투사"
+    },
+    {
+      "key": "imagoform_411_2",
+      "slotCounts": [
+        4,
+        1,
+        1
+      ],
+      "values": [
+        [
+          4,
+          2,
+          0
+        ],
+        [
+          6,
+          3,
+          1
+        ],
+        [
+          7,
+          5,
+          2
+        ],
+        [
+          9,
+          6,
+          3
+        ],
+        [
+          13,
+          6,
+          4
+        ],
+        [
+          15,
+          9,
+          5
+        ]
+      ],
+      "comment": "레이니"
+    },
+    {
+      "key": "imagoform_411_3",
+      "slotCounts": [
+        4,
+        1,
+        1
+      ],
+      "values": [
+        [
+          5,
+          2,
+          0
+        ],
+        [
+          8,
+          3,
+          0
+        ],
+        [
+          9,
+          4,
+          1
+        ],
+        [
+          11,
+          6,
+          2
+        ],
+        [
+          15,
+          7,
+          2
+        ],
+        [
+          18,
+          8,
+          3
+        ]
+      ],
+      "comment": null
+    }
+  ],
+  "phenomenon_stage_order": [
+    "배아",
+    "떡잎",
+    "꽃눈",
+    "꽃봉오리",
+    "꽃망울",
+    "꽃"
+  ],
+  "phenomenon_level_requirements": {
+    "배아": 0,
+    "떡잎": 10,
+    "꽃눈": 20,
+    "꽃봉오리": 30,
+    "꽃망울": 45,
+    "꽃": 60
+  },
+  "phenomenon_source": "gfl2-remold.github.io/planner snapshot supplied 2026-08-30"
+}

@@ -1,0 +1,2239 @@
+{
+  "schema_version": 1,
+  "source_table_version": "1151583",
+  "items": [
+    {
+      "id": 1001,
+      "name_tid": 7930,
+      "name_ko": "캐롤릭",
+      "resource_name": "CharolicSR",
+      "rarity": 4,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 7,
+      "weapon_type_ko": "도검",
+      "weapon_type_code": "BLD",
+      "profile_tid": 10115,
+      "profile_ko": "성격이 약간 까칠한 인형. 자신과 상관 없는 일에는 흥미가 없지만, 책임감만큼은 흠잡을 곳이 없습니다. \"네메시스 전속 통역사\" 같은, 내키지 않는 임무에도 노력을 아끼지 않을 정도로 말이죠.",
+      "intro_tid": 5789,
+      "intro_ko": "왜 그렇게 놀라? 이런 거 처음 봐? 흐흐, 이 칼 어때? 엄청 쎄 보이지?",
+      "get_show_path": "GunGet/CharolicSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_CharolicSR--c995681519.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_CharolicSR--01dc280672.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_CharolicSR--c63d64a366.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_CharolicSR--6305bdfe5d.webp",
+          "assets/skins/Img_ChrSkinPic_CharolicSR01--0806a79997.webp",
+          "assets/skins/Img_ChrSkinPic_CharolicSR03--3930412577.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_CharolicSR--c995681519.webp",
+          "assets/portraits/Avatar_Bust_CharolicSR01--a6b307742b.webp",
+          "assets/portraits/Avatar_Bust_CharolicSR03--46fd6bd732.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_CharolicSR--01dc280672.webp",
+          "assets/gacha/Avatar_Gacha_CharolicSR01--2470e1dd03.webp",
+          "assets/gacha/Avatar_Gacha_CharolicSR03--97dc0f9fce.webp"
+        ]
+      }
+    },
+    {
+      "id": 1008,
+      "name_tid": 26170,
+      "name_ko": "네메시스",
+      "resource_name": "NemesisSR",
+      "rarity": 4,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 5820,
+      "profile_ko": "오컬트와 점술에 심취해 있는 인형. 신기한 점술 도구인 \"프리즘\"을 언제나 가지고 다닙니다. 그 미스테리한 언어표현 때문에 점괘를 알아듣는 건 힘들지만, 그래도 믿음직한 동료인 것은 변함이 없습니다. 소통 문제만 어떻게 해결한다면...",
+      "intro_tid": 5821,
+      "intro_ko": "...책장... 가벼운 산바람... 뻗어나가...",
+      "get_show_path": "GunGet/NemesisSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_NemesisSR--faf84a8281.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_NemesisSR--1c51276544.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_NemesisSR--d1658ae613.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_NemesisSR--eb4b70cc91.webp",
+          "assets/skins/Img_ChrSkinPic_NemesisSR03--60af92d209.webp",
+          "assets/skins/Img_ChrSkinPic_NemesisSR04--1d83f79c3b.webp",
+          "assets/skins/Img_ChrSkinPic_NemesisSR05--f1ff7d09c1.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_NemesisSR--faf84a8281.webp",
+          "assets/portraits/Avatar_Bust_NemesisSR03--b3a9532d86.webp",
+          "assets/portraits/Avatar_Bust_NemesisSR04--c2fcdb2744.webp",
+          "assets/portraits/Avatar_Bust_NemesisSR05--3e32affdf8.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_NemesisSR--1c51276544.webp",
+          "assets/gacha/Avatar_Gacha_NemesisSR03--7b45af9b32.webp",
+          "assets/gacha/Avatar_Gacha_NemesisSR04--025e64d6d1.webp",
+          "assets/gacha/Avatar_Gacha_NemesisSR05--086a2474c8.webp"
+        ]
+      }
+    },
+    {
+      "id": 1009,
+      "name_tid": 9586,
+      "name_ko": "콜펜",
+      "resource_name": "ColphneSR",
+      "rarity": 4,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 1,
+      "weapon_type_ko": "권총",
+      "weapon_type_code": "HG",
+      "profile_tid": 10121,
+      "profile_ko": "평소에는 열정이 넘치는 인형이지만, 이따금씩 돌변해서 차가운 면모를 보이기도 합니다. 들고 있는 주사기는 환자를 위한 의료용품일까요, 숨통을 끊기 위한 흉기일까요?",
+      "intro_tid": 5825,
+      "intro_ko": "우와~, 엄청나게 귀찮은 일이 터졌나봐요~? 히힛, 콜펜의 도움이 필요하신가요~?",
+      "get_show_path": "GunGet/ColphneSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_ColphneSR--76ad4deb66.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_ColphneSR--adb13ab5f8.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_ColphneSR--1f6bdd0f89.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_ColphneSR--aa69d60ad7.webp",
+          "assets/skins/Img_ChrSkinPic_ColphneSR01--0b413740fd.webp",
+          "assets/skins/Img_ChrSkinPic_ColphneSR03--06cbb15466.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_ColphneSR--76ad4deb66.webp",
+          "assets/portraits/Avatar_Bust_ColphneSR01--e47b3c6903.webp",
+          "assets/portraits/Avatar_Bust_ColphneSR03--acf17294a4.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_ColphneSR--adb13ab5f8.webp",
+          "assets/gacha/Avatar_Gacha_ColphneSR01--d6bd12f26d.webp",
+          "assets/gacha/Avatar_Gacha_ColphneSR03--47c34f7aac.webp"
+        ]
+      }
+    },
+    {
+      "id": 1013,
+      "name_tid": 21523,
+      "name_ko": "레나",
+      "resource_name": "LennaSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 10142,
+      "profile_ko": "명랑하고 붙임성 좋은 인형. 소중한 가족을 지키기 위해 온 힘을 다합니다. 이제는 철이 들어 대외 활동 시에는 완벽한 미소를 보여주면서도, 가족을 만나면 \"강제로\" 진심 포옹을 선사합니다.",
+      "intro_tid": 5834,
+      "intro_ko": "에헤헤, 오래 기다렸어~! 이제부턴 나한테 맡겨♪",
+      "get_show_path": "GunGet/LennaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_LennaSSR--b050f008d1.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_LennaSSR--f0a2c82f99.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_LennaSSR--b8f1289b42.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_LennaSSR--4bf483d440.webp",
+          "assets/skins/Img_ChrSkinPic_LennaSSR01--3333e4c831.webp",
+          "assets/skins/Img_ChrSkinPic_LennaSSR05--c04d4d4dad.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_LennaSSR--b050f008d1.webp",
+          "assets/portraits/Avatar_Bust_LennaSSR01--31ced466fc.webp",
+          "assets/portraits/Avatar_Bust_LennaSSR05--e397421d80.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_LennaSSR--f0a2c82f99.webp",
+          "assets/gacha/Avatar_Gacha_LennaSSR01--321ed5ba65.webp",
+          "assets/gacha/Avatar_Gacha_LennaSSR05--cad220b0fc.webp"
+        ]
+      }
+    },
+    {
+      "id": 1015,
+      "name_tid": 4972,
+      "name_ko": "베프리",
+      "resource_name": "VepleySSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 6,
+      "weapon_type_ko": "산탄총",
+      "weapon_type_code": "SG",
+      "profile_tid": 10137,
+      "profile_ko": "전장이라는 무대 위에서 활약하는 아이돌! 다음 공연을 위해 매일같이 철저하게 준비합니다. 자꾸 넘어지거나 남에게 부딪히는 사고를 줄이기 위해서요.",
+      "intro_tid": 9507,
+      "intro_ko": "새로운 공연이 있다고? 베프리, 완~전 기대되는걸☆!",
+      "get_show_path": "GunGet/VepleySSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_VepleySSR--806c41b33a.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_VepleySSR--a8284ce184.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_VepleySSR--fe7d6b5432.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_VepleySSR--a570a85ab5.webp",
+          "assets/skins/Img_ChrSkinPic_VepleySSR01--5ee53cb235.webp",
+          "assets/skins/Img_ChrSkinPic_VepleySSR02--0a1b46a8b2.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_VepleySSR--806c41b33a.webp",
+          "assets/portraits/Avatar_Bust_VepleySSR01--c91e141b64.webp",
+          "assets/portraits/Avatar_Bust_VepleySSR02--05993cad32.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_VepleySSR--a8284ce184.webp",
+          "assets/gacha/Avatar_Gacha_VepleySSR01--41cdc92f3f.webp",
+          "assets/gacha/Avatar_Gacha_VepleySSR02--4426453499.webp"
+        ]
+      }
+    },
+    {
+      "id": 1017,
+      "name_tid": 5803,
+      "name_ko": "그로자",
+      "resource_name": "GrozaSR",
+      "rarity": 4,
+      "duty_id": 1,
+      "duty_ko": "불워크",
+      "duty_code": "Guard",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 5846,
+      "profile_ko": "성숙하고 진중한 엘리트 인형. 소대의 핵심 역할로 손색이 없습니다. 각자 개성이 넘치는 대원들을 질서 있게 통제할 수 있는 훌륭한 리더. 그로자만 있으면 아무 문제 없죠!",
+      "intro_tid": 5797,
+      "intro_ko": "전부 예상 범위 내야. 내가 있으니 걱정은 접어둬.",
+      "get_show_path": "GunGet/GrozaSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_GrozaSR--52ab8be03a.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_GrozaSR--fffb144eea.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_GrozaSR--e9fcf9be82.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_GrozaSR--225b7eb774.webp",
+          "assets/skins/Img_ChrSkinPic_GrozaSR01--515030ac41.webp",
+          "assets/skins/Img_ChrSkinPic_GrozaSR03--161f78a541.webp",
+          "assets/skins/Img_ChrSkinPic_GrozaSR05--2339ca709b.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_GrozaSR--52ab8be03a.webp",
+          "assets/portraits/Avatar_Bust_GrozaSR01--89250d8411.webp",
+          "assets/portraits/Avatar_Bust_GrozaSR03--ee93d6ad42.webp",
+          "assets/portraits/Avatar_Bust_GrozaSR05--87bf849237.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_GrozaSR--fffb144eea.webp",
+          "assets/gacha/Avatar_Gacha_GrozaSR01--c47073608e.webp",
+          "assets/gacha/Avatar_Gacha_GrozaSR03--f4e77cedad.webp",
+          "assets/gacha/Avatar_Gacha_GrozaSR05--5979c8826f.webp"
+        ]
+      }
+    },
+    {
+      "id": 1021,
+      "name_tid": 10147,
+      "name_ko": "페리티아",
+      "resource_name": "PerityaSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 5,
+      "weapon_type_ko": "기관총",
+      "weapon_type_code": "MG",
+      "profile_tid": 5851,
+      "profile_ko": "페리티아의 눈에 전투와 생존, 그리고 각종 신기한 감정들은 모두 이 넓은 세계의 일부입니다. 이 드넓은 세계는 사이버 세상에는 없는 미지의 취미로 가득합니다... 응, 드디어 저 구름이 해님을 가렸네요, 잠깐 누워서 쉬죠.",
+      "intro_tid": 5852,
+      "intro_ko": "당신의 호출, 확실하게 들었습니다.",
+      "get_show_path": "GunGet/PerityaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_PerityaSSR--cc8ff5f4a4.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_PerityaSSR--c288d579e2.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_PerityaSSR--9ed805bc88.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_PerityaSSR--e80df4bb3d.webp",
+          "assets/skins/Img_ChrSkinPic_PerityaSSR01--7c4b0bdc43.webp",
+          "assets/skins/Img_ChrSkinPic_PerityaSSR02--5de82d2ccb.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_PerityaSSR--cc8ff5f4a4.webp",
+          "assets/portraits/Avatar_Bust_PerityaSSR01--1e06bb2059.webp",
+          "assets/portraits/Avatar_Bust_PerityaSSR02--2ab0b90347.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_PerityaSSR--c288d579e2.webp",
+          "assets/gacha/Avatar_Gacha_PerityaSSR01--4c3314b059.webp",
+          "assets/gacha/Avatar_Gacha_PerityaSSR02--5859a81d5c.webp"
+        ]
+      }
+    },
+    {
+      "id": 1022,
+      "name_tid": 8335,
+      "name_ko": "샤크리",
+      "resource_name": "SharkrySR",
+      "rarity": 4,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 13860,
+      "profile_ko": "소악마 기운을 폴폴 풍기는 인형. 달콤한 미소에 깜찍한 꿍꿍이를 숨기고 있죠. 샤크리가 원하는 것은 무대뿐만이 아니라, 손님들의 영원한 사랑이랍니다♥",
+      "intro_tid": 5858,
+      "intro_ko": "우히히, 준비 완료~♡ 샤크리한테 '꽂혀버린' 행운아는 누구일까~요?",
+      "get_show_path": "GunGet/SharkrySR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_SharkrySR--9fd7750f2a.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_SharkrySR--fb39f9a86a.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_SharkrySR--8b49d68421.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_SharkrySR--8fe97ca160.webp",
+          "assets/skins/Img_ChrSkinPic_SharkrySR01--8d4826cc99.webp",
+          "assets/skins/Img_ChrSkinPic_SharkrySR02--0b0220c96c.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_SharkrySR--9fd7750f2a.webp",
+          "assets/portraits/Avatar_Bust_SharkrySR01--d652f744f2.webp",
+          "assets/portraits/Avatar_Bust_SharkrySR02--2b29f62561.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_SharkrySR--fb39f9a86a.webp",
+          "assets/gacha/Avatar_Gacha_SharkrySR01--ba864be9a7.webp",
+          "assets/gacha/Avatar_Gacha_SharkrySR02--3497ff37d4.webp"
+        ]
+      }
+    },
+    {
+      "id": 1023,
+      "name_tid": 47880,
+      "name_ko": "드셰브니",
+      "resource_name": "DusevnyjSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 75093,
+      "profile_ko": "마인드맵 기록을 잃어 예민해진 인형, 자신의 과거를 되찾는 것에 집착하면서도, 타인의 부탁에 전력을 다한다. 감정 표현이 많이 과장되고 중2스러워 사람을 당황하게 만들지만, 사실은 그녀도 이런 식으로 난감함을 감추는 것이다.",
+      "intro_tid": 75094,
+      "intro_ko": "보이나? 불빛이 암흑 속에서 터져나오는 광경이.\n그리고 나는, 지금 여기에 있다.",
+      "get_show_path": "GunGet/DusevnyjSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_DusevnyjSSR--39f88fc569.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_DusevnyjSSR--d8741e9692.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_DusevnyjSSR--43f0f4e345.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_DusevnyjSSR--316eeca96e.webp",
+          "assets/skins/Img_ChrSkinPic_DusevnyjSSR01--7d022fe13c.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_DusevnyjSSR--39f88fc569.webp",
+          "assets/portraits/Avatar_Bust_DusevnyjSSR01--4c0584cda8.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_DusevnyjSSR--d8741e9692.webp",
+          "assets/gacha/Avatar_Gacha_DusevnyjSSR01--787665f13b.webp"
+        ]
+      }
+    },
+    {
+      "id": 1024,
+      "name_tid": 35298,
+      "name_ko": "치타",
+      "resource_name": "CheetaSR",
+      "rarity": 4,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 10163,
+      "profile_ko": "영감이 끊임없이 샘솟는 인형. 그리폰의 발명왕입니다. 무수한 실패에도 좌절하지 않고 기상천외한 아이디어로 다른 이들의 골치를 썩이지만, 중요한 순간에는 \"천재\"적인 기책을 꺼낸답니다.",
+      "intro_tid": 5867,
+      "intro_ko": "또 일이야~? ...어? 사육사잖아?\n어쩔 수 없네, 금세기 가장 위대한 이 천재 님께서 기꺼이 도와주도록 하지.",
+      "get_show_path": "GunGet/CheetaSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_CheetaSR--50c9d27053.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_CheetaSR--066d66b460.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_CheetaSR--7a7629c264.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_CheetaSR--77fa3be51f.webp",
+          "assets/skins/Img_ChrSkinPic_CheetaSR01--c32ca40024.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_CheetaSR--50c9d27053.webp",
+          "assets/portraits/Avatar_Bust_CheetaSR01--f538f7e87d.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_CheetaSR--066d66b460.webp",
+          "assets/gacha/Avatar_Gacha_CheetaSR01--01676711f3.webp"
+        ]
+      }
+    },
+    {
+      "id": 1025,
+      "name_tid": 8306,
+      "name_ko": "토로로",
+      "resource_name": "TololoSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 10169,
+      "profile_ko": "별하늘과 함께하는 조용한 인형. 침묵 속에 섬세하고 민감한 속내를 품고 있습니다. 만물이 잠들 때, 토로로는 자신을 드넓은 은하에 맡기고, 밤하늘은 그녀를 위해 반짝입니다.",
+      "intro_tid": 5874,
+      "intro_ko": "인력에 끌려 별의 궤적이 바뀌듯 우리도 서로를 끌어당겼군요.\n토로로, 전입을 신고합니다.",
+      "get_show_path": "GunGet/TololoSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_TololoSSR--5d2e2848b7.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_TololoSSR--96983d4fc9.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_TololoSSR--5f346bab82.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_TololoSSR--0380cd7313.webp",
+          "assets/skins/Img_ChrSkinPic_TololoSSR01--88f4c9b988.webp",
+          "assets/skins/Img_ChrSkinPic_TololoSSR02--758d21dd93.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_TololoSSR--5d2e2848b7.webp",
+          "assets/portraits/Avatar_Bust_TololoSSR01--36bb9c6896.webp",
+          "assets/portraits/Avatar_Bust_TololoSSR02--86a84ad1ef.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_TololoSSR--96983d4fc9.webp",
+          "assets/gacha/Avatar_Gacha_TololoSSR01--493b08a333.webp",
+          "assets/gacha/Avatar_Gacha_TololoSSR02--15cb4de2ed.webp"
+        ]
+      }
+    },
+    {
+      "id": 1026,
+      "name_tid": 10915,
+      "name_ko": "나강",
+      "resource_name": "NagantSR",
+      "rarity": 4,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 1,
+      "weapon_type_ko": "권총",
+      "weapon_type_code": "HG",
+      "profile_tid": 5877,
+      "profile_ko": "언행에 성숙한 척이 묻어나는 인형. 영웅을 동경하는 나강은 전장을 떠난 뒤에도 치안 인형으로 계속 활약합니다. 덕분에 주민들은 매일 평온한 밤을 누릴 수 있게 되었죠.",
+      "intro_tid": 5878,
+      "intro_ko": "노병 나강, 참전일세! 음음, 지휘관도 꽤나 성장한 듯하구먼.",
+      "get_show_path": "GunGet/NagantSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_NagantSR--e356e1255e.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_NagantSR--46ccab5fee.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_NagantSR--09213b1958.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_NagantSR--02256412af.webp",
+          "assets/skins/Img_ChrSkinPic_NagantSR01--ccee7a0bd5.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_NagantSR--e356e1255e.webp",
+          "assets/portraits/Avatar_Bust_NagantSR01--615a25241d.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_NagantSR--46ccab5fee.webp",
+          "assets/gacha/Avatar_Gacha_NagantSR01--e5699be019.webp"
+        ]
+      }
+    },
+    {
+      "id": 1027,
+      "name_tid": 3777,
+      "name_ko": "경구",
+      "resource_name": "QiongjiuSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 5881,
+      "profile_ko": "자유로운 걸음을 멈추고 팀을 이끄는 무거운 책임을 짊어진 인형. 그리폰에 시간과 체력을 바치면서도 자기 앞가림 역시 빈틈이 없습니다. 경구의 정확하고 효율적인 업무 계획에는 절대 위배나 예외가 없으며, 계획을 수정할 바에는 차라리 자신과 현실을 고치려고 합니다.",
+      "intro_tid": 5882,
+      "intro_ko": "이렇게 또 손을 잡게 되어 실로 기쁘오.\n귀공의 아름다운 보옥이 될 수 있도록 분골쇄신하겠소.",
+      "get_show_path": "GunGet/QiongjiuSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_QiongjiuSSR--a091ed60ad.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_QiongjiuSSR--f16668ee1c.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_QiongjiuSSR--9d000bceea.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_QiongjiuSSR--218334fefb.webp",
+          "assets/skins/Img_ChrSkinPic_QiongjiuSSR01--293d1a651e.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_QiongjiuSSR--a091ed60ad.webp",
+          "assets/portraits/Avatar_Bust_QiongjiuSSR01--ef97fa367c.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_QiongjiuSSR--f16668ee1c.webp",
+          "assets/gacha/Avatar_Gacha_QiongjiuSSR01--db56557711.webp"
+        ]
+      }
+    },
+    {
+      "id": 1028,
+      "name_tid": 8279,
+      "name_ko": "센타우레이시",
+      "resource_name": "CentaureissiSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 10213,
+      "profile_ko": "공손하면서도 원칙을 고수하는 인형. 향기가 진한 커피를 끓이면서도 카페를 굳건하게 수호합니다. 그야말로 카페 주케로의 대들보라 할 수 있죠.",
+      "intro_tid": 6198,
+      "intro_ko": "센타우레이시, 이제부터 주인님을 모시겠습니다.\n오늘의 홍차는 어떻게 준비해드릴까요?",
+      "get_show_path": "GunGet/CentaureissiSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_CentaureissiSSR--6f7bf9594b.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_CentaureissiSSR--8b46738e83.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_CentaureissiSSR--b8537edd7d.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_CentaureissiSSR--55563b37c8.webp",
+          "assets/skins/Img_ChrSkinPic_CentaureissiSSR01--1b340ddf9b.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_CentaureissiSSR--6f7bf9594b.webp",
+          "assets/portraits/Avatar_Bust_CentaureissiSSR01--4d19c245d1.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_CentaureissiSSR--8b46738e83.webp",
+          "assets/gacha/Avatar_Gacha_CentaureissiSSR01--8677587668.webp"
+        ]
+      }
+    },
+    {
+      "id": 1029,
+      "name_tid": 3778,
+      "name_ko": "사브리나",
+      "resource_name": "SabrinaSSR",
+      "rarity": 5,
+      "duty_id": 1,
+      "duty_ko": "불워크",
+      "duty_code": "Guard",
+      "weapon_type_id": 6,
+      "weapon_type_ko": "산탄총",
+      "weapon_type_code": "SG",
+      "profile_tid": 6202,
+      "profile_ko": "음식 연구에 열중하고 미식을 즐기는 인형. 주방이 그녀의 새로운 전장입니다. 자신의 요리 과정을 공유하기 좋아하는 그녀, 모니터 너머로 향기까지 전해주진 못해도, 그녀의 미소는 네트워크를 타고 시청자들까지 물들입니다.",
+      "intro_tid": 6203,
+      "intro_ko": "짜안! 오늘은 엘모호 맛집 탐방 컨텐츠 진행할게!\n저기... 내 방송 나오면 광고 효과도 있는데 이거 무료로 주면 안 될까?",
+      "get_show_path": "GunGet/SabrinaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_SabrinaSSR--ebec2b6408.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_SabrinaSSR--ff83a68825.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_SabrinaSSR--efa329d8b9.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_SabrinaSSR--8d1c16c835.webp",
+          "assets/skins/Img_ChrSkinPic_SabrinaSSR01--b7f791e3d1.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_SabrinaSSR--ebec2b6408.webp",
+          "assets/portraits/Avatar_Bust_SabrinaSSR01--6f559e5750.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_SabrinaSSR--ff83a68825.webp",
+          "assets/gacha/Avatar_Gacha_SabrinaSSR01--53cda0112d.webp"
+        ]
+      }
+    },
+    {
+      "id": 1032,
+      "name_tid": 7833,
+      "name_ko": "대연",
+      "resource_name": "DaiyanSSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 10223,
+      "profile_ko": "상냥하고 겸손한 인형. 고쟁을 등에 지고 '계절풍 악단'의 동료들과 함께 사방을 떠돕니다. 현을 튕기며 듣는 이의 마음 속 가장 깊숙한 곳의 소원을 불러일으키는 그녀는, 모든 것을 경청하면서 모든 것을 포용합니다.",
+      "intro_tid": 6209,
+      "intro_ko": "지휘관님과의 재회로 어떤 곡이 태어날지 정말 기대되네요.",
+      "get_show_path": "GunGet/DaiyanSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_DaiyanSSR--2a8031e7ca.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_DaiyanSSR--40774dd85e.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_DaiyanSSR--f9e745ef82.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_DaiyanSSR--dd631116f4.webp",
+          "assets/skins/Img_ChrSkinPic_DaiyanSSR03--740e8d056b.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_DaiyanSSR--2a8031e7ca.webp",
+          "assets/portraits/Avatar_Bust_DaiyanSSR03--8c15f0d322.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_DaiyanSSR--40774dd85e.webp",
+          "assets/gacha/Avatar_Gacha_DaiyanSSR03--a743ae546e.webp"
+        ]
+      }
+    },
+    {
+      "id": 1033,
+      "name_tid": 35302,
+      "name_ko": "모신나강",
+      "resource_name": "MosinnagantSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 6213,
+      "profile_ko": "남을 돕는 것을 좋아하며, 비관적인 성격을 개선하려 열심히 노력하는 인형. 도망치지 않는 것을 신조로 삼아, 씩씩하게 전력으로 업무에 임합니다. 아직 소극적인 성격이 남아있긴 하지만, 그 명랑한 웃음과 열정은 많은 동료를 고무시킬 것입니다.",
+      "intro_tid": 6214,
+      "intro_ko": "치안 업무용 인형 모신나강입니다...\n어? 지휘관 동지잖아! 오랜만이야! 잘 지냈어?",
+      "get_show_path": "GunGet/MosinnagantSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_MosinnagantSSR--436fec0e10.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_MosinnagantSSR--9bb4ecfc58.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_MosinnagantSSR--d5ce808e84.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_MosinnagantSSR--21075ef378.webp",
+          "assets/skins/Img_ChrSkinPic_MosinnagantSSR01--a8bddba259.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_MosinnagantSSR--436fec0e10.webp",
+          "assets/portraits/Avatar_Bust_MosinnagantSSR01--d25638b9b7.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_MosinnagantSSR--9bb4ecfc58.webp",
+          "assets/gacha/Avatar_Gacha_MosinnagantSSR01--b7173eb391.webp"
+        ]
+      }
+    },
+    {
+      "id": 1034,
+      "name_tid": 15766,
+      "name_ko": "마키아토",
+      "resource_name": "MacqiatoSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 6217,
+      "profile_ko": "침착하고 도도하며 솔직하지 못한 인형. 복슬복슬한 작은 동물을 좋아하고, 달아빠진 마끼아또를 즐깁니다. 언제나 홀로 다니는 그녀는 어딘가로 물끄러미 시선을 던질 때가 많습니다. 언제쯤 그녀는 바라던 대답을 들을 수 있을까요?",
+      "intro_tid": 6218,
+      "intro_ko": "하아... 하아... 드디어, 찾았다...\n뭘 멍하니 쳐다봐? 빨리 엘모호에 태워달라고!",
+      "get_show_path": "GunGet/MacqiatoSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_MacqiatoSSR--3c0b118657.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_MacqiatoSSR--c3648b330b.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_MacqiatoSSR--88de2cd92c.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_MacqiatoSSR--3dffa36aa6.webp",
+          "assets/skins/Img_ChrSkinPic_MacqiatoSSR01--cfa0351828.webp",
+          "assets/skins/Img_ChrSkinPic_MacqiatoSSR02--9f9b1696d6.webp",
+          "assets/skins/Img_ChrSkinPic_MacqiatoSSR03--07cf6b0dc7.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_MacqiatoSSR--3c0b118657.webp",
+          "assets/portraits/Avatar_Bust_MacqiatoSSR01--2e82c37e10.webp",
+          "assets/portraits/Avatar_Bust_MacqiatoSSR02--55ad8500ad.webp",
+          "assets/portraits/Avatar_Bust_MacqiatoSSR03--ccad1e33ae.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_MacqiatoSSR--c3648b330b.webp",
+          "assets/gacha/Avatar_Gacha_MacqiatoSSR01--d81574d918.webp",
+          "assets/gacha/Avatar_Gacha_MacqiatoSSR02--b148ec7e36.webp",
+          "assets/gacha/Avatar_Gacha_MacqiatoSSR03--5ff3992ad9.webp"
+        ]
+      }
+    },
+    {
+      "id": 1035,
+      "name_tid": 6079,
+      "name_ko": "강우",
+      "resource_name": "JiangyuSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 10926,
+      "profile_ko": "자진모리 장단처럼 활발하고 열정적인 인형. 야단법석을 떨며 언니를 따라 악단 동료들과 함께 떠돌이 생활을 하고 있습니다. '계절풍 악단'에 참신하고 뜨거운 음표를 가져다 주는 존재입니다.",
+      "intro_tid": 6222,
+      "intro_ko": "뭔가 성가신 일이라도 생겼어? 그럼 안심하고 나한테 맡겨줘!",
+      "get_show_path": "GunGet/JiangyuSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_JiangyuSSR--569b60bd94.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_JiangyuSSR--92f71e4b94.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_JiangyuSSR--5bd04b02c3.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_JiangyuSSR--f083a8dd77.webp",
+          "assets/skins/Img_ChrSkinPic_JiangyuSSR01--edaf9858a1.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_JiangyuSSR--569b60bd94.webp",
+          "assets/portraits/Avatar_Bust_JiangyuSSR01--c8192e8ce8.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_JiangyuSSR--92f71e4b94.webp",
+          "assets/gacha/Avatar_Gacha_JiangyuSSR01--c0dd37d7a4.webp"
+        ]
+      }
+    },
+    {
+      "id": 1036,
+      "name_tid": 35301,
+      "name_ko": "크세니아",
+      "resource_name": "KseniaSR",
+      "rarity": 4,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 1,
+      "weapon_type_ko": "권총",
+      "weapon_type_code": "HG",
+      "profile_tid": 10302,
+      "profile_ko": "돈벌이에 엄청난 집념을 보이는 인형. 개처럼 벌어서 정승처럼 쓰는 것이 그녀가 마음의 안정을 얻는 노하우입니다. 물론 믿음직한 동료들과 함께 일하는 시간 역시 그녀의 소중한 보물이랍니다.",
+      "intro_tid": 6330,
+      "intro_ko": "보자, 고용주는... 지휘관?\n저기, 보수 깎아줄 테니까 우리 장기 계약 맺는 게 어때?",
+      "get_show_path": "GunGet/KseniaSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_KseniaSR--d87a2bb285.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_KseniaSR--cb144343f7.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_KseniaSR--22c5baff42.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_KseniaSR--843e154be8.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_KseniaSR--d87a2bb285.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_KseniaSR--cb144343f7.webp"
+        ]
+      }
+    },
+    {
+      "id": 1037,
+      "name_tid": 36994,
+      "name_ko": "울리드",
+      "resource_name": "UllridSSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 7,
+      "weapon_type_ko": "도검",
+      "weapon_type_code": "BLD",
+      "profile_tid": 66550,
+      "profile_ko": "원대한 이상을 품은 인형. 과감한 성격과 뛰어난 행동력으로 동료들을 끌어모았습니다. 하지만 희망에 가득 찬 그녀는 가끔 조용한 구석에서 무거운 짐을 내려놓고 잠시 휴식을 취합니다.",
+      "intro_tid": 64923,
+      "intro_ko": "지휘관, 부디 나라는 화살을 잘 이끌어주기 바란다.",
+      "get_show_path": "GunGet/UllridSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_UllridSSR--c0bc2c6805.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_UllridSSR--4dd4e3156f.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_UllridSSR--235e2a9dae.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_UllridSSR--b14e27cba0.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_UllridSSR--c0bc2c6805.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_UllridSSR--4dd4e3156f.webp"
+        ]
+      }
+    },
+    {
+      "id": 1038,
+      "name_tid": 36998,
+      "name_ko": "리타라",
+      "resource_name": "LittaraSR",
+      "rarity": 4,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 5,
+      "weapon_type_ko": "기관총",
+      "weapon_type_code": "MG",
+      "profile_tid": 19575,
+      "profile_ko": "내성적인 성향이 심해서 남들과 필기로 소통하는 인형. 하지만 세심하고 주도면밀한 성향을 살려 공동체의 '군사' 역할을 맡고 있습니다. 각인 모델을 교체한 후로 더욱 믿음직스러워져, 언제나 동료들의 꿈을 받쳐주는 존재가 되었습니다.",
+      "intro_tid": 10962,
+      "intro_ko": "으앗! 지, 지지지휘관, 아아아안녕!\n호, 호호호혹시 내가 뭐 도, 도도도와줄 거 있어?",
+      "get_show_path": "GunGet/LittaraSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_LittaraSR--6e97084f86.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_LittaraSR--26434b310f.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_LittaraSR--5cb64d6d3c.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_LittaraSR--854bca7a67.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_LittaraSR--6e97084f86.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_LittaraSR--26434b310f.webp"
+        ]
+      }
+    },
+    {
+      "id": 1039,
+      "name_tid": 63027,
+      "name_ko": "수오미",
+      "resource_name": "SuomiSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 74154,
+      "profile_ko": "친절하고 진지하며, 사명감 넘치고 귀여운 인형. 동료를 위해 용감히 나아가며, 아끼는 사람들을 찾기 위해 떠돌기도 합니다. 걱정 마시고 그녀에게 맡기세요. 신뢰와 사명을 절대 저버리지 않으니까요.",
+      "intro_tid": 71023,
+      "intro_ko": "눈보라 끝자락에... 지휘관님의 모습이 보였어요.\n다시 만나게 돼서 정말 기뻐요.",
+      "get_show_path": "GunGet/SuomiSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_SuomiSSR--67136d193f.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_SuomiSSR--b4dede95b7.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_SuomiSSR--f8f30fc2fe.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_SuomiSSR--f7c1947459.webp",
+          "assets/skins/Img_ChrSkinPic_SuomiSSR01--0cae8612e5.webp",
+          "assets/skins/Img_ChrSkinPic_SuomiSSR02--550b565a61.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_SuomiSSR--67136d193f.webp",
+          "assets/portraits/Avatar_Bust_SuomiSSR01--3237256562.webp",
+          "assets/portraits/Avatar_Bust_SuomiSSR02--c408496982.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_SuomiSSR--b4dede95b7.webp",
+          "assets/gacha/Avatar_Gacha_SuomiSSR01--5950b896b4.webp",
+          "assets/gacha/Avatar_Gacha_SuomiSSR02--a5e72d7679.webp"
+        ]
+      }
+    },
+    {
+      "id": 1040,
+      "name_tid": 50565,
+      "name_ko": "파파샤",
+      "resource_name": "PapashaSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 77691,
+      "profile_ko": "부탁을 거절하지 않고 열심인 인형. 독학으로 만능 도우미가 되어 어떤 부탁이든 해결할 수 있답니다. 모두를 지키기 위해서라면 그녀는 무엇이든 할 수 있습니다. 어려움이 있으면 얼마든지 말해주세요, 무슨 일이든 파파샤가 꼭 해낼 거예요!",
+      "intro_tid": 77978,
+      "intro_ko": "아직 미숙한 몸이지만, 지휘관님의 기대에 반드시 부응해 보이겠습니다!",
+      "get_show_path": "GunGet/PapashaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_PapashaSSR--3376ff6685.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_PapashaSSR--25dfa1ed83.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_PapashaSSR--e49f5d3d47.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_PapashaSSR--5d3e51a384.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_PapashaSSR--3376ff6685.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_PapashaSSR--25dfa1ed83.webp"
+        ]
+      }
+    },
+    {
+      "id": 1041,
+      "name_tid": 29528,
+      "name_ko": "롯타",
+      "resource_name": "LottaSR",
+      "rarity": 4,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 6,
+      "weapon_type_ko": "산탄총",
+      "weapon_type_code": "SG",
+      "profile_tid": 64926,
+      "profile_ko": "지나치게 소심하고 신중한 인형. 눈에 잘 띄지 않는 사소한 부분을 종종 발견합니다. 너무 신중한 성격 때문에 사람을 사귀는 데도 시간이 걸리니 조금만 더 기다려 주세요.",
+      "intro_tid": 64927,
+      "intro_ko": "이게 엘모호...? 이렇게 웅장한 탈것은 처음이에요...\n사진 한 장만 찍어도 될까요...?",
+      "get_show_path": "GunGet/LottaSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_LottaSR--b4a7d29ba6.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_LottaSR--c38e9f81b6.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_LottaSR--a636519f1b.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_LottaSR--387d146b1f.webp",
+          "assets/skins/Img_ChrSkinPic_LottaSR01--da729d98e8.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_LottaSR--b4a7d29ba6.webp",
+          "assets/portraits/Avatar_Bust_LottaSR01--938ccd83b2.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_LottaSR--c38e9f81b6.webp",
+          "assets/gacha/Avatar_Gacha_LottaSR01--6dc08cd6f7.webp"
+        ]
+      }
+    },
+    {
+      "id": 1042,
+      "name_tid": 87712,
+      "name_ko": "안도리스",
+      "resource_name": "AndorisSSR",
+      "rarity": 5,
+      "duty_id": 1,
+      "duty_ko": "불워크",
+      "duty_code": "Guard",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 130444,
+      "profile_ko": "다정하고 상냥한 인형. 성능상 한계가 있어도 실의에 빠지지 않고 자신이 있을 곳을 열심히 찾아다니며, 곁의 모든 사람을 포용했습니다. 그러던 중 어느 사이에 그녀도 타인이 기댈 곳이 되었습니다.",
+      "intro_tid": 127572,
+      "intro_ko": "지휘관, 만나뵙게 되어 영광입니다. 후훗, 404소대에서 얘기 많이 들었어요.",
+      "get_show_path": "GunGet/AndorisSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_AndorisSSR--4d61d575c1.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_AndorisSSR--df129395bd.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_AndorisSSR--d1dab7917d.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_AndorisSSR--9e7f7745f0.webp",
+          "assets/skins/Img_ChrSkinPic_AndorisSSR01--9520a172b7.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_AndorisSSR--4d61d575c1.webp",
+          "assets/portraits/Avatar_Bust_AndorisSSR01--d29b72ae5f.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_AndorisSSR--df129395bd.webp",
+          "assets/gacha/Avatar_Gacha_AndorisSSR01--68e1e5d1d8.webp"
+        ]
+      }
+    },
+    {
+      "id": 1043,
+      "name_tid": 87713,
+      "name_ko": "페이",
+      "resource_name": "FayeSSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 1,
+      "weapon_type_ko": "권총",
+      "weapon_type_code": "HG",
+      "profile_tid": 130448,
+      "profile_ko": "외모와 성격 차이가 극명한 인형. 몸집은 작지만 넘치는 기세와, 총과 도끼를 빼든 모습으로 모두를 알아서 기게 하죠. 하지만 그녀를 깊이 알수록, 신경질적인 표정과 거친 말투 뒤에 사실 섬세하고 예민한 마음이 숨겨져 있다는 것을 깨닫게 됩니다. 그녀 역시 당신의 온정을 기대하고, 또 보답하려 할 거예요.",
+      "intro_tid": 156303,
+      "intro_ko": "지휘관의 앞을 가로막는 것들은, 내가 싹 다 쓸어버리겠어.",
+      "get_show_path": "GunGet/FayeSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_FayeSSR--22c622a1c7.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_FayeSSR--78cc31818a.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_FayeSSR--c52530b262.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_FayeSSR--279287f403.webp",
+          "assets/skins/Img_ChrSkinPic_FayeSSR01--4dfde09f27.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_FayeSSR--22c622a1c7.webp",
+          "assets/portraits/Avatar_Bust_FayeSSR01--9bf6c66906.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_FayeSSR--78cc31818a.webp",
+          "assets/gacha/Avatar_Gacha_FayeSSR01--f3f6c2ae3f.webp"
+        ]
+      }
+    },
+    {
+      "id": 1044,
+      "name_tid": 126471,
+      "name_ko": "벡터",
+      "resource_name": "VectorSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 130452,
+      "profile_ko": "비관주의에 찌든 인형. 하지만 H.I.D.E. 404 제2팀의 대장이 된 이후로, 아무리 절망적인 결과가 예측되어도 벡터는 마지막 순간까지 버티며 대원들과 함께 위협에 맞섭니다.",
+      "intro_tid": 127598,
+      "intro_ko": "지휘... 관...? ...정말로 다시 만나다니, 생각도 못 했어. 조금... 기쁠지도...",
+      "get_show_path": "GunGet/VectorSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_VectorSSR--f28b1c5d3c.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_VectorSSR--7ad29b9455.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_VectorSSR--9211562fc1.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_VectorSSR--a7379d16e9.webp",
+          "assets/skins/Img_ChrSkinPic_VectorSSR01--c7038c8467.webp",
+          "assets/skins/Img_ChrSkinPic_VectorSSR02--836a8dcd70.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_VectorSSR--f28b1c5d3c.webp",
+          "assets/portraits/Avatar_Bust_VectorSSR01--878e5b3e64.webp",
+          "assets/portraits/Avatar_Bust_VectorSSR02--3042d884a9.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_VectorSSR--7ad29b9455.webp",
+          "assets/gacha/Avatar_Gacha_VectorSSR01--25e388b72f.webp",
+          "assets/gacha/Avatar_Gacha_VectorSSR02--c4c5cbe745.webp"
+        ]
+      }
+    },
+    {
+      "id": 1045,
+      "name_tid": 87714,
+      "name_ko": "비욜카",
+      "resource_name": "BiyocaSSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 130455,
+      "profile_ko": "순수하고 활발하며, 인축무해한 잔머리가 한가득. 지휘관과 언니에게 절대 충성하며 모두에게 사랑받는 인형이 되기 위해 노력하는 엘리트 인형. 그녀가 있는 한 분위기가 썰렁해질 걱정은 없죠!",
+      "intro_tid": 127758,
+      "intro_ko": "지휘관~! 아직 나 기억해?\n히힛, 언니가 새 이름을 붙여줬어, 이제 비욜카라고 불러줘!",
+      "get_show_path": "GunGet/BiyocaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_BiyocaSSR--d85c263bc4.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_BiyocaSSR--f6ff0d7f09.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_BiyocaSSR--f1b0e84358.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_BiyocaSSR--0ea76f36e6.webp",
+          "assets/skins/Img_ChrSkinPic_BiyocaSSR01--375f090614.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_BiyocaSSR--d85c263bc4.webp",
+          "assets/portraits/Avatar_Bust_BiyocaSSR01--651a5b71c3.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_BiyocaSSR--f6ff0d7f09.webp",
+          "assets/gacha/Avatar_Gacha_BiyocaSSR01--a9c1942e87.webp"
+        ]
+      }
+    },
+    {
+      "id": 1047,
+      "name_tid": 63792,
+      "name_ko": "스프링필드",
+      "resource_name": "SpringfieldSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 130458,
+      "profile_ko": "다정하면서도 굳세고, 사람 마음을 잘 헤아리며, 다양한 사람들을 대하면서도 약점을 드러내지 않는 노련한 인형. 넓은 포용력과 엄격한 원칙주의를 겸비한 스프링필드의 원칙은 단 하나, 친구와 소중한 사람을 전부 지켜낼 것.",
+      "intro_tid": 156304,
+      "intro_ko": "이렇게 또 지휘관님과 함께 싸울 수 있게 돼서 정말 기뻐요...\n여기가 엘모호인가요? 전부터 한번 와보고 싶었어요.",
+      "get_show_path": "GunGet/SpringfieldSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_SpringfieldSSR--a82ea5f9bf.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_SpringfieldSSR--49ce174277.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_SpringfieldSSR--ed65d58fba.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_SpringfieldSSR--8ef0aaafac.webp",
+          "assets/skins/Img_ChrSkinPic_SpringfieldSSR01--a512c64cdf.webp",
+          "assets/skins/Img_ChrSkinPic_SpringfieldSSR02--bbf9c7d577.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_SpringfieldSSR--a82ea5f9bf.webp",
+          "assets/portraits/Avatar_Bust_SpringfieldSSR01--47e34f65df.webp",
+          "assets/portraits/Avatar_Bust_SpringfieldSSR02--bb66178419.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_SpringfieldSSR--49ce174277.webp",
+          "assets/gacha/Avatar_Gacha_SpringfieldSSR01--746af92b4d.webp",
+          "assets/gacha/Avatar_Gacha_SpringfieldSSR02--6b5f390d42.webp"
+        ]
+      }
+    },
+    {
+      "id": 1048,
+      "name_tid": 165865,
+      "name_ko": "추화",
+      "resource_name": "QiuhuaSSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 6,
+      "weapon_type_ko": "산탄총",
+      "weapon_type_code": "SG",
+      "profile_tid": 165866,
+      "profile_ko": "열정적이고 시원시원하며, 통이 크고 낙천적인, 에너지 넘치는 인형. 사람들이 굶주림에 시달리는 현실을 바꾸기 위해 새로운 식재료 개발에 매진하고 있습니다. 불의를 보면 그냥 지나치는 법이 없으며, 대화의 흐름을 끊지 않는 것이 신조입니다. \"궈바오러우에 뭣 땀시 케첩을 늫는지는 모르겄는디, 머 그기 입맛에 맞는다구 허면 으짤 수 없제.\"",
+      "intro_tid": 165867,
+      "intro_ko": "좋아! 야생 허브랑 단백질...\n어? 지휘관님! 마침 잘 오셨어요! 오늘 포식하시겠는데요~?",
+      "get_show_path": "GunGet/QiuhuaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_QiuhuaSSR--28944439d2.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_QiuhuaSSR--eb4acc88b9.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_QiuhuaSSR--eb9f6dca67.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_QiuhuaSSR--9ccad76182.webp",
+          "assets/skins/Img_ChrSkinPic_QiuhuaSSR01--16566edb1f.webp",
+          "assets/skins/Img_ChrSkinPic_QiuhuaSSR02--0e3ce00535.webp",
+          "assets/skins/Img_ChrSkinPic_QiuhuaSSR03--e5ac6057bf.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_QiuhuaSSR--28944439d2.webp",
+          "assets/portraits/Avatar_Bust_QiuhuaSSR01--e868df084b.webp",
+          "assets/portraits/Avatar_Bust_QiuhuaSSR02--d019b8ae5c.webp",
+          "assets/portraits/Avatar_Bust_QiuhuaSSR03--82f26d13ad.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_QiuhuaSSR--eb4acc88b9.webp",
+          "assets/gacha/Avatar_Gacha_QiuhuaSSR01--8b6ab3b84f.webp",
+          "assets/gacha/Avatar_Gacha_QiuhuaSSR02--743f873c6b.webp",
+          "assets/gacha/Avatar_Gacha_QiuhuaSSR03--0648c17a4c.webp"
+        ]
+      }
+    },
+    {
+      "id": 1049,
+      "name_tid": 383024,
+      "name_ko": "하프시",
+      "resource_name": "HarpsySSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 383025,
+      "profile_ko": "404 2팀의 일원으로, 팀에서 가장 든든한 기술 지원가입니다. 소심하고 겁이 많은 첫인상을 주지만, 끝까지 책임을 다하는 것이 그녀가 404의 일원이 될 수 있었던 결정적인 요소죠. 항상 안전을 추구하는 그녀는 기술을 끊임없이 연마하며 자신의 단점을 극복하기 위해 노력하고 있습니다. 이 소심한 야옹이의 머리를 쓰다듬어 격려해 주는 건 어떨까요?",
+      "intro_tid": 383026,
+      "intro_ko": "후우, 커스텀 파츠 완성... 히얏!? 꼬, 꼬리 붙잡지 마세요...! 어? 지, 지휘관님...?",
+      "get_show_path": "GunGet/HarpsySSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_HarpsySSR--18520cd0a9.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_HarpsySSR--16f52100c6.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_HarpsySSR--968dd7edbc.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_HarpsySSR--0f8e80837c.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_HarpsySSR--18520cd0a9.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_HarpsySSR--16f52100c6.webp"
+        ]
+      }
+    },
+    {
+      "id": 1050,
+      "name_tid": 44221,
+      "name_ko": "조휘",
+      "resource_name": "ZhaohuiSSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 77694,
+      "profile_ko": "전투 경험이 풍부하고 냉철한 인형. 시원시원하며 과감한 판단력의 소유자입니다. 계절풍 소대의 리더로서 작전 수립 및 소대 업무 처리에 능하지만, 분위기 메이킹 면에선 아직 초심자입니다. 이 정의를 좇는 협객을 안심하고 받아주세요.",
+      "intro_tid": 77980,
+      "intro_ko": "만나서 반가워, 조휘라고 해.\n대연이랑 강우는 널 '지휘관'이라고 부르던데, 나도 그러면 될까?",
+      "get_show_path": "GunGet/ZhaohuiSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_ZhaohuiSSR--a34d7d86fc.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_ZhaohuiSSR--8089e87403.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_ZhaohuiSSR--49c9de88da.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_ZhaohuiSSR--d7eefcc970.webp",
+          "assets/skins/Img_ChrSkinPic_ZhaohuiSSR01--68f8277bbe.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_ZhaohuiSSR--a34d7d86fc.webp",
+          "assets/portraits/Avatar_Bust_ZhaohuiSSR01--b6cf2c7f95.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_ZhaohuiSSR--8089e87403.webp",
+          "assets/gacha/Avatar_Gacha_ZhaohuiSSR01--f159a0c95a.webp"
+        ]
+      }
+    },
+    {
+      "id": 1051,
+      "name_tid": 82684,
+      "name_ko": "미슈티",
+      "resource_name": "MishtySSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 130462,
+      "profile_ko": "게임과 만화 감상 외에는 항상 나른한 인형. 언제 어디서든 쿨쿨 잘 수 있는 특기가 있습니다. 무기력의 극치를 보여주는 그녀지만 위기의 순간에는 듬직한 모습을 보여주기도 합니다. 물론 본인은 위기가 평생 없길 바라지만요.",
+      "intro_tid": 127684,
+      "intro_ko": "어~ 어~, 자기주장 없어서 써먹기 좋은 미슈티 등장~\n...내 짐들은 미리 다 엘모호에 갖다놨지?",
+      "get_show_path": "GunGet/MishtySSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_MishtySSR--fd7f2fbff6.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_MishtySSR--7ed7a62cb9.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_MishtySSR--5d799ba21c.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_MishtySSR--b8392e8d5c.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_MishtySSR--fd7f2fbff6.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_MishtySSR--7ed7a62cb9.webp"
+        ]
+      }
+    },
+    {
+      "id": 1052,
+      "name_tid": 82049,
+      "name_ko": "클루카이",
+      "resource_name": "ClukaySSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 82228,
+      "profile_ko": "우아하고 냉정하며 절대적인 자신감으로 무장한 인형. H.I.D.E. 404 전원을 정예로 키워내기 위해 노력합니다. 그 강인함과 엄격함 뒤에 얼마나 부드럽고 모두를 아끼는 마음이 숨겨져 있는지는, 그녀와 친숙한 사람들만이 알고 있습니다.",
+      "intro_tid": 82229,
+      "intro_ko": "H.I.D.E.404 현역 대장, 엘리트 인형 클루카이, 도착했습니다.\n오랜만이에요, 지휘관.",
+      "get_show_path": "GunGet/ClukaySSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_ClukaySSR--55ca444ab9.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_ClukaySSR--a306a64e58.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_ClukaySSR--34d0c98203.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_ClukaySSR--0f75764192.webp",
+          "assets/skins/Img_ChrSkinPic_ClukaySSR01--9900a8f088.webp",
+          "assets/skins/Img_ChrSkinPic_ClukaySSR02--4cadbff17e.webp",
+          "assets/skins/Img_ChrSkinPic_ClukaySSR03--2205814a30.webp",
+          "assets/skins/Img_ChrSkinPic_ClukaySSR04--18ad914d73.webp",
+          "assets/skins/Img_ChrSkinPic_ClukaySSR05--4d6b625c2d.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_ClukaySSR--55ca444ab9.webp",
+          "assets/portraits/Avatar_Bust_ClukaySSR01--20ae68a35f.webp",
+          "assets/portraits/Avatar_Bust_ClukaySSR02--94acc7a979.webp",
+          "assets/portraits/Avatar_Bust_ClukaySSR03--e4ba66e15f.webp",
+          "assets/portraits/Avatar_Bust_ClukaySSR04--a2c40e8269.webp",
+          "assets/portraits/Avatar_Bust_ClukaySSR05--f7c6276e43.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_ClukaySSR--a306a64e58.webp",
+          "assets/gacha/Avatar_Gacha_ClukaySSR01--d9da93b656.webp",
+          "assets/gacha/Avatar_Gacha_ClukaySSR02--75082283c9.webp",
+          "assets/gacha/Avatar_Gacha_ClukaySSR03--02a9430e14.webp",
+          "assets/gacha/Avatar_Gacha_ClukaySSR04--3aeb4f03fe.webp",
+          "assets/gacha/Avatar_Gacha_ClukaySSR05--ada883ebe2.webp"
+        ]
+      }
+    },
+    {
+      "id": 1053,
+      "name_tid": 128357,
+      "name_ko": "페리",
+      "resource_name": "PeriSSR",
+      "rarity": 5,
+      "duty_id": 1,
+      "duty_ko": "불워크",
+      "duty_code": "Guard",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 165869,
+      "profile_ko": "체형은 귀엽지만 포부는 원대한 인형. 스승의 발자취를 좇던 페리는 점점 혼자서도 제 몫을 해내는 암상인으로 성장했습니다. 활발하고 낙관적인 성격으로 많은 고객들의 신뢰를 얻었으며, 예리하고 노련한 안목으로 언제나 골칫거리를 피할 수 있었죠. 페리는 완전 멋있고 믿음직한 인형이 되기 위해서 이 모든 노력을 해왔습니다. 그러니 가끔은 그녀에게 좀 더 의지해 보는 건 어떨까요?",
+      "intro_tid": 165870,
+      "intro_ko": "페리, 도착했습니다! 예전보다 훨씬 성장했어요!\n네? 암상인한테서 들은 적 있는 이름이라구요?",
+      "get_show_path": "GunGet/PeriSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_PeriSSR--0e42e91b8a.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_PeriSSR--825ddf917f.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_PeriSSR--d75701f29d.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_PeriSSR--ac9e620105.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_PeriSSR--0e42e91b8a.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_PeriSSR--825ddf917f.webp"
+        ]
+      }
+    },
+    {
+      "id": 1054,
+      "name_tid": 177987,
+      "name_ko": "유희",
+      "resource_name": "YooHeeSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 177988,
+      "profile_ko": "열정적이고 책임감이 강하며, 춤에 전념을 다하는 인형. 지휘관이 칭찬해준 것을 계기로 댄서가 되었고, '선배'로서의 책임을 다하기 위해 댄스그룹 '스파크' 를 결성하여 많은 떠돌이 인형들에게 안식처를 제공합니다. 나태에 빠지지 않는 성실함과 배움에의 열정, 그리고 철저한 자기관리가 그녀의 기반이며, 목표를 정하면 결코 꺾이지 않는 근성이 그녀의 성공의 비결입니다. 의심하지 마세요. 그저 믿어주면 됩니다. 그녀는 약속을 반드시 지킬 테니까요. \"박자를 가지고 노는 거야! 무대 씹어먹고 올게!\"",
+      "intro_tid": 177989,
+      "intro_ko": "표정... 합격. 포즈... 합격. 좋아, 이번 무대는 분명...\n응? 지, 지휘관!? 우리 공연 보러 와준 거야!?",
+      "get_show_path": "GunGet/YooHeeSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_YooHeeSSR--8278919555.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_YooHeeSSR--bf3e105def.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_YooHeeSSR--2c491c850f.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_YooHeeSSR--99f9472e14.webp",
+          "assets/skins/Img_ChrSkinPic_YooHeeSSR01--e4ed5879ad.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_YooHeeSSR--8278919555.webp",
+          "assets/portraits/Avatar_Bust_YooHeeSSR01--0e141fa651.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_YooHeeSSR--bf3e105def.webp",
+          "assets/gacha/Avatar_Gacha_YooHeeSSR01--09aa552f95.webp"
+        ]
+      }
+    },
+    {
+      "id": 1055,
+      "name_tid": 182991,
+      "name_ko": "니키타",
+      "resource_name": "NikketaSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 184216,
+      "profile_ko": "정의를 지키는 치안 요원, 어린이를 지키는 다정한 언니누나, 지르는 데 아낌이 없는 욜로족... 이 모든 속성을 한 사람이 가지고 있다면 믿어지시는지? 정의를 수호하는 최전선에서 싸우며, 니키타는 언제나 냉철하게 자신의 원칙을 지켜왔습니다. 하지만 당신을 마주할 때라면 그녀도 특별한 일면을 보입니다.\n\"전 업무 때문에 어떤 사람도 완전히 믿지 말라고 배웠습니다. 하지만 보스는 예외입니다. 우린 함께 정의를 추구하는 파트너니까요.\"",
+      "intro_tid": 184217,
+      "intro_ko": "보스, 저와 함께 정의를 지켜주시겠습니까?",
+      "get_show_path": "GunGet/NikketaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_NikketaSSR--52dd8a8cea.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_NikketaSSR--46ed2d0363.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_NikketaSSR--c29eb2fa11.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_NikketaSSR--5660e9746c.webp",
+          "assets/skins/Img_ChrSkinPic_NikketaSSR01--bf1e0db485.webp",
+          "assets/skins/Img_ChrSkinPic_NikketaSSR02--d7af261cda.webp",
+          "assets/skins/Img_ChrSkinPic_NikketaSSR03--bd78071e3d.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_NikketaSSR--52dd8a8cea.webp",
+          "assets/portraits/Avatar_Bust_NikketaSSR01--71ad8c2acf.webp",
+          "assets/portraits/Avatar_Bust_NikketaSSR02--64a72e57ff.webp",
+          "assets/portraits/Avatar_Bust_NikketaSSR03--85ebbea357.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_NikketaSSR--46ed2d0363.webp",
+          "assets/gacha/Avatar_Gacha_NikketaSSR01--f03bccacf4.webp",
+          "assets/gacha/Avatar_Gacha_NikketaSSR02--5585fb7008.webp",
+          "assets/gacha/Avatar_Gacha_NikketaSSR03--895216b656.webp"
+        ]
+      }
+    },
+    {
+      "id": 1056,
+      "name_tid": 197241,
+      "name_ko": "리바",
+      "resource_name": "LevaSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 197662,
+      "profile_ko": "눈앞의 이 인형이 친절해 보인다면 이미 그녀의 함정에 빠진 것입니다. 제때 깨닫지 못해서 입는 피해에 대해 리바는 일절 책임지지 않는답니다. 그 사람이 당신이라면……, 예외지만요.\n“지휘관, 일부러 손해 보는 건 아니지? 후훗♪ 뭐 상관 없지만. 내가 어떻게 책임졌으면 좋겠어?”",
+      "intro_tid": 197663,
+      "intro_ko": "앞으로 더욱 더 끈끈한 협력 관계를 맺게 될 거야.\n너~무 재밌겠다, 그치? 지휘관.",
+      "get_show_path": "GunGet/LevaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_LevaSSR--a51238504b.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_LevaSSR--c0bf35e940.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_LevaSSR--ea29d02b17.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_LevaSSR--6fdcb91585.webp",
+          "assets/skins/Img_ChrSkinPic_LevaSSR01--c088284732.webp",
+          "assets/skins/Img_ChrSkinPic_LevaSSR02--31dc2d3f53.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_LevaSSR--a51238504b.webp",
+          "assets/portraits/Avatar_Bust_LevaSSR01--c51189e414.webp",
+          "assets/portraits/Avatar_Bust_LevaSSR02--808383ae7d.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_LevaSSR--c0bf35e940.webp",
+          "assets/gacha/Avatar_Gacha_LevaSSR01--1d8fc0f64d.webp",
+          "assets/gacha/Avatar_Gacha_LevaSSR02--d802ddacbc.webp"
+        ]
+      }
+    },
+    {
+      "id": 1057,
+      "name_tid": 197665,
+      "name_ko": "로벨라",
+      "resource_name": "RobellaSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 208338,
+      "profile_ko": "겉으론 과감하고 똑부러진 로벨라. 하지만 남이 안 보는 구석에선 홀로 고민을 끌어안고 있습니다. 그녀의 예민함, 다정함과 섬세함은 오직 당신만이 볼 수 있는 모습이죠.\n\"힘드시면 나머지 일은 제게 맡기세요... 이따 작전 회의도 참석하셔야 하잖아요.\"",
+      "intro_tid": 208339,
+      "intro_ko": "지휘관님, 드디어 다시 만났네요. 또 예전처럼 언제든지 명령을 내려주세요.",
+      "get_show_path": "GunGet/RobellaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_RobellaSSR--62a43b950c.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_RobellaSSR--2f5f7e57d0.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_RobellaSSR--305482cf19.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_RobellaSSR--7051c4e6de.webp",
+          "assets/skins/Img_ChrSkinPic_RobellaSSR01--b9c0ff662d.webp",
+          "assets/skins/Img_ChrSkinPic_RobellaSSR02--b55aab170b.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_RobellaSSR--62a43b950c.webp",
+          "assets/portraits/Avatar_Bust_RobellaSSR01--b5ca9c7d8c.webp",
+          "assets/portraits/Avatar_Bust_RobellaSSR02--0d74ccc334.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_RobellaSSR--2f5f7e57d0.webp",
+          "assets/gacha/Avatar_Gacha_RobellaSSR01--f0c3e281fc.webp",
+          "assets/gacha/Avatar_Gacha_RobellaSSR02--bc96ec3770.webp"
+        ]
+      }
+    },
+    {
+      "id": 1058,
+      "name_tid": 216753,
+      "name_ko": "레이니",
+      "resource_name": "LeneSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 225474,
+      "profile_ko": "마인드맵 기록에서 다시 '태어난' 인형. 활기차고 명랑한 작은 태양이자, 강인하고 과감한 전사입니다. 겉모습과 성격은 이전과 다를 바 없어 보이지만, 레이니는 알고 있습니다. 시뮬레이션된 과거가 자신의 전부가 아니라는 것을. 눈앞의 미래에는 무한한 가능성이 있다는 것을. 마인드맵 속 수많은 공백은 이제 새로운 경험으로 채워지기를 기다리고 있습니다. 그리고 이미 기록된 부분에는 리바와, 당신과, 그리고 모두와의 인연이 소중하게 간직되어 있습니다.\n\"지휘관, 오늘도 같이 햇빛 쐬자~\"",
+      "intro_tid": 225537,
+      "intro_ko": "인간이랑 직접 교류하는 건 이번이 처음인가~? 앞으로 잘 부탁해!",
+      "get_show_path": "GunGet/LeneSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_LeneSSR--f6492cabde.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_LeneSSR--4599dc3d56.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_LeneSSR--9b0f25e789.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_LeneSSR--35d9c5bd16.webp",
+          "assets/skins/Img_ChrSkinPic_LeneSSR01--721ccacbc3.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_LeneSSR--f6492cabde.webp",
+          "assets/portraits/Avatar_Bust_LeneSSR01--079ce5903e.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_LeneSSR--4599dc3d56.webp",
+          "assets/gacha/Avatar_Gacha_LeneSSR01--6a489fba05.webp"
+        ]
+      }
+    },
+    {
+      "id": 1059,
+      "name_tid": 128369,
+      "name_ko": "린드",
+      "resource_name": "LindSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 6,
+      "weapon_type_ko": "산탄총",
+      "weapon_type_code": "SG",
+      "profile_tid": 232298,
+      "profile_ko": "겉모습은 까칠해 보이지만 실제로는 감수성 예민한 인형. 잘하지 못하는 일을 억지로 떠맡고는 자책에 빠지는 경우가 많습니다. 심야 라디오 청취를 좋아하고, 제때 당분을 섭취하지 않으면 구역질이 나곤 합니다. 폭력은 야만적이라며 싫어하지만, 무기는 문명적이고 효과적인 해결 수단이라고 생각하기 때문에 총기 사용은 그 범주에 포함되지 않습니다.\n“당분을 과다 섭취하면 고장 날 수도 있겠지. 하지만 섭취 안 하면 지금 당장 고장 날 거야. 그러니까 이건 어쩔 수 없는 거라구... 냠.”",
+      "intro_tid": 232299,
+      "intro_ko": "오글거리는 자기소개는 굳이 안 해도 되지? 처음 본 사이도 아니고...\n이름? 그냥 린드라고 불러.",
+      "get_show_path": "GunGet/LindSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_LindSSR--229e023e10.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_LindSSR--5a79c3e1f0.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_LindSSR--186fa1f8cf.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_LindSSR--75e9947e24.webp",
+          "assets/skins/Img_ChrSkinPic_LindSSR01--140e4bdbc8.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_LindSSR--229e023e10.webp",
+          "assets/portraits/Avatar_Bust_LindSSR01--1ce8d1724b.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_LindSSR--5a79c3e1f0.webp",
+          "assets/gacha/Avatar_Gacha_LindSSR01--9d6fb3e58e.webp"
+        ]
+      }
+    },
+    {
+      "id": 1060,
+      "name_tid": 368438,
+      "name_ko": "파에투사",
+      "resource_name": "PhaetusaSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 7,
+      "weapon_type_ko": "도검",
+      "weapon_type_code": "BLD",
+      "profile_tid": 368512,
+      "profile_ko": "온화하고 포용력이 넓은 봄바람 같은 인격, 날카롭고 도도한 무쇠같은 인격. 전자의 이름은 파에투사, 후자의 이름은 스위퍼. 한 몸에 두 마음이 깃든 이 인형의 반쪽은 인류 문명의 아름다움을 지키기 위해 태어났고, 다른 반쪽은 철혈공조의 잔해 속에서 태어났습니다. \n둘은 전장에서 만나 서로를 구원하고, 이 격동의 시대에서 자신들만의 길을 개척하기로 다짐했습니다.",
+      "intro_tid": 369704,
+      "intro_ko": "드디어 만났구나, 지휘관...! 정말... 내가 상상하던 그대로네.",
+      "get_show_path": "GunGet/PhaetusaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_PhaetusaSSR--334239bc7d.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_PhaetusaSSR--6fbaf1d177.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_PhaetusaSSR--0b593cdb6d.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_PhaetusaSSR--60cc406684.webp",
+          "assets/skins/Img_ChrSkinPic_PhaetusaSSR01--8a5e5e4182.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_PhaetusaSSR--334239bc7d.webp",
+          "assets/portraits/Avatar_Bust_PhaetusaSSR01--85d1c9075a.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_PhaetusaSSR--6fbaf1d177.webp",
+          "assets/gacha/Avatar_Gacha_PhaetusaSSR01--fb577cc9cb.webp"
+        ]
+      }
+    },
+    {
+      "id": 1061,
+      "name_tid": 242870,
+      "name_ko": "바틸다",
+      "resource_name": "BalthildeSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 5,
+      "weapon_type_ko": "기관총",
+      "weapon_type_code": "MG",
+      "profile_tid": 242871,
+      "profile_ko": "‘성질 급한 인형’, 이것이 그녀의 첫인상입니다. 다른 사람과 대화할 땐 쉽게 조급해하고, 특히 오해를 받으면 그 조급증이 더욱더 두드러져 어찌할 바를 모르고 끝없이 고집을 부립니다. 하지만 이는 사실 스스로를 표현하는 데 서투른 탓일 뿐, 그녀를 더 깊이 알게 되면 그녀가 얼마나 세심하고 성실하게 일을 처리하는지 알 수 있습니다.\n\"...스마일, 눈에 힘 주지 말고, 스마일... 저 아직도 그렇게 사나워 보여요? ...흥, 오늘 이후론 그런 말 못 할걸요! 아, 안 돼... 스마일, 스마일...\"",
+      "intro_tid": 242872,
+      "intro_ko": "지휘관님 눈엔 고철로 보일지 몰라도, 저한텐 전부 보물이라구요.",
+      "get_show_path": "GunGet/BalthildeSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_BalthildeSSR--56f800e893.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_BalthildeSSR--057f30b8a1.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_BalthildeSSR--54415fd689.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_BalthildeSSR--7287298c6c.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_BalthildeSSR--56f800e893.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_BalthildeSSR--057f30b8a1.webp"
+        ]
+      }
+    },
+    {
+      "id": 1062,
+      "name_tid": 18600,
+      "name_ko": "루이스",
+      "resource_name": "LewisSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 5,
+      "weapon_type_ko": "기관총",
+      "weapon_type_code": "MG",
+      "profile_tid": 342421,
+      "profile_ko": "순진무구하며, 언제나 순수한 동심을 유지하는 전술인형 겸 장난감 디자이너입니다. 엄청난 괴력의 소유자이며, 귀여운 것을 손에서 놓지 못합니다. 장난감 수집가들에게는 유명인사지만, 본인은 명성도 보상도 신경 쓰지 않습니다. 그녀는 오직 다른 이들에게 즐거움을 주고, 장난감을 가지고 노는 아이들의 웃음을 지키는 것에만 관심이 있습니다. 장난감 디자이너로서 루이스는 계속해서 미래를 위한 장난감을 디자인하여 아름다움을 대대로 물려줄 것이고, 전술 인형으로서 그녀는 무기를 통해 그 미래를 확실히 지켜낼 것입니다.",
+      "intro_tid": 342422,
+      "intro_ko": "빠밤빠밤! 전술인형 겸 장난감 디자이너 루이스, 장난감 병정들과 함께 도착했답니다~! 오랜만이야, 지휘관!",
+      "get_show_path": "GunGet/LewisSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_LewisSSR--0639a84221.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_LewisSSR--20fe4c0c1b.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_LewisSSR--92cc521364.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_LewisSSR--65ae1dfc2b.webp",
+          "assets/skins/Img_ChrSkinPic_LewisSSR01--3c149884a2.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_LewisSSR--0639a84221.webp",
+          "assets/portraits/Avatar_Bust_LewisSSR01--f1dd69127a.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_LewisSSR--20fe4c0c1b.webp",
+          "assets/gacha/Avatar_Gacha_LewisSSR01--b8aa6e1a76.webp"
+        ]
+      }
+    },
+    {
+      "id": 1063,
+      "name_tid": 492669,
+      "name_ko": "웰로드",
+      "resource_name": "WelrodSSR",
+      "rarity": 5,
+      "duty_id": 1,
+      "duty_ko": "불워크",
+      "duty_code": "Guard",
+      "weapon_type_id": 1,
+      "weapon_type_ko": "권총",
+      "weapon_type_code": "HG",
+      "profile_tid": 492877,
+      "profile_ko": "겉으로는 자기중심적이며 팀원들에게 다소 엄격한 편이지만, 사실은 동료를 매우 소중히 여기며 모두를 돕기 위해 노력합니다. 자신의 판단력에 특히 자신감이 넘치며, 사물의 옳고 그름을 따지기 좋아하고 마음속 정의를 수호하기 위해 행동에 나섭니다. 내면은 매우 다정하지만 타인에 대한 관심을 표현하는 데 서툽니다. 본인도 이 점을 고민하고 있으며, 동료들의 포용과 이해가 필요합니다. 강한 척하는 모습이 들통나면 의외로 귀여운 일면을 보여주기도 합니다.",
+      "intro_tid": 492878,
+      "intro_ko": "지휘관, 이제 안심해도 됩니다.\n가장 뛰어난 명탐정이, 오직 당신만을 위한 전술인형이 되어 드릴 테니까.",
+      "get_show_path": "GunGet/WelrodSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_WelrodSSR--1122951a0e.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_WelrodSSR--18e0e53034.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_WelrodSSR--446fac8fa3.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_WelrodSSR--2c173bb0e6.webp",
+          "assets/skins/Img_ChrSkinPic_WelrodSSR01--c120720e66.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_WelrodSSR--1122951a0e.webp",
+          "assets/portraits/Avatar_Bust_WelrodSSR01--3fe0627a0c.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_WelrodSSR--18e0e53034.webp",
+          "assets/gacha/Avatar_Gacha_WelrodSSR01--6adb10996b.webp"
+        ]
+      }
+    },
+    {
+      "id": 1064,
+      "name_tid": 227112,
+      "name_ko": "플로렌스",
+      "resource_name": "FlorenceSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 1,
+      "weapon_type_ko": "권총",
+      "weapon_type_code": "HG",
+      "profile_tid": 227165,
+      "profile_ko": "자극과 쾌락 추구에 열중하는 의료 인형. 꾸밈 없는 성격이며 유혹에도 능합니다. 뛰어난 의료 기술과 약학에 대한 열정을 겸비했지만, 성격적인 면 때문에 그 열정을 주변에서 감당하기 힘들어합니다.\n\"어떤 걸 고를래? 이 약? 이 주사기? 아니면... 내 벌? 어떤 걸 고르든 아주 기분 좋을 거야. \"",
+      "intro_tid": 227731,
+      "intro_ko": "Bonjour! 엘모호에 자극과 쾌락을 전도하러 왔어! 자아, 더욱더 기뻐하도록 해!",
+      "get_show_path": "GunGet/FlorenceSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_FlorenceSSR--88e09d7a91.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_FlorenceSSR--7458423b73.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_FlorenceSSR--c944d4d363.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_FlorenceSSR--467b57acaa.webp",
+          "assets/skins/Img_ChrSkinPic_FlorenceSSR01--0110940389.webp",
+          "assets/skins/Img_ChrSkinPic_FlorenceSSR02--25c4d8363b.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_FlorenceSSR--88e09d7a91.webp",
+          "assets/portraits/Avatar_Bust_FlorenceSSR01--2dec5bf198.webp",
+          "assets/portraits/Avatar_Bust_FlorenceSSR02--c9f002dc86.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_FlorenceSSR--7458423b73.webp",
+          "assets/gacha/Avatar_Gacha_FlorenceSSR01--8f491206ea.webp",
+          "assets/gacha/Avatar_Gacha_FlorenceSSR02--b1b4543f9c.webp"
+        ]
+      }
+    },
+    {
+      "id": 1065,
+      "name_tid": 242874,
+      "name_ko": "앨바",
+      "resource_name": "AlvaSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 242875,
+      "profile_ko": "겉모습은 쌀쌀맞아 보이지만, 내면은 섬세한 전술인형. 언뜻 보기엔 무심하게 감정 없이 대답하는 것 같지만, 실제로는 상대의 요구와 의견을 마음에 담아두고 이를 만족시켜주기 위해 노력합니다. 간과하기 쉬운 미세한 반응과 감정에 항상 촉각을 곤두세우고 주변 환경에도 민감해서, 주변의 분위기에 쉽게 영향을 받습니다.\n\"예전엔 시간이 많은 것을 바꿀 거라고 생각했었다... 하지만 지금 와서 보니, 너도 우리도 변한 건 아무것도 없더군. 오직 이 세상만이 매일 바뀌고 있다.\"",
+      "intro_tid": 242876,
+      "intro_ko": "앨바, 도착을 신고한다. 과거의 AN-94는 이제 없지만,\n이 새 이름과 새 신분으로 지휘관과 이상을 위해 싸우겠다.",
+      "get_show_path": "GunGet/AlvaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_AlvaSSR--ec983e917f.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_AlvaSSR--f42e307471.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_AlvaSSR--eed0bdf574.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_AlvaSSR--12036ba639.webp",
+          "assets/skins/Img_ChrSkinPic_AlvaSSR01--97c70884bf.webp",
+          "assets/skins/Img_ChrSkinPic_AlvaSSR02--cb835bf9be.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_AlvaSSR--ec983e917f.webp",
+          "assets/portraits/Avatar_Bust_AlvaSSR01--05e2f1a910.webp",
+          "assets/portraits/Avatar_Bust_AlvaSSR02--c482c17ee4.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_AlvaSSR--f42e307471.webp",
+          "assets/gacha/Avatar_Gacha_AlvaSSR01--20815d0c52.webp",
+          "assets/gacha/Avatar_Gacha_AlvaSSR02--0d32e5add1.webp"
+        ]
+      }
+    },
+    {
+      "id": 1066,
+      "name_tid": 242878,
+      "name_ko": "보이마스티나",
+      "resource_name": "VoymastinaSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 284210,
+      "profile_ko": "아무리 어려운 임무도, 보이마스티나는 언제나 실행 가능한 방법을 제시합니다. 그녀는 부대에서 가장 날카로운 칼이자 가장 견고한 방패이며, 계획에서 가장 믿음직한 고리입니다. 하지만 가끔은, 그녀가 같은 편이어서 정말 다행이라고 느끼게 될 겁니다.\n\"인형을 '최강'으로 만드는 요소는 전술, 효율, 경험... 그중 어떤 것도 빠질 수 없습니다.\"",
+      "intro_tid": 284211,
+      "intro_ko": "오랜만에 뵙습니다, 지휘관. 앞으로는 '최강의 2세대 인형' 같은 칭호가 아니라,\n제 실력 자체를 주목해 주시길 바랍니다.",
+      "get_show_path": "GunGet/VoymastinaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_VoymastinaSSR--d97158d072.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_VoymastinaSSR--6abcdf995c.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_VoymastinaSSR--8898977a8a.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_VoymastinaSSR--aa7f0b5d86.webp",
+          "assets/skins/Img_ChrSkinPic_VoymastinaSSR01--7a3380bffb.webp",
+          "assets/skins/Img_ChrSkinPic_VoymastinaSSR02--3af7fde1b5.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_VoymastinaSSR--d97158d072.webp",
+          "assets/portraits/Avatar_Bust_VoymastinaSSR01--2e22863df9.webp",
+          "assets/portraits/Avatar_Bust_VoymastinaSSR02--49b64e47c5.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_VoymastinaSSR--6abcdf995c.webp",
+          "assets/gacha/Avatar_Gacha_VoymastinaSSR01--d1779e32a6.webp",
+          "assets/gacha/Avatar_Gacha_VoymastinaSSR02--232cd608af.webp"
+        ]
+      }
+    },
+    {
+      "id": 1067,
+      "name_tid": 341373,
+      "name_ko": "헬렌",
+      "resource_name": "HelenSSR",
+      "rarity": 5,
+      "duty_id": 1,
+      "duty_ko": "불워크",
+      "duty_code": "Guard",
+      "weapon_type_id": 6,
+      "weapon_type_ko": "산탄총",
+      "weapon_type_code": "SG",
+      "profile_tid": 342424,
+      "profile_ko": "겉으로는 온화하지만, 규칙을 매우 잘 이용하고 허점을 공략하여 목적을 달성하는 데 능숙합니다. 뛰어난 통찰력을 가지고 있어, 항상 인간의 표면적 행동을 꿰뚫어 내면의 본질을 간파합니다. 주변 사람들과 관계를 맺을 때는 때때로 악의 없는 장난으로 상대방과 가까워지며, 자신의 마음을 깨닫지 못하는 사람을 인도하여 깨달음을 얻게 하고, 스스로의 약점을 극복하도록 돕습니다. 그리고 필요한 순간에는 주변의 소중한 사람들을 지키기 위해 기꺼이 자신을 희생합니다.",
+      "intro_tid": 342425,
+      "intro_ko": "다시 만날 수 있어서 정말 기뻐요. 이번에야말로, 영원히 당신 곁에 있게 해주세요... 제가 반드시 지켜드리겠어요.",
+      "get_show_path": "GunGet/HelenSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_HelenSSR--12a343c39e.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_HelenSSR--219e3639d7.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_HelenSSR--3ecb98c17e.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_HelenSSR--5245fd5b5d.webp",
+          "assets/skins/Img_ChrSkinPic_HelenSSR01--b5d3ab3267.webp",
+          "assets/skins/Img_ChrSkinPic_HelenSSR02--071015d985.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_HelenSSR--12a343c39e.webp",
+          "assets/portraits/Avatar_Bust_HelenSSR01--c98d83fc1b.webp",
+          "assets/portraits/Avatar_Bust_HelenSSR02--0155760557.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_HelenSSR--219e3639d7.webp",
+          "assets/gacha/Avatar_Gacha_HelenSSR01--bede02ef8f.webp",
+          "assets/gacha/Avatar_Gacha_HelenSSR02--4b72736fbc.webp"
+        ]
+      }
+    },
+    {
+      "id": 1068,
+      "name_tid": 368436,
+      "name_ko": "사쿠라",
+      "resource_name": "SakuraSSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 368513,
+      "profile_ko": "“사쿠라 익스프레스”의 창립자 겸 택배원. 위성 도시 및 주변 오염 지대에서 활동하며, 트럭 내비게이션 시스템인 “동료”와 함께 물류를 통해 주민들에게 더 나은 생활 경험을 제공하기 위해 힘쓰고 있습니다. \n내성적인데다 불운 체질이지만, 성실한 근무 태도로 에이스 택배원의 칭호를 획득한 적도 있죠. 어엿한 전문가로서 홀로서기에 성공했지만, 미래로 나아가는 길을 당신과 함께할 수 있다는 것이 그녀에겐 더욱 큰 기쁨입니다. \n“노력해서 지휘관님의 칭찬을 받을 수 있다면… 조금 더 열심히 해도 되겠죠?”",
+      "intro_tid": 369706,
+      "intro_ko": "사쿠라 익스프레스의 사쿠라입니다! 고객님의 소중한 택배, 안전하게 배송해 드리겠습니다!",
+      "get_show_path": "GunGet/SakuraSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_SakuraSSR--73b1810ac0.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_SakuraSSR--d1cf6e68a8.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_SakuraSSR--149ba2cf02.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_SakuraSSR--c2d9054dd7.webp",
+          "assets/skins/Img_ChrSkinPic_SakuraSSR01--19f2593a84.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_SakuraSSR--73b1810ac0.webp",
+          "assets/portraits/Avatar_Bust_SakuraSSR01--2aeb33f0be.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_SakuraSSR--d1cf6e68a8.webp",
+          "assets/gacha/Avatar_Gacha_SakuraSSR01--ffa1250db3.webp"
+        ]
+      }
+    },
+    {
+      "id": 1069,
+      "name_tid": 380154,
+      "name_ko": "로렐라이",
+      "resource_name": "LoreleySSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 383021,
+      "profile_ko": "신비롭고 우아한 외모 아래에는 깊고 대담한 욕망이 숨겨져 있습니다. 누구도 그녀의 생각을 헤아릴 수 없지만, 그녀의 진심은 오직 한 사람에게 머물러 있을지도 모릅니다. \n“후후후, 내 자료를 열람한 건 나한테 관심이 있다는 뜻일까? 더 알고 싶다면 직접 찾아와. 조금씩, 남김 없이… 내 모든 것을 알겨줄게.”",
+      "intro_tid": 383022,
+      "intro_ko": "오랜만이네, 지휘관. 자기는 예전 모습 그대로구나, 후훗... 자, 내 새 이름을 불러볼래? 맞아, 로렐라이. 기억 못 해도 괜찮아, 그 몸에 듬뿍, 새겨 줄 테니까...",
+      "get_show_path": "GunGet/LoreleySSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_LoreleySSR--4aa2d74dcf.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_LoreleySSR--ee6a1cabe1.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_LoreleySSR--1d419bb735.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_LoreleySSR--7a1d04bb49.webp",
+          "assets/skins/Img_ChrSkinPic_LoreleySSR01--37ebfb793d.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_LoreleySSR--4aa2d74dcf.webp",
+          "assets/portraits/Avatar_Bust_LoreleySSR01--6adb7daa15.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_LoreleySSR--ee6a1cabe1.webp",
+          "assets/gacha/Avatar_Gacha_LoreleySSR01--28fe641511.webp"
+        ]
+      }
+    },
+    {
+      "id": 1070,
+      "name_tid": 380155,
+      "name_ko": "샤이엔",
+      "resource_name": "CheyanneSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 403110,
+      "profile_ko": "깊은 내면을 가진 전술인형. 조심스럽고 신중한 성격으로 표현에 서툴며 쉽게 부끄러워합니다. 현재 역할과 무관할지라도 끈질긴 열정으로 미지의 영역을 탐험하며 다양한 기술을 익힙니다. 내향적인 그녀의 무덤덤한 표면 아래 깊이 감춰진 이 특별한 열정은, 오직 독특한 안목을 가진 지휘관만이 발견할 수 있습니다. \n“…그냥 조금 아는 것뿐이에요, 너무 칭찬하실 필요 없어요… 평범한 전술인형일 뿐이니까...”",
+      "intro_tid": 403111,
+      "intro_ko": "저 아직 기억하시나요? 줄곧 지휘관님 뒷모습만 쫓다가, 마침내 따라잡았네요. 샤이엔, 복귀를 신고합니다.",
+      "get_show_path": "GunGet/CheyanneSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_CheyanneSSR--17370f7c73.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_CheyanneSSR--23a30a31ca.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_CheyanneSSR--ef10677da3.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_CheyanneSSR--11e1ac7787.webp",
+          "assets/skins/Img_ChrSkinPic_CheyanneSSR01--46b4143f5a.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_CheyanneSSR--17370f7c73.webp",
+          "assets/portraits/Avatar_Bust_CheyanneSSR01--7138b518f4.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_CheyanneSSR--23a30a31ca.webp",
+          "assets/gacha/Avatar_Gacha_CheyanneSSR01--63c1ebda16.webp"
+        ]
+      }
+    },
+    {
+      "id": 1071,
+      "name_tid": 402546,
+      "name_ko": "바스티",
+      "resource_name": "BastiSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 1,
+      "weapon_type_ko": "권총",
+      "weapon_type_code": "HG",
+      "profile_tid": 403113,
+      "profile_ko": "바스티의 이력을 평가하기란 쉽지 않습니다. 권력자에게는 범죄 기록으로, 지역 세력에게는 협박장으로, 지휘관에게는 감동적인 러브레터로 보이죠.\n“달링, 내 비밀을 알고 싶어? 지금 이대로는 부족해, 좀 더 과감하게 다가와줘~”",
+      "intro_tid": 403114,
+      "intro_ko": "달링! 찾~ 았~ 다~! 이제 숨바꼭질은 끝이야!",
+      "get_show_path": "GunGet/BastiSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_BastiSSR--afd11c704f.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_BastiSSR--4dcb853b5d.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_BastiSSR--900f1315ee.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_BastiSSR--7f9645e49a.webp",
+          "assets/skins/Img_ChrSkinPic_BastiSSR01--06262f2208.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_BastiSSR--afd11c704f.webp",
+          "assets/portraits/Avatar_Bust_BastiSSR01--44afa33ebf.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_BastiSSR--4dcb853b5d.webp",
+          "assets/gacha/Avatar_Gacha_BastiSSR01--6b306c41b2.webp"
+        ]
+      }
+    },
+    {
+      "id": 1072,
+      "name_tid": 425959,
+      "name_ko": "류시",
+      "resource_name": "LiushihSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 425960,
+      "profile_ko": "온화하고 예의 바르며 선량하고 강인한 인형. 가격과 숫자 개념이 부족한 탓에, 매우 고가의 소지품을 지녀 모두에게 ‘부잣집 아가씨’로 통합니다. 소중한 사람에게 최고의 자원을 아낌없이 주는 것을 당연한 책임이라 여기기에 씀씀이 또한 매우 시원시원합니다. \n“어서 오세요, 지휘관님! 음… 저기, 경비 처리 해드릴까요?”",
+      "intro_tid": 426381,
+      "intro_ko": "오랜만이에요, 지휘관님. 다시 지휘관님의 힘이 될 수 있도록 오랫동안 준비해 왔어요. 앞으로는 아무리 험난한 길이라도 지휘관님을 위해 전력을 다할게요!",
+      "get_show_path": "GunGet/LiushihSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_LiushihSSR--c77f1825c8.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_LiushihSSR--3ba58d860e.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_LiushihSSR--2ecfd58aea.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_LiushihSSR--ad58be5d17.webp",
+          "assets/skins/Img_ChrSkinPic_LiushihSSR01--b3e84e3b41.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_LiushihSSR--c77f1825c8.webp",
+          "assets/portraits/Avatar_Bust_LiushihSSR01--7cdcd8d2a1.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_LiushihSSR--3ba58d860e.webp",
+          "assets/gacha/Avatar_Gacha_LiushihSSR01--76eb9e9ea8.webp"
+        ]
+      }
+    },
+    {
+      "id": 1073,
+      "name_tid": 52873,
+      "name_ko": "섹스턴스",
+      "resource_name": "SextansSSR",
+      "rarity": 5,
+      "duty_id": 3,
+      "duty_ko": "서포트",
+      "duty_code": "Assist",
+      "weapon_type_id": 7,
+      "weapon_type_ko": "도검",
+      "weapon_type_code": "BLD",
+      "profile_tid": 436567,
+      "profile_ko": "몸놀림이 민첩하고 책략에 능한 인형. 과거 올로그 재단 소속이었으나 중요한 임무에 실패한 뒤 폐기되었고 마인드맵이 심각하게 손상되었습니다. 이후 엘모호에 구조되어 모두의 든든한 동료가 되었습니다.\n“예전 동료들과 비교하면, 각하 곁에 있는 인형들은 조금... 단순하군요.”",
+      "intro_tid": 436568,
+      "intro_ko": "이 버려진 ‘그릇’을, 취하겠단 말씀이십니까. 그 선의가... 언젠가 통제불능의 괴물을 만들어낼지도 모릅니다.",
+      "get_show_path": "GunGet/SextansSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_SextansSSR--5bae40081e.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_SextansSSR--7fe420d5e7.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_SextansSSR--34554d9ec5.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_SextansSSR--5e5f626ca1.webp",
+          "assets/skins/Img_ChrSkinPic_SextansSSR01--e33d316a43.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_SextansSSR--5bae40081e.webp",
+          "assets/portraits/Avatar_Bust_SextansSSR01--2c2a0dbc9f.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_SextansSSR--7fe420d5e7.webp",
+          "assets/gacha/Avatar_Gacha_SextansSSR01--3d025f0c2f.webp"
+        ]
+      }
+    },
+    {
+      "id": 1074,
+      "name_tid": 446159,
+      "name_ko": "OTs-14",
+      "resource_name": "OTs14SSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 446715,
+      "profile_ko": "냉정하고 엄숙하며, 프라이드와 자신감 넘치는 3세대 인형. 개조는 그녀에게 비할 데 없는 강력한 힘을 가져다주었으며, 과거보다 더욱 강인하게 만들었습니다. 그녀의 어렴풋한 불안과 나약함을 숨기기에 충분할 만큼.\n“지휘관, 오늘 계획은 어떻게 세웠어? 나한테도 조금 들려줄래?”",
+      "intro_tid": 446716,
+      "intro_ko": "드디어 당신 곁으로 돌아왔네, 지휘관. 앞으로의 길은 아직 멀어. 그럼, 즐겁게 지내 보자.",
+      "get_show_path": "GunGet/OTs14SSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_OTs14SSR--493202966a.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_OTs14SSR--c33d729471.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_OTs14SSR--7f4d9c9cea.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_OTs14SSR--c6682b2926.webp",
+          "assets/skins/Img_ChrSkinPic_OTs14SSR01--51249a8299.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_OTs14SSR--493202966a.webp",
+          "assets/portraits/Avatar_Bust_OTs14SSR01--176d4a9bcc.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_OTs14SSR--c33d729471.webp",
+          "assets/gacha/Avatar_Gacha_OTs14SSR01--209135d393.webp"
+        ]
+      }
+    },
+    {
+      "id": 1075,
+      "name_tid": 446718,
+      "name_ko": "네메시스·연광",
+      "resource_name": "NemesisGnosisSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 3,
+      "weapon_type_ko": "저격소총",
+      "weapon_type_code": "RF",
+      "profile_tid": 446719,
+      "profile_ko": "최초의 소체로 회귀한 네메시스는 미래와 관련된 새로운 힘을 각성했을 뿐만 아니라, 정상적인 소통 기능도 회복했습니다. 과거의 난해했던 언어는 이제 더 이상 장애가 되지 않습니다.\n“……휘광은 고요하고, 산들바람은 부른다…… 지휘관, 오늘의 점괘를 듣고 싶어?”",
+      "intro_tid": 446720,
+      "intro_ko": "지난날 흩어졌던 산란광, 마침내 오늘, 교차한다…… 네메시스, 복귀를 신고.",
+      "get_show_path": "GunGet/NemesisGnosisSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_NemesisGnosisSSR--c15c0c5bf6.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_NemesisGnosisSSR--8a1475ecf4.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_NemesisGnosisSSR--22c319e8bb.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_NemesisGnosisSSR--8843dab9b1.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_NemesisGnosisSSR--c15c0c5bf6.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_NemesisGnosisSSR--8a1475ecf4.webp"
+        ]
+      }
+    },
+    {
+      "id": 1076,
+      "name_tid": 426523,
+      "name_ko": "소프",
+      "resource_name": "SoppoSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 467538,
+      "profile_ko": "활발하고 활동적이며, 전투를 좋아하는 인형. 생각이 단순하고 일을 시원시원하게 처리하는 것을 좋아하며, 깊게 생각하는 일이 거의 없습니다. 동료를 무조건적으로 신뢰하며, 당신의 모든 명령에 따릅니다.\n“지휘관, 다음엔 뭘 할 거야? 아직 모르겠어? 그럼... 같이 놀러 가자~~”",
+      "intro_tid": 468715,
+      "intro_ko": "우와~ 지휘관, 나 받아 줘——! 헤헤, 나 누군지 아직 알아보겠어?",
+      "get_show_path": "GunGet/SoppoSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_SoppoSSR--5dd0f39b9d.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_SoppoSSR--def2d25a7a.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_SoppoSSR--21ec91fa4f.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_SoppoSSR--4bab92ceb9.webp",
+          "assets/skins/Img_ChrSkinPic_SoppoSSR01--3da7a4d9b7.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_SoppoSSR--5dd0f39b9d.webp",
+          "assets/portraits/Avatar_Bust_SoppoSSR01--4854bc8104.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_SoppoSSR--def2d25a7a.webp",
+          "assets/gacha/Avatar_Gacha_SoppoSSR01--42e237dfa9.webp"
+        ]
+      }
+    },
+    {
+      "id": 1077,
+      "name_tid": 467539,
+      "name_ko": "미틸",
+      "resource_name": "MitylSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 2,
+      "weapon_type_ko": "기관단총",
+      "weapon_type_code": "SMG",
+      "profile_tid": 467540,
+      "profile_ko": "활발하지만 어딘가 덧없는 인상을 주며, 단체 활동을 좋아하고 언제나 남을 따라 하거나 흉내 내며 혼자 있는 것을 싫어합니다. 할 일이 없을 때는 쿠로과 함께 라이브 방송을 하며, 실감 나는 연기와 천연덕스러운 모습으로 관객들의 인정을 받았습니다. 일상 속에서 엉뚱한 행동을 자주 하지만, 사실은 붙임성이 좋고 동료들의 기분을 잘 살핍니다. 전투 시에는 앞장서서 돌격하는 것을 좋아하며, 이상한 ‘주문’을 중얼거리기도 합니다.\n“Rush B, GOGOGO!”",
+      "intro_tid": 468717,
+      "intro_ko": "“행복의 새의 인도를 따라……”\nP90, 복귀! 지휘관, 오늘부터 미틸이라고 불러 줘~\n지휘관이 어딜 가든, 내가 훨훨~ 날아갈게!",
+      "get_show_path": "GunGet/MitylSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_MitylSSR--8def395845.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_MitylSSR--b536c0a812.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_MitylSSR--ad6d1cd941.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_MitylSSR--6c70d1f2d9.webp",
+          "assets/skins/Img_ChrSkinPic_MitylSSR01--03c8e0c7d9.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_MitylSSR--8def395845.webp",
+          "assets/portraits/Avatar_Bust_MitylSSR01--c509bd8a36.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_MitylSSR--b536c0a812.webp",
+          "assets/gacha/Avatar_Gacha_MitylSSR01--bfabff151b.webp"
+        ]
+      }
+    },
+    {
+      "id": 1078,
+      "name_tid": 402501,
+      "name_ko": "페일린",
+      "resource_name": "FaelynnSSR",
+      "rarity": 5,
+      "duty_id": 4,
+      "duty_ko": "센티널",
+      "duty_code": "Suppress",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 501336,
+      "profile_ko": "페일린의 기억 속에는 괴롭고 우울한 비밀이 쌓여 있지만, 그녀의 마인드맵은 여전히 한 줄기 밝은 빛을 내비치고 있습니다. 모든 먹구름이 순수한 햇살에 비춰지고 있기 때문입니다. \n“주인님, 얼마나 오래 떠나 계시든... 돌아오실 때까지 착하게 기다릴게요!”",
+      "intro_tid": 501337,
+      "intro_ko": "주인님! 드디어 주인님 곁으로 돌아왔어요~\n주인님께 도움이 될 수 있도록, 앞으로도 계속 열심히 강해질게요!",
+      "get_show_path": "GunGet/FaelynnSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_FaelynnSSR--d28c9d6228.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_FaelynnSSR--5804ad5c82.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_FaelynnSSR--f2d65fabe8.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_FaelynnSSR--1b3150107d.webp",
+          "assets/skins/Img_ChrSkinPic_FaelynnSSR01--4ef2d2f1bd.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_FaelynnSSR--d28c9d6228.webp",
+          "assets/portraits/Avatar_Bust_FaelynnSSR01--91884c9ea7.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_FaelynnSSR--5804ad5c82.webp",
+          "assets/gacha/Avatar_Gacha_FaelynnSSR01--b962b41878.webp"
+        ]
+      }
+    },
+    {
+      "id": 1079,
+      "name_tid": 513517,
+      "name_ko": "콜레다",
+      "resource_name": "KoledaSSR",
+      "rarity": 5,
+      "duty_id": 2,
+      "duty_ko": "뱅가드",
+      "duty_code": "Scout",
+      "weapon_type_id": 4,
+      "weapon_type_ko": "돌격소총",
+      "weapon_type_code": "AR",
+      "profile_tid": 515589,
+      "profile_ko": "리벨리온 소대의 옛 알파. 최악의 하루를 겪은 뒤, 책임을 지고 전우들을 이끌며 마지막까지 자리를 지키고서, 결국 리더의 책임과 직함을 신뢰할 수 있는 동료에게 넘겨주었고, 자신은 다른 방식으로 계속 싸우는 길을 택했습니다. 오늘날까지도 그녀는 여전히 당신이 잘 아는 AK-12이지만, 부디 조심하세요. 그녀는 지금 훨씬 더 위험해졌으니까요.\n“훌륭한 백랑은 흰 눈을 이용해 몸을 숨기지만, 난 그보다 더 뛰어나지. 온몸이 하얗더라도 어둠 속으로 숨어들 수 있거든.”",
+      "intro_tid": 515598,
+      "intro_ko": "오랜만이야 지휘관, 콜레다야.\n기뻐해도 돼. 내가 왔다는 건 봄이 다시 찾아온다는 뜻이니까.",
+      "get_show_path": "GunGet/KoledaSSR01_GunGetShow",
+      "assets": {
+        "portrait": "assets/portraits/Avatar_Bust_KoledaSSR--676d2c743d.webp",
+        "gacha": "assets/gacha/Avatar_Gacha_KoledaSSR--d27a57207f.webp",
+        "fullbody": "assets/fullbody/Avatar_Whole_KoledaSSR--7c02dd0b75.webp",
+        "skins": [
+          "assets/skins/Img_ChrSkinPic_KoledaSSR--e6a2ab72d4.webp",
+          "assets/skins/Img_ChrSkinPic_KoledaSSR01--df08333590.webp"
+        ],
+        "portrait_variants": [
+          "assets/portraits/Avatar_Bust_KoledaSSR--676d2c743d.webp",
+          "assets/portraits/Avatar_Bust_KoledaSSR01--3c68ae3c30.webp"
+        ],
+        "gacha_variants": [
+          "assets/gacha/Avatar_Gacha_KoledaSSR--d27a57207f.webp",
+          "assets/gacha/Avatar_Gacha_KoledaSSR01--a8b3a523b1.webp"
+        ]
+      }
+    }
+  ]
+}

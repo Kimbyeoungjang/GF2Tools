@@ -1,0 +1,1981 @@
+{
+  "schema_version": 2,
+  "source_table_version": "1151583",
+  "property_definitions": [
+    {
+      "id": 1,
+      "code": "max_mp",
+      "name_tid": 4685,
+      "name_ko": "최대 스킬 포인트",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 2,
+      "code": "vision_range",
+      "name_tid": 5365,
+      "name_ko": "시야 범위",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 3,
+      "code": "res_mp",
+      "name_tid": 5366,
+      "name_ko": "턴당 스킬 포인트 회복",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 4,
+      "code": "hp",
+      "name_tid": 26625,
+      "name_ko": "체력",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 5,
+      "code": "ap",
+      "name_tid": 5368,
+      "name_ko": "이동력",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 6,
+      "code": "mp",
+      "name_tid": 5369,
+      "name_ko": "스킬 포인트",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 7,
+      "code": "pow",
+      "name_tid": 64993,
+      "name_ko": "공격",
+      "description_tid": 74459,
+      "description_ko": "주는 피해에 관여하는 스탯. 공격 스탯이 높을수록 주는 피해가 증가합니다.",
+      "icon": "Icon_Pow"
+    },
+    {
+      "id": 8,
+      "code": "pow1",
+      "name_tid": 64993,
+      "name_ko": "공격",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Pow"
+    },
+    {
+      "id": 9,
+      "code": "max_hp",
+      "name_tid": 26625,
+      "name_ko": "체력",
+      "description_tid": 74460,
+      "description_ko": "받을 수 있는 최대 피해. 체력이 0이 되면 전투 능력을 상실합니다.",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 10,
+      "code": "max_hp1",
+      "name_tid": 26625,
+      "name_ko": "체력",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 11,
+      "code": "armor",
+      "name_tid": 6063,
+      "name_ko": "방어",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Armor"
+    },
+    {
+      "id": 12,
+      "code": "armor1",
+      "name_tid": 6063,
+      "name_ko": "방어",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Armor"
+    },
+    {
+      "id": 13,
+      "code": "max_ap",
+      "name_tid": 5368,
+      "name_ko": "이동력",
+      "description_tid": 74461,
+      "description_ko": "행동 1회당 이동할 수 있는 최대 범위",
+      "icon": "Icon_Max_Ap"
+    },
+    {
+      "id": 14,
+      "code": "max_ap1",
+      "name_tid": 5368,
+      "name_ko": "이동력",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Max_Ap"
+    },
+    {
+      "id": 15,
+      "code": "crit",
+      "name_tid": 14291,
+      "name_ko": "치명타",
+      "description_tid": 74462,
+      "description_ko": "치명타가 발생할 확률. 치명타 발생 시 더 큰 피해를 입힙니다.",
+      "icon": "Icon_Crit"
+    },
+    {
+      "id": 16,
+      "code": "crit_mult",
+      "name_tid": 23672,
+      "name_ko": "치명타 피해",
+      "description_tid": 74463,
+      "description_ko": "치명타 발생 시 주는 피해량 배율.",
+      "icon": "Icon_Mult"
+    },
+    {
+      "id": 17,
+      "code": "hit",
+      "name_tid": 6083,
+      "name_ko": "명중",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 18,
+      "code": "dodge",
+      "name_tid": 1770,
+      "name_ko": "회피",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Dodge"
+    },
+    {
+      "id": 19,
+      "code": "hit_percentage",
+      "name_tid": 6085,
+      "name_ko": "명중 보너스",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 20,
+      "code": "dodge_percentage",
+      "name_tid": 1770,
+      "name_ko": "회피",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Dodge"
+    },
+    {
+      "id": 21,
+      "code": "scratch",
+      "name_tid": 6086,
+      "name_ko": "찰과상",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Dodge"
+    },
+    {
+      "id": 22,
+      "code": "scratch_reduction",
+      "name_tid": 6087,
+      "name_ko": "찰과상 차감",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Dodge"
+    },
+    {
+      "id": 23,
+      "code": "hit_damage",
+      "name_tid": 348043,
+      "name_ko": "주는 피해 변화",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Mult"
+    },
+    {
+      "id": 24,
+      "code": "behit_damage",
+      "name_tid": 348044,
+      "name_ko": "받는 피해 변화",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Mult"
+    },
+    {
+      "id": 25,
+      "code": "release_heal",
+      "name_tid": 6090,
+      "name_ko": "치료 보너스",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_release_heal"
+    },
+    {
+      "id": 26,
+      "code": "accept_heal",
+      "name_tid": 6091,
+      "name_ko": "받는 치료량",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_accept_heal"
+    },
+    {
+      "id": 27,
+      "code": "life_steal",
+      "name_tid": 6092,
+      "name_ko": "흡혈",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 28,
+      "code": "max_will_value",
+      "name_tid": 26627,
+      "name_ko": "안정 지수",
+      "description_tid": 74464,
+      "description_ko": "받을 수 있는 최대 안정 피해. 안정 지수가 0이 되면 「안정 붕괴」에 빠져, 가지고 있는 안정 버프와 엄폐물 보호 효과를 잃습니다.",
+      "icon": "Icon_Will"
+    },
+    {
+      "id": 29,
+      "code": "suppress_value",
+      "name_tid": 6094,
+      "name_ko": "안정 피해",
+      "description_tid": 74465,
+      "description_ko": "이 유닛이 주는 안정 피해. 안정 피해가 높을수록 공격받은 상대의 안정 지수가 더 크게 감소합니다.",
+      "icon": "Icon_Suppress"
+    },
+    {
+      "id": 30,
+      "code": "physical_shield",
+      "name_tid": 6096,
+      "name_ko": "견고 장갑",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Physical_Shield"
+    },
+    {
+      "id": 31,
+      "code": "magical_shield",
+      "name_tid": 6097,
+      "name_ko": "이온 코팅",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Magical_Shield"
+    },
+    {
+      "id": 32,
+      "code": "shield_armor",
+      "name_tid": 6063,
+      "name_ko": "방어",
+      "description_tid": 74466,
+      "description_ko": "받는 피해에 관여하는 스탯. 방어 스탯이 높을수록 받는 피해가 감소합니다.",
+      "icon": "Icon_Armor"
+    },
+    {
+      "id": 33,
+      "code": "shield_hp",
+      "name_tid": 6098,
+      "name_ko": "장갑",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Physical_Shield"
+    },
+    {
+      "id": 34,
+      "code": "shield_damage",
+      "name_tid": 6100,
+      "name_ko": "장갑관통",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Magical_Shield"
+    },
+    {
+      "id": 35,
+      "code": "weight",
+      "name_tid": 6101,
+      "name_ko": "무게",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 36,
+      "code": "max_shield_hp",
+      "name_tid": 6098,
+      "name_ko": "장갑",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Physical_Shield"
+    },
+    {
+      "id": 37,
+      "code": "suppress_damage",
+      "name_tid": 6102,
+      "name_ko": "제압 변화",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 38,
+      "code": "be_suppressed_damage",
+      "name_tid": 9981,
+      "name_ko": "제압 피해",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 39,
+      "code": "release_will_heal",
+      "name_tid": 10014,
+      "name_ko": "의지 회복",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 40,
+      "code": "accept_will_heal",
+      "name_tid": 10965,
+      "name_ko": "의지 변화",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 41,
+      "code": "pow_percent",
+      "name_tid": 10966,
+      "name_ko": "공격 보너스",
+      "description_tid": 74467,
+      "description_ko": "공격 스탯의 추가 증가율.",
+      "icon": "Icon_Pow"
+    },
+    {
+      "id": 42,
+      "code": "max_hp_percent",
+      "name_tid": 10967,
+      "name_ko": "체력 보너스",
+      "description_tid": 74468,
+      "description_ko": "최대 체력의 추가 증가율.",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 43,
+      "code": "max_will_value_percent",
+      "name_tid": 10968,
+      "name_ko": "안정 지수 보너스",
+      "description_tid": 74469,
+      "description_ko": "최대 안정 지수의 추가 증가율.",
+      "icon": "Icon_Will"
+    },
+    {
+      "id": 44,
+      "code": "suppress_value_percent",
+      "name_tid": 10969,
+      "name_ko": "안정 피해 보너스",
+      "description_tid": 74470,
+      "description_ko": "안정 피해의 추가 증가율.",
+      "icon": "Icon_Suppress"
+    },
+    {
+      "id": 45,
+      "code": "shield_armor_percent",
+      "name_tid": 10970,
+      "name_ko": "방어 보너스",
+      "description_tid": 74471,
+      "description_ko": "방어 스탯의 추가 증가율.",
+      "icon": "Icon_Armor"
+    },
+    {
+      "id": 46,
+      "code": "max_shield_hp_percent",
+      "name_tid": 10971,
+      "name_ko": "장갑 보너스",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 47,
+      "code": "element_add_fire",
+      "name_tid": 10972,
+      "name_ko": "연소 보너스",
+      "description_tid": 74472,
+      "description_ko": "이 유닛이 주는 연소계 위상 피해의 증가율.",
+      "icon": "Icon_Add_Fire"
+    },
+    {
+      "id": 48,
+      "code": "element_add_electric",
+      "name_tid": 10973,
+      "name_ko": "전도 보너스",
+      "description_tid": 74473,
+      "description_ko": "이 유닛이 주는 전도계 위상 피해의 증가율.",
+      "icon": "Icon_Add_Electric"
+    },
+    {
+      "id": 49,
+      "code": "element_add_ice",
+      "name_tid": 10974,
+      "name_ko": "빙결 보너스",
+      "description_tid": 74474,
+      "description_ko": "이 유닛이 주는 빙결계 위상 피해의 증가율.",
+      "icon": "Icon_Add_Ice"
+    },
+    {
+      "id": 50,
+      "code": "element_add_poison",
+      "name_tid": 10975,
+      "name_ko": "산성 보너스",
+      "description_tid": 74475,
+      "description_ko": "이 유닛이 주는 산성계 위상 피해의 증가율.",
+      "icon": "Icon_Add_Poison"
+    },
+    {
+      "id": 51,
+      "code": "element_add_physics",
+      "name_tid": 10976,
+      "name_ko": "물리 보너스",
+      "description_tid": 74476,
+      "description_ko": "이 유닛이 주는 물리계 위상 피해의 증가율.",
+      "icon": "Icon_Add_Physical"
+    },
+    {
+      "id": 52,
+      "code": "element_add_soil",
+      "name_tid": 10977,
+      "name_ko": "치밀 보너스",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Add_Soil"
+    },
+    {
+      "id": 53,
+      "code": "element_add_grass",
+      "name_tid": 10979,
+      "name_ko": "기생 보너스",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Add_Grass"
+    },
+    {
+      "id": 54,
+      "code": "element_add_water",
+      "name_tid": 10982,
+      "name_ko": "탁류 보너스",
+      "description_tid": 74477,
+      "description_ko": "이 유닛이 주는 탁류계 위상 피해의 증가율.",
+      "icon": "Icon_Add_Water"
+    },
+    {
+      "id": 55,
+      "code": "element_against_fire",
+      "name_tid": 10986,
+      "name_ko": "연소 저항",
+      "description_tid": 74478,
+      "description_ko": "이 유닛이 받는 연소계 위상 피해의 저항율.",
+      "icon": "Icon_Against_Fire"
+    },
+    {
+      "id": 56,
+      "code": "element_against_electric",
+      "name_tid": 10996,
+      "name_ko": "전도 저항",
+      "description_tid": 74479,
+      "description_ko": "이 유닛이 받는 전도계 위상 피해의 저항율.",
+      "icon": "Icon_Against_Electric"
+    },
+    {
+      "id": 57,
+      "code": "element_against_ice",
+      "name_tid": 10997,
+      "name_ko": "빙결 저항",
+      "description_tid": 74480,
+      "description_ko": "이 유닛이 받는 빙결계 위상 피해의 저항율.",
+      "icon": "Icon_Against_Ice"
+    },
+    {
+      "id": 58,
+      "code": "element_against_poison",
+      "name_tid": 10999,
+      "name_ko": "산성 저항",
+      "description_tid": 74481,
+      "description_ko": "이 유닛이 받는 산성계 위상 피해의 저항율.",
+      "icon": "Icon_Against_Poison"
+    },
+    {
+      "id": 59,
+      "code": "element_against_physics",
+      "name_tid": 11001,
+      "name_ko": "물리 저항",
+      "description_tid": 74482,
+      "description_ko": "이 유닛이 받는 물리계 위상 피해의 저항율.",
+      "icon": "Icon_Against_Physical"
+    },
+    {
+      "id": 60,
+      "code": "element_against_soil",
+      "name_tid": 11002,
+      "name_ko": "치밀 저항",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Against_Soil"
+    },
+    {
+      "id": 61,
+      "code": "element_against_grass",
+      "name_tid": 11003,
+      "name_ko": "기생 저항",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Against_Grass"
+    },
+    {
+      "id": 62,
+      "code": "element_against_water",
+      "name_tid": 11053,
+      "name_ko": "탁류 저항",
+      "description_tid": 74483,
+      "description_ko": "이 유닛이 받는 탁류계 위상 피해의 저항율.",
+      "icon": "Icon_Against_Water"
+    },
+    {
+      "id": 63,
+      "code": "outround_dam",
+      "name_tid": 11055,
+      "name_ko": "턴외 피해 증가",
+      "description_tid": 74484,
+      "description_ko": "자신의 턴이 아닐 때 발동한 스킬로 주는 피해의 증가율.",
+      "icon": "Icon_outround_dam"
+    },
+    {
+      "id": 64,
+      "code": "potential_dam",
+      "name_tid": 11056,
+      "name_ko": "리몰딩 피해 증가",
+      "description_tid": 74485,
+      "description_ko": "리몰딩 지수를 소모하는 공격으로 주는 피해의 증가율.",
+      "icon": "Icon_potential_dam"
+    },
+    {
+      "id": 65,
+      "code": "aoe_dam",
+      "name_tid": 11057,
+      "name_ko": "범위 피해 증가",
+      "description_tid": 74486,
+      "description_ko": "범위 공격으로 주는 피해의 증가율.",
+      "icon": "Icon_aoe_dam"
+    },
+    {
+      "id": 66,
+      "code": "single_dam",
+      "name_tid": 11058,
+      "name_ko": "단일 피해 증가",
+      "description_tid": 74487,
+      "description_ko": "단일 공격으로 주는 피해의 증가율.",
+      "icon": "Icon_single_dam"
+    },
+    {
+      "id": 67,
+      "code": "cd_dam",
+      "name_tid": 11059,
+      "name_ko": "기초 피해 증가",
+      "description_tid": 74488,
+      "description_ko": "리몰딩 지수를 소모하지 않는 기초 공격으로 주는 피해의 증가율.",
+      "icon": "Icon_cd_dam"
+    },
+    {
+      "id": 68,
+      "code": "potential_behit_dam",
+      "name_tid": 11060,
+      "name_ko": "리몰딩 피해 차감",
+      "description_tid": 74489,
+      "description_ko": "리몰딩 지수를 소모하는 공격으로 받는 피해의 감소율.",
+      "icon": "Icon_Against_potential"
+    },
+    {
+      "id": 69,
+      "code": "aoe_behit_dam",
+      "name_tid": 11061,
+      "name_ko": "범위 피해 차감",
+      "description_tid": 74490,
+      "description_ko": "범위 공격으로 받는 피해의 감소율.",
+      "icon": "Icon_Against_aoe"
+    },
+    {
+      "id": 70,
+      "code": "single_behit_dam",
+      "name_tid": 11062,
+      "name_ko": "단일 피해 차감",
+      "description_tid": 74491,
+      "description_ko": "단일 공격으로 받는 피해의 감소율.",
+      "icon": "Icon_Against_single"
+    },
+    {
+      "id": 71,
+      "code": "cd_behit_dam",
+      "name_tid": 11063,
+      "name_ko": "기초 피해 차감",
+      "description_tid": 74492,
+      "description_ko": "리몰딩 지수를 소모하지 않는 기초 공격으로 받는 피해의 감소율.",
+      "icon": "Icon_Against_cd"
+    },
+    {
+      "id": 72,
+      "code": "heal_reverse",
+      "name_tid": 11064,
+      "name_ko": "치료-피해 변환",
+      "description_tid": 74493,
+      "description_ko": "공격 측의 스킬 안정 피해 수치가 상승한다.",
+      "icon": "Icon_Against_Water"
+    },
+    {
+      "id": 73,
+      "code": "suppress_dam_addrate",
+      "name_tid": 11065,
+      "name_ko": "안정 피해 증가",
+      "description_tid": 74494,
+      "description_ko": "안정 피해를 가할 시, 배율에 따라 안정 피해가 상승한다.",
+      "icon": "Icon_Will"
+    },
+    {
+      "id": 74,
+      "code": "suppress_dam_times",
+      "name_tid": 11066,
+      "name_ko": "안정 피해 차감",
+      "description_tid": 74495,
+      "description_ko": "안정 피해를 입을 시, 배율에 따라 안정 피해가 차감된다.",
+      "icon": "Icon_Suppress"
+    },
+    {
+      "id": 75,
+      "code": "suppress_resist",
+      "name_tid": 11067,
+      "name_ko": "안정 방어",
+      "description_tid": 74496,
+      "description_ko": "엄폐 효과를 받으면서 안정 지수가 0보다 높을 때, 받는 피해의 감소율.",
+      "icon": "Icon_Suppress_Defend"
+    },
+    {
+      "id": 76,
+      "code": "suppress_resist_rate",
+      "name_tid": 11068,
+      "name_ko": "수비측 안정 방어 변화",
+      "description_tid": 74497,
+      "description_ko": "안정 지수가 0보다 높을 경우, 피격 측의 안정 피해 감소 수치의 수정치",
+      "icon": "Icon_Suppress"
+    },
+    {
+      "id": 77,
+      "code": "suppress_resist_ignore",
+      "name_tid": 11069,
+      "name_ko": "공격측 안정 방어 무시",
+      "description_tid": 74498,
+      "description_ko": "안정 지수가 0보다 높을 경우, 공격 측이 피격 측의 안정 피해 감소 수치를 무시하는 수정치",
+      "icon": "Icon_Suppress"
+    },
+    {
+      "id": 78,
+      "code": "cover_resist_rate",
+      "name_tid": 11070,
+      "name_ko": "수비측 엄폐 방어 변화",
+      "description_tid": 74499,
+      "description_ko": "엄폐물의 보호를 받고 있는 경우, 피격 측의 엄폐물 피해 감소 수치의 수정치",
+      "icon": "Icon_Suppress"
+    },
+    {
+      "id": 79,
+      "code": "cover_resist_ignore",
+      "name_tid": 11071,
+      "name_ko": "공격측 엄페 방어 무시",
+      "description_tid": 74500,
+      "description_ko": "엄폐물의 보호를 받고 있는 경우, 공격 측이 피격측의 엄폐물 피해 감소 수치를 무시하는 수정치",
+      "icon": "Icon_Suppress"
+    },
+    {
+      "id": 80,
+      "code": "crit_resist",
+      "name_tid": 11072,
+      "name_ko": "치명내성",
+      "description_tid": 74501,
+      "description_ko": "방어 측이 공격 측의 치명률에 저항할 수 있는 능력치",
+      "icon": "Icon_Crit"
+    },
+    {
+      "id": 81,
+      "code": "suppress_defend",
+      "name_tid": 11073,
+      "name_ko": "안정 장갑",
+      "description_tid": 74502,
+      "description_ko": "받는 안정 피해의 감소 수치",
+      "icon": "Icon_Suppress_Armor"
+    },
+    {
+      "id": 82,
+      "code": "fixed_effect_base",
+      "name_tid": 11074,
+      "name_ko": "고정 효과 계수",
+      "description_tid": 74503,
+      "description_ko": "고정 피해 혹은 치료효과의 계산 기준치",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 83,
+      "code": "fixed_dam_add",
+      "name_tid": 11075,
+      "name_ko": "고정 피해 증가",
+      "description_tid": 74504,
+      "description_ko": "공격 측이 입힌 고정 피해 증가 백분율",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 84,
+      "code": "fixed_dam_resist",
+      "name_tid": 11076,
+      "name_ko": "받는 고정 피해 차감",
+      "description_tid": 74505,
+      "description_ko": "방어 측이 받은 고정 피해 감소 백분율",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 85,
+      "code": "assist_atknum",
+      "name_tid": 11077,
+      "name_ko": "협공 횟수",
+      "description_tid": 74506,
+      "description_ko": "인형이 협동 공격을 하는 기본 횟수 설정값",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 86,
+      "code": "counter_atknum",
+      "name_tid": 11078,
+      "name_ko": "반격 횟수",
+      "description_tid": 74507,
+      "description_ko": "인형이 반격하는 기본 횟수 설정값",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 87,
+      "code": "shield_effect_rate",
+      "name_tid": 64230,
+      "name_ko": "보호막 부여 효과",
+      "description_tid": 74508,
+      "description_ko": "보호막 부여 시 효율 설정값 수정",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 88,
+      "code": "min_hp",
+      "name_tid": 128170,
+      "name_ko": "현재 체력 최소치",
+      "description_tid": 128170,
+      "description_ko": "현재 체력 최소치",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 89,
+      "code": "min_will_value",
+      "name_tid": 128171,
+      "name_ko": "현재 안정 최소치",
+      "description_tid": 128171,
+      "description_ko": "현재 안정 최소치",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 90,
+      "code": "final_behit_damage",
+      "name_tid": 177940,
+      "name_ko": "최종 피해 변화",
+      "description_tid": 177941,
+      "description_ko": "최종 피해 변화 수정치",
+      "icon": "Icon_Hit"
+    },
+    {
+      "id": 100,
+      "code": "darkzone_chequer",
+      "name_tid": 11079,
+      "name_ko": "다크존 배낭칸",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 101,
+      "code": "darkzone_speed_attack",
+      "name_tid": 11080,
+      "name_ko": "다크존 이동속도-공격",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 102,
+      "code": "darkzone_range",
+      "name_tid": 11081,
+      "name_ko": "다크존 사거리",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 103,
+      "code": "darkzone_visual_day",
+      "name_tid": 11082,
+      "name_ko": "다크존 시야_낮",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 104,
+      "code": "darkzone_strength",
+      "name_tid": 11083,
+      "name_ko": "다크존 스테미나",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 105,
+      "code": "darkzone_speed_normal",
+      "name_tid": 11084,
+      "name_ko": "다크존 이동속도-비공격",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 106,
+      "code": "darkzone_visual_night",
+      "name_tid": 11085,
+      "name_ko": "다크존 시야_밤",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 107,
+      "code": "darkzone_cure",
+      "name_tid": 11086,
+      "name_ko": "다크존 회복",
+      "description_tid": 74458,
+      "description_ko": "",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 108,
+      "code": "outround_behit_dam",
+      "name_tid": 11087,
+      "name_ko": "턴외 피해 차감",
+      "description_tid": 74509,
+      "description_ko": "공격자의 턴이 아닐 때 발동한 스킬로 받는 피해의 감소율.",
+      "icon": "Icon_Against_potential"
+    },
+    {
+      "id": 201,
+      "code": "guard_pow",
+      "name_tid": 74510,
+      "name_ko": "불워크 인형의 공격력 수치 증가",
+      "description_tid": 74511,
+      "description_ko": "불워크 인형의 입히는 피해, 공격력이 높을수록 입히는 피해량이 증가한다.",
+      "icon": "Icon_Pow_guard_64"
+    },
+    {
+      "id": 202,
+      "code": "guard_pow1",
+      "name_tid": 74512,
+      "name_ko": "불워크 인형의 공격력 백분율 증가",
+      "description_tid": 74511,
+      "description_ko": "불워크 인형의 입히는 피해, 공격력이 높을수록 입히는 피해량이 증가한다.",
+      "icon": "Icon_Pow_guard_percent_64"
+    },
+    {
+      "id": 203,
+      "code": "scout_pow",
+      "name_tid": 74513,
+      "name_ko": "뱅가드 인형의 공격력 수치 증가",
+      "description_tid": 74514,
+      "description_ko": "뱅가드 인형의 입히는 피해, 공격력이 높을수록 입히는 피해량이 증가한다.",
+      "icon": "Icon_Pow_scout_64"
+    },
+    {
+      "id": 204,
+      "code": "scout_pow1",
+      "name_tid": 74515,
+      "name_ko": "뱅가드 인형의 공격력 백분율 증가",
+      "description_tid": 74514,
+      "description_ko": "뱅가드 인형의 입히는 피해, 공격력이 높을수록 입히는 피해량이 증가한다.",
+      "icon": "Icon_Pow_scout_percent_64"
+    },
+    {
+      "id": 205,
+      "code": "assist_pow",
+      "name_tid": 74516,
+      "name_ko": "서포트 인형의 공격력 수치 증가",
+      "description_tid": 74517,
+      "description_ko": "서포트 인형의 입히는 피해, 공격력이 높을수록 입히는 피해량이 증가한다.",
+      "icon": "Icon_Pow_assist_64"
+    },
+    {
+      "id": 206,
+      "code": "assist_pow1",
+      "name_tid": 74518,
+      "name_ko": "서포트 인형의 공격력 백분율 증가",
+      "description_tid": 74517,
+      "description_ko": "서포트 인형의 입히는 피해, 공격력이 높을수록 입히는 피해량이 증가한다.",
+      "icon": "Icon_Pow_assist_percent_64"
+    },
+    {
+      "id": 207,
+      "code": "suppress_pow",
+      "name_tid": 74519,
+      "name_ko": "센티널 인형의 공격력 수치 증가",
+      "description_tid": 74520,
+      "description_ko": "센티널 인형의 입히는 피해, 공격력이 높을수록 입히는 피해량이 증가한다.",
+      "icon": "Icon_Pow_suppress_64"
+    },
+    {
+      "id": 208,
+      "code": "suppress_pow1",
+      "name_tid": 74521,
+      "name_ko": "센티널 인형의 공격력 백분율 증가",
+      "description_tid": 74520,
+      "description_ko": "센티널 인형의 입히는 피해, 공격력이 높을수록 입히는 피해량이 증가한다.",
+      "icon": "Icon_Pow_suppress_percent_64"
+    },
+    {
+      "id": 209,
+      "code": "guard_max_hp",
+      "name_tid": 74522,
+      "name_ko": "불워크 인형의 체력 수치 증가",
+      "description_tid": 74523,
+      "description_ko": "불워크 인형의 받는 피해 상한, 체력이 0일 경우, 해당 작전 유닛은 전투 능력을 잃게 된다.",
+      "icon": "Icon_Hp_guard_64"
+    },
+    {
+      "id": 210,
+      "code": "guard_max_hp1",
+      "name_tid": 74524,
+      "name_ko": "불워크 인형의 체력 백분율 증가",
+      "description_tid": 74523,
+      "description_ko": "불워크 인형의 받는 피해 상한, 체력이 0일 경우, 해당 작전 유닛은 전투 능력을 잃게 된다.",
+      "icon": "Icon_Hp_guard_percent_64"
+    },
+    {
+      "id": 211,
+      "code": "scout_max_hp",
+      "name_tid": 74525,
+      "name_ko": "뱅가드 인형의 체력 수치 증가",
+      "description_tid": 74526,
+      "description_ko": "뱅가드 인형의 받는 피해 상한, 체력이 0일 경우, 해당 작전 유닛은 전투 능력을 잃게 된다.",
+      "icon": "Icon_Hp_scout_64"
+    },
+    {
+      "id": 212,
+      "code": "scout_max_hp1",
+      "name_tid": 74527,
+      "name_ko": "뱅가드 인형의 체력 백분율 증가",
+      "description_tid": 74526,
+      "description_ko": "뱅가드 인형의 받는 피해 상한, 체력이 0일 경우, 해당 작전 유닛은 전투 능력을 잃게 된다.",
+      "icon": "Icon_Hp_scout_percent_64"
+    },
+    {
+      "id": 213,
+      "code": "assist_max_hp",
+      "name_tid": 74528,
+      "name_ko": "서포트 인형의 체력 수치 증가",
+      "description_tid": 74529,
+      "description_ko": "서포트 인형의 받는 피해 상한, 체력이 0일 경우, 해당 작전 유닛은 전투 능력을 잃게 된다.",
+      "icon": "Icon_Hp_assist_64"
+    },
+    {
+      "id": 214,
+      "code": "assist_max_hp1",
+      "name_tid": 74530,
+      "name_ko": "서포트 인형의 체력 백분율 증가",
+      "description_tid": 74529,
+      "description_ko": "서포트 인형의 받는 피해 상한, 체력이 0일 경우, 해당 작전 유닛은 전투 능력을 잃게 된다.",
+      "icon": "Icon_Hp_assist_percent_64"
+    },
+    {
+      "id": 215,
+      "code": "suppress_max_hp",
+      "name_tid": 74531,
+      "name_ko": "센티널 인형의 체력 수치 증가",
+      "description_tid": 74532,
+      "description_ko": "센티널 인형의 받는 피해 상한, 체력이 0일 경우, 해당 작전 유닛은 전투 능력을 잃게 된다.",
+      "icon": "Icon_Hp_suppress_64"
+    },
+    {
+      "id": 216,
+      "code": "suppress_max_hp1",
+      "name_tid": 74533,
+      "name_ko": "센티널 인형의 체력 백분율 증가",
+      "description_tid": 74532,
+      "description_ko": "센티널 인형의 받는 피해 상한, 체력이 0일 경우, 해당 작전 유닛은 전투 능력을 잃게 된다.",
+      "icon": "Icon_Hp_suppress_percent_64"
+    },
+    {
+      "id": 217,
+      "code": "guard_shield_armor",
+      "name_tid": 74534,
+      "name_ko": "불워크 인형의 방어력 수치 증가",
+      "description_tid": 77723,
+      "description_ko": "불워크 인형이 입는 피해가 감소하며, 방어력이 높을 수록 받는 피해가 감소한다.",
+      "icon": "Icon_Armor_guard_64"
+    },
+    {
+      "id": 218,
+      "code": "guard_shield_armor1",
+      "name_tid": 74535,
+      "name_ko": "불워크 인형의 방어력 백분율 증가",
+      "description_tid": 77723,
+      "description_ko": "불워크 인형이 입는 피해가 감소하며, 방어력이 높을 수록 받는 피해가 감소한다.",
+      "icon": "Icon_Armor_guard_percent_64"
+    },
+    {
+      "id": 219,
+      "code": "scout_shield_armor",
+      "name_tid": 74536,
+      "name_ko": "뱅가드 인형의 방어력 수치 증가",
+      "description_tid": 77724,
+      "description_ko": "뱅가드 인형이 입는 피해가 감소하며, 방어력이 높을 수록 받는 피해가 감소한다.",
+      "icon": "Icon_Armor_scout_64"
+    },
+    {
+      "id": 220,
+      "code": "scout_shield_armor1",
+      "name_tid": 74537,
+      "name_ko": "뱅가드 인형의 방어력 백분율 증가",
+      "description_tid": 77724,
+      "description_ko": "뱅가드 인형이 입는 피해가 감소하며, 방어력이 높을 수록 받는 피해가 감소한다.",
+      "icon": "Icon_Armor_scout_percent_64"
+    },
+    {
+      "id": 221,
+      "code": "assist_shield_armor",
+      "name_tid": 74538,
+      "name_ko": "서포트 인형의 방어력 수치 증가",
+      "description_tid": 77725,
+      "description_ko": "서포트 인형이 입는 피해가 감소하며, 방어력이 높을 수록 받는 피해가 감소한다.",
+      "icon": "Icon_Armor_assist_64"
+    },
+    {
+      "id": 222,
+      "code": "assist_shield_armor1",
+      "name_tid": 74539,
+      "name_ko": "서포트 인형의 방어력 백분율 증가",
+      "description_tid": 77725,
+      "description_ko": "서포트 인형이 입는 피해가 감소하며, 방어력이 높을 수록 받는 피해가 감소한다.",
+      "icon": "Icon_Armor_assist_percent_64"
+    },
+    {
+      "id": 223,
+      "code": "suppress_shield_armor",
+      "name_tid": 74540,
+      "name_ko": "센티널 인형의 방어력 수치 증가",
+      "description_tid": 77726,
+      "description_ko": "센티널 인형이 입는 피해가 감소하며, 방어력이 높을 수록 받는 피해가 감소한다.",
+      "icon": "Icon_Armor_suppress_64"
+    },
+    {
+      "id": 224,
+      "code": "suppress_shield_armor1",
+      "name_tid": 74541,
+      "name_ko": "센티널 인형의 방어력 백분율 증가",
+      "description_tid": 77726,
+      "description_ko": "센티널 인형이 입는 피해가 감소하며, 방어력이 높을 수록 받는 피해가 감소한다.",
+      "icon": "Icon_Armor_suppress_percent_64"
+    },
+    {
+      "id": 225,
+      "code": "all_add_pow",
+      "name_tid": 232176,
+      "name_ko": "모든 인형 추가 공격력",
+      "description_tid": 74459,
+      "description_ko": "주는 피해에 관여하는 스탯. 공격 스탯이 높을수록 주는 피해가 증가합니다.",
+      "icon": "Icon_Pow"
+    },
+    {
+      "id": 226,
+      "code": "all_add_max_hp",
+      "name_tid": 232177,
+      "name_ko": "모든 인형 추가 체력",
+      "description_tid": 74460,
+      "description_ko": "받을 수 있는 최대 피해. 체력이 0이 되면 전투 능력을 상실합니다.",
+      "icon": "Icon_Hp"
+    },
+    {
+      "id": 227,
+      "code": "all_add_shield_armor",
+      "name_tid": 232178,
+      "name_ko": "모든 인형 추가 방어력",
+      "description_tid": 74466,
+      "description_ko": "받는 피해에 관여하는 스탯. 방어 스탯이 높을수록 받는 피해가 감소합니다.",
+      "icon": "Icon_Armor"
+    },
+    {
+      "id": 301,
+      "code": "mastery_fire",
+      "name_tid": 447802,
+      "name_ko": "연소 증폭",
+      "description_tid": 447803,
+      "description_ko": "연소 증폭 보유 시 주는 연소 피해가 상승합니다.",
+      "icon": "IconAttributeIcon_Mastery_Fire"
+    },
+    {
+      "id": 302,
+      "code": "mastery_electric",
+      "name_tid": 447804,
+      "name_ko": "전도 증폭",
+      "description_tid": 447805,
+      "description_ko": "전도 증폭 보유 시 주는 전도 피해가 상승합니다.",
+      "icon": "IconAttributeIcon_Mastery_Electric"
+    },
+    {
+      "id": 303,
+      "code": "mastery_ice",
+      "name_tid": 447806,
+      "name_ko": "빙결 증폭",
+      "description_tid": 447807,
+      "description_ko": "빙결 증폭 보유 시 주는 빙결 피해가 상승합니다.",
+      "icon": "IconAttributeIcon_Mastery_Ice"
+    },
+    {
+      "id": 304,
+      "code": "mastery_poison",
+      "name_tid": 447808,
+      "name_ko": "산성 증폭",
+      "description_tid": 447809,
+      "description_ko": "산성 증폭 보유 시 주는 산성 피해가 상승합니다.",
+      "icon": "IconAttributeIcon_Mastery_Poison"
+    },
+    {
+      "id": 305,
+      "code": "mastery_water",
+      "name_tid": 447810,
+      "name_ko": "탁류 증폭",
+      "description_tid": 447811,
+      "description_ko": "탁류 증폭 보유 시 주는 탁류 피해가 상승합니다.",
+      "icon": "IconAttributeIcon_Mastery_Water"
+    },
+    {
+      "id": 306,
+      "code": "suppression_fire",
+      "name_tid": 447812,
+      "name_ko": "연소 내성",
+      "description_tid": 447813,
+      "description_ko": "연소 내성 보유 시 받는 연소 피해가 감소합니다.",
+      "icon": "Icon_Against_Fire"
+    },
+    {
+      "id": 307,
+      "code": "suppression_electric",
+      "name_tid": 447814,
+      "name_ko": "전도 내성",
+      "description_tid": 447815,
+      "description_ko": "전도 내성 보유 시 받는 전도 피해가 감소합니다.",
+      "icon": "Icon_Against_Electric"
+    },
+    {
+      "id": 308,
+      "code": "suppression_ice",
+      "name_tid": 447816,
+      "name_ko": "빙결 내성",
+      "description_tid": 447817,
+      "description_ko": "빙결 내성 보유 시 받는 빙결 피해가 감소합니다.",
+      "icon": "Icon_Against_Ice"
+    },
+    {
+      "id": 309,
+      "code": "suppression_poison",
+      "name_tid": 447818,
+      "name_ko": "산성 내성",
+      "description_tid": 447819,
+      "description_ko": "산성 내성 보유 시 받는 산성 피해가 감소합니다.",
+      "icon": "Icon_Against_Poison"
+    },
+    {
+      "id": 310,
+      "code": "suppression_water",
+      "name_tid": 447820,
+      "name_ko": "탁류 내성",
+      "description_tid": 447821,
+      "description_ko": "탁류 내성 보유 시 받는 탁류 피해가 감소합니다.",
+      "icon": "Icon_Against_Water"
+    },
+    {
+      "id": 311,
+      "code": "mastery_all_element",
+      "name_tid": 467919,
+      "name_ko": "전속성 증폭",
+      "description_tid": 467920,
+      "description_ko": "모든 위상 속성의 증폭 수치 상승",
+      "icon": "IconAttributeIcon_Mastery_Fire"
+    },
+    {
+      "id": 312,
+      "code": "suppression_all_element",
+      "name_tid": 467921,
+      "name_ko": "전속성 내성",
+      "description_tid": 467922,
+      "description_ko": "모든 위상 속성의 내성 수치 상승",
+      "icon": "IconAttributeIcon_Mastery_Fire"
+    },
+    {
+      "id": 313,
+      "code": "element_add_all",
+      "name_tid": 467917,
+      "name_ko": "전속성 보너스",
+      "description_tid": 467923,
+      "description_ko": "모든 속성의 위상 피해 상승",
+      "icon": "Icon_Add_All"
+    }
+  ],
+  "power_effects": [
+    {
+      "id": 1,
+      "name_tid": 64029,
+      "name_ko": "결전 추진",
+      "icon": "WeaponPart_ModPower_Attack01"
+    },
+    {
+      "id": 2,
+      "name_tid": 6928,
+      "name_ko": "이중 대책",
+      "icon": "WeaponPart_ModPower_Attack02"
+    },
+    {
+      "id": 3,
+      "name_tid": 6929,
+      "name_ko": "위상 타격",
+      "icon": "WeaponPart_ModPower_Critical01"
+    },
+    {
+      "id": 4,
+      "name_tid": 64032,
+      "name_ko": "위상 증폭",
+      "icon": "WeaponPart_ModPower_Current01"
+    },
+    {
+      "id": 5,
+      "name_tid": 29045,
+      "name_ko": "응급 회복",
+      "icon": "WeaponPart_ModPower_Support01"
+    },
+    {
+      "id": 6,
+      "name_tid": 29047,
+      "name_ko": "방어 지원",
+      "icon": "WeaponPart_ModPower_Defend01"
+    },
+    {
+      "id": 7,
+      "name_tid": 76351,
+      "name_ko": "실탄 증폭",
+      "icon": "WeaponPart_ModPower_Physical"
+    },
+    {
+      "id": 8,
+      "name_tid": 76353,
+      "name_ko": "작열 증폭",
+      "icon": "WeaponPart_ModPower_Fire"
+    },
+    {
+      "id": 9,
+      "name_tid": 76355,
+      "name_ko": "빙점 증폭",
+      "icon": "WeaponPart_ModPower_Ice"
+    },
+    {
+      "id": 10,
+      "name_tid": 76357,
+      "name_ko": "강산 증폭",
+      "icon": "WeaponPart_ModPower_Poison"
+    },
+    {
+      "id": 11,
+      "name_tid": 76359,
+      "name_ko": "자력 증폭",
+      "icon": "WeaponPart_ModPower_Electric"
+    },
+    {
+      "id": 12,
+      "name_tid": 76361,
+      "name_ko": "격류 증폭",
+      "icon": "WeaponPart_ModPower_Water"
+    },
+    {
+      "id": 13,
+      "name_tid": 242816,
+      "name_ko": "전술 연산",
+      "icon": "WeaponPart_ModPower_Ambush01"
+    },
+    {
+      "id": 14,
+      "name_tid": 242817,
+      "name_ko": "보호막 치유",
+      "icon": "WeaponPart_ModPower_Shield01"
+    },
+    {
+      "id": 15,
+      "name_tid": 242818,
+      "name_ko": "육박 강공",
+      "icon": "WeaponPart_ModPower_Dash01"
+    },
+    {
+      "id": 16,
+      "name_tid": 426033,
+      "name_ko": "정점 소환",
+      "icon": "WeaponPart_ModPower_Summon"
+    }
+  ],
+  "power_map": [
+    {
+      "id": 20,
+      "plan_id": 201,
+      "effect_id": 4,
+      "effect_name_ko": "위상 증폭"
+    },
+    {
+      "id": 21,
+      "plan_id": 201,
+      "effect_id": 5,
+      "effect_name_ko": "응급 회복"
+    },
+    {
+      "id": 22,
+      "plan_id": 201,
+      "effect_id": 6,
+      "effect_name_ko": "방어 지원"
+    },
+    {
+      "id": 23,
+      "plan_id": 201,
+      "effect_id": 7,
+      "effect_name_ko": "실탄 증폭"
+    },
+    {
+      "id": 24,
+      "plan_id": 201,
+      "effect_id": 8,
+      "effect_name_ko": "작열 증폭"
+    },
+    {
+      "id": 25,
+      "plan_id": 201,
+      "effect_id": 9,
+      "effect_name_ko": "빙점 증폭"
+    },
+    {
+      "id": 26,
+      "plan_id": 201,
+      "effect_id": 10,
+      "effect_name_ko": "강산 증폭"
+    },
+    {
+      "id": 27,
+      "plan_id": 201,
+      "effect_id": 11,
+      "effect_name_ko": "자력 증폭"
+    },
+    {
+      "id": 28,
+      "plan_id": 201,
+      "effect_id": 12,
+      "effect_name_ko": "격류 증폭"
+    },
+    {
+      "id": 29,
+      "plan_id": 201,
+      "effect_id": 13,
+      "effect_name_ko": "전술 연산"
+    },
+    {
+      "id": 30,
+      "plan_id": 201,
+      "effect_id": 14,
+      "effect_name_ko": "보호막 치유"
+    },
+    {
+      "id": 31,
+      "plan_id": 201,
+      "effect_id": 15,
+      "effect_name_ko": "육박 강공"
+    },
+    {
+      "id": 32,
+      "plan_id": 201,
+      "effect_id": 16,
+      "effect_name_ko": "정점 소환"
+    },
+    {
+      "id": 33,
+      "plan_id": 301,
+      "effect_id": 1,
+      "effect_name_ko": "결전 추진"
+    },
+    {
+      "id": 1,
+      "plan_id": 102,
+      "effect_id": 1,
+      "effect_name_ko": "결전 추진"
+    },
+    {
+      "id": 2,
+      "plan_id": 103,
+      "effect_id": 2,
+      "effect_name_ko": "이중 대책"
+    },
+    {
+      "id": 3,
+      "plan_id": 104,
+      "effect_id": 3,
+      "effect_name_ko": "위상 타격"
+    },
+    {
+      "id": 4,
+      "plan_id": 105,
+      "effect_id": 4,
+      "effect_name_ko": "위상 증폭"
+    },
+    {
+      "id": 5,
+      "plan_id": 106,
+      "effect_id": 5,
+      "effect_name_ko": "응급 회복"
+    },
+    {
+      "id": 6,
+      "plan_id": 107,
+      "effect_id": 6,
+      "effect_name_ko": "방어 지원"
+    },
+    {
+      "id": 7,
+      "plan_id": 108,
+      "effect_id": 7,
+      "effect_name_ko": "실탄 증폭"
+    },
+    {
+      "id": 8,
+      "plan_id": 109,
+      "effect_id": 8,
+      "effect_name_ko": "작열 증폭"
+    },
+    {
+      "id": 9,
+      "plan_id": 110,
+      "effect_id": 9,
+      "effect_name_ko": "빙점 증폭"
+    },
+    {
+      "id": 10,
+      "plan_id": 111,
+      "effect_id": 10,
+      "effect_name_ko": "강산 증폭"
+    },
+    {
+      "id": 11,
+      "plan_id": 112,
+      "effect_id": 11,
+      "effect_name_ko": "자력 증폭"
+    },
+    {
+      "id": 12,
+      "plan_id": 113,
+      "effect_id": 12,
+      "effect_name_ko": "격류 증폭"
+    },
+    {
+      "id": 13,
+      "plan_id": 114,
+      "effect_id": 13,
+      "effect_name_ko": "전술 연산"
+    },
+    {
+      "id": 14,
+      "plan_id": 115,
+      "effect_id": 14,
+      "effect_name_ko": "보호막 치유"
+    },
+    {
+      "id": 15,
+      "plan_id": 116,
+      "effect_id": 15,
+      "effect_name_ko": "육박 강공"
+    },
+    {
+      "id": 16,
+      "plan_id": 117,
+      "effect_id": 16,
+      "effect_name_ko": "정점 소환"
+    },
+    {
+      "id": 17,
+      "plan_id": 201,
+      "effect_id": 1,
+      "effect_name_ko": "결전 추진"
+    },
+    {
+      "id": 18,
+      "plan_id": 201,
+      "effect_id": 2,
+      "effect_name_ko": "이중 대책"
+    },
+    {
+      "id": 19,
+      "plan_id": 201,
+      "effect_id": 3,
+      "effect_name_ko": "위상 타격"
+    }
+  ],
+  "mod_types": [
+    {
+      "id": 8011,
+      "category_id": 2,
+      "weapon_type_id": 8,
+      "name_tid": 3950,
+      "name_ko": "BLD 튜닝",
+      "description_tid": 3525,
+      "description_ko": "적합: BLD",
+      "icon": "WeaponPart_Adjust_None"
+    },
+    {
+      "id": 1,
+      "category_id": 1,
+      "weapon_type_id": null,
+      "name_tid": 4359,
+      "name_ko": "조준 장치",
+      "description_tid": 3955,
+      "description_ko": "",
+      "icon": "WeaponPart_Scope_None"
+    },
+    {
+      "id": 2,
+      "category_id": 1,
+      "weapon_type_id": null,
+      "name_tid": 4360,
+      "name_ko": "총구 장치",
+      "description_tid": 3955,
+      "description_ko": "",
+      "icon": "WeaponPart_Muzzle_None"
+    },
+    {
+      "id": 3,
+      "category_id": 1,
+      "weapon_type_id": null,
+      "name_tid": 4361,
+      "name_ko": "총열덮개 부착물",
+      "description_tid": 3955,
+      "description_ko": "",
+      "icon": "WeaponPart_Hangdown_None"
+    },
+    {
+      "id": 4,
+      "category_id": 1,
+      "weapon_type_id": null,
+      "name_tid": 3524,
+      "name_ko": "BLD 칼끝",
+      "description_tid": 3955,
+      "description_ko": "",
+      "icon": "WeaponPart_Ensharp_None"
+    },
+    {
+      "id": 8,
+      "category_id": 1,
+      "weapon_type_id": null,
+      "name_tid": 4362,
+      "name_ko": "튜닝 파츠",
+      "description_tid": 3955,
+      "description_ko": "",
+      "icon": "WeaponPart_Adjust_None"
+    },
+    {
+      "id": 9,
+      "category_id": 1,
+      "weapon_type_id": null,
+      "name_tid": 4363,
+      "name_ko": "이음쇠 파츠",
+      "description_tid": 3955,
+      "description_ko": "",
+      "icon": "WeaponPart_Link_None"
+    },
+    {
+      "id": 2021,
+      "category_id": 2,
+      "weapon_type_id": 2,
+      "name_tid": 3505,
+      "name_ko": "MG 총구",
+      "description_tid": 3506,
+      "description_ko": "적합: MG",
+      "icon": "WeaponPart_Muzzle_None"
+    },
+    {
+      "id": 2022,
+      "category_id": 2,
+      "weapon_type_id": 2,
+      "name_tid": 3507,
+      "name_ko": "RF 총구",
+      "description_tid": 3509,
+      "description_ko": "적합: RF",
+      "icon": "WeaponPart_Muzzle_None"
+    },
+    {
+      "id": 2041,
+      "category_id": 2,
+      "weapon_type_id": 2,
+      "name_tid": 3945,
+      "name_ko": "HG 총구",
+      "description_tid": 3532,
+      "description_ko": "적합: HG",
+      "icon": "WeaponPart_Muzzle_None"
+    },
+    {
+      "id": 1011,
+      "category_id": 2,
+      "weapon_type_id": 1,
+      "name_tid": 4364,
+      "name_ko": "AR 조준기",
+      "description_tid": 3502,
+      "description_ko": "적합: AR",
+      "icon": "WeaponPart_Scope_None"
+    },
+    {
+      "id": 1012,
+      "category_id": 2,
+      "weapon_type_id": 1,
+      "name_tid": 4365,
+      "name_ko": "SMG 조준기",
+      "description_tid": 3504,
+      "description_ko": "적합: SMG",
+      "icon": "WeaponPart_Scope_None"
+    },
+    {
+      "id": 1013,
+      "category_id": 2,
+      "weapon_type_id": 1,
+      "name_tid": 4366,
+      "name_ko": "MG 조준기",
+      "description_tid": 3506,
+      "description_ko": "적합: MG",
+      "icon": "WeaponPart_Scope_None"
+    },
+    {
+      "id": 2011,
+      "category_id": 2,
+      "weapon_type_id": 2,
+      "name_tid": 3501,
+      "name_ko": "AR 총구",
+      "description_tid": 3502,
+      "description_ko": "적합: AR",
+      "icon": "WeaponPart_Muzzle_None"
+    },
+    {
+      "id": 2012,
+      "category_id": 2,
+      "weapon_type_id": 2,
+      "name_tid": 3503,
+      "name_ko": "SMG 총구",
+      "description_tid": 3504,
+      "description_ko": "적합: SMG",
+      "icon": "WeaponPart_Muzzle_None"
+    },
+    {
+      "id": 12011,
+      "category_id": 2,
+      "weapon_type_id": 12,
+      "name_tid": 3961,
+      "name_ko": "AR 그립",
+      "description_tid": 3502,
+      "description_ko": "적합: AR",
+      "icon": "WeaponPart_Grip_None"
+    },
+    {
+      "id": 12012,
+      "category_id": 2,
+      "weapon_type_id": 12,
+      "name_tid": 3962,
+      "name_ko": "SMG 그립",
+      "description_tid": 3504,
+      "description_ko": "적합: SMG",
+      "icon": "WeaponPart_Grip_None"
+    },
+    {
+      "id": 11011,
+      "category_id": 2,
+      "weapon_type_id": 11,
+      "name_tid": 3528,
+      "name_ko": "SG 걸쇠",
+      "description_tid": 3500,
+      "description_ko": "적합: SG",
+      "icon": "WeaponPart_orbment_None"
+    },
+    {
+      "id": 11012,
+      "category_id": 2,
+      "weapon_type_id": 11,
+      "name_tid": 3531,
+      "name_ko": "HG 걸쇠",
+      "description_tid": 3532,
+      "description_ko": "적합: HG",
+      "icon": "WeaponPart_orbment_None"
+    },
+    {
+      "id": 11013,
+      "category_id": 2,
+      "weapon_type_id": 11,
+      "name_tid": 3944,
+      "name_ko": "BLD 걸쇠",
+      "description_tid": 3525,
+      "description_ko": "적합: BLD",
+      "icon": "WeaponPart_orbment_None"
+    },
+    {
+      "id": 11,
+      "category_id": 1,
+      "weapon_type_id": null,
+      "name_tid": 3954,
+      "name_ko": "모듈 걸쇠",
+      "description_tid": 3955,
+      "description_ko": "",
+      "icon": "WeaponPart_orbment_None"
+    },
+    {
+      "id": 12,
+      "category_id": 1,
+      "weapon_type_id": null,
+      "name_tid": 3956,
+      "name_ko": "범용 그립",
+      "description_tid": 3955,
+      "description_ko": "",
+      "icon": "WeaponPart_Grip_None"
+    },
+    {
+      "id": 13,
+      "category_id": 1,
+      "weapon_type_id": null,
+      "name_tid": 3957,
+      "name_ko": "범용 양각대",
+      "description_tid": 3955,
+      "description_ko": "",
+      "icon": "WeaponPart_Stool_None"
+    },
+    {
+      "id": 2031,
+      "category_id": 2,
+      "weapon_type_id": 2,
+      "name_tid": 3499,
+      "name_ko": "SG 총구",
+      "description_tid": 3500,
+      "description_ko": "적합: SG",
+      "icon": "WeaponPart_Muzzle_None"
+    },
+    {
+      "id": 3011,
+      "category_id": 2,
+      "weapon_type_id": 3,
+      "name_tid": 3946,
+      "name_ko": "AR 총열덮개",
+      "description_tid": 3502,
+      "description_ko": "적합: AR",
+      "icon": "WeaponPart_Lightweight_None"
+    },
+    {
+      "id": 3012,
+      "category_id": 2,
+      "weapon_type_id": 3,
+      "name_tid": 3947,
+      "name_ko": "SMG 총열덮개",
+      "description_tid": 3504,
+      "description_ko": "적합: SMG",
+      "icon": "WeaponPart_Lightweight_None"
+    },
+    {
+      "id": 3013,
+      "category_id": 2,
+      "weapon_type_id": 3,
+      "name_tid": 3948,
+      "name_ko": "MG 총열덮개",
+      "description_tid": 3506,
+      "description_ko": "적합: MG",
+      "icon": "WeaponPart_Lightweight_None"
+    },
+    {
+      "id": 3014,
+      "category_id": 2,
+      "weapon_type_id": 3,
+      "name_tid": 3949,
+      "name_ko": "RF 총열덮개",
+      "description_tid": 3509,
+      "description_ko": "적합: RF",
+      "icon": "WeaponPart_Lightweight_None"
+    },
+    {
+      "id": 9011,
+      "category_id": 2,
+      "weapon_type_id": 9,
+      "name_tid": 3951,
+      "name_ko": "SG 이음쇠",
+      "description_tid": 3500,
+      "description_ko": "적합: SG",
+      "icon": "WeaponPart_Link_None"
+    },
+    {
+      "id": 9012,
+      "category_id": 2,
+      "weapon_type_id": 9,
+      "name_tid": 3952,
+      "name_ko": "HG 이음쇠",
+      "description_tid": 3532,
+      "description_ko": "적합: HG",
+      "icon": "WeaponPart_Link_None"
+    },
+    {
+      "id": 9013,
+      "category_id": 2,
+      "weapon_type_id": 9,
+      "name_tid": 3953,
+      "name_ko": "BLD 이음쇠",
+      "description_tid": 3525,
+      "description_ko": "적합: BLD",
+      "icon": "WeaponPart_Link_None"
+    },
+    {
+      "id": 13011,
+      "category_id": 2,
+      "weapon_type_id": 13,
+      "name_tid": 3964,
+      "name_ko": "MG 양각대",
+      "description_tid": 3506,
+      "description_ko": "적합: MG",
+      "icon": "WeaponPart_Stool_None"
+    },
+    {
+      "id": 13012,
+      "category_id": 2,
+      "weapon_type_id": 13,
+      "name_tid": 3965,
+      "name_ko": "RF 양각대",
+      "description_tid": 3509,
+      "description_ko": "적합: RF",
+      "icon": "WeaponPart_Stool_None"
+    },
+    {
+      "id": 1021,
+      "category_id": 2,
+      "weapon_type_id": 1,
+      "name_tid": 3958,
+      "name_ko": "RF 조준기",
+      "description_tid": 3509,
+      "description_ko": "적합: RF",
+      "icon": "WeaponPart_Scope_None"
+    },
+    {
+      "id": 1031,
+      "category_id": 2,
+      "weapon_type_id": 1,
+      "name_tid": 3959,
+      "name_ko": "SG 조준기",
+      "description_tid": 3500,
+      "description_ko": "적합: SG",
+      "icon": "WeaponPart_Scope_None"
+    },
+    {
+      "id": 1032,
+      "category_id": 2,
+      "weapon_type_id": 1,
+      "name_tid": 3960,
+      "name_ko": "HG 조준기",
+      "description_tid": 3532,
+      "description_ko": "적합: HG",
+      "icon": "WeaponPart_Scope_None"
+    },
+    {
+      "id": 4011,
+      "category_id": 2,
+      "weapon_type_id": 4,
+      "name_tid": 3524,
+      "name_ko": "BLD 칼끝",
+      "description_tid": 3525,
+      "description_ko": "적합: BLD",
+      "icon": "WeaponPart_Ensharp_None"
+    }
+  ],
+  "ranks": [
+    {
+      "rank": 2,
+      "name_tid": 27115,
+      "name_ko": "민용급"
+    },
+    {
+      "rank": 3,
+      "name_tid": 11686,
+      "name_ko": "공업급"
+    },
+    {
+      "rank": 4,
+      "name_tid": 27120,
+      "name_ko": "군용급"
+    },
+    {
+      "rank": 5,
+      "name_tid": 11877,
+      "name_ko": "기밀급"
+    }
+  ],
+  "polarity_plans": [
+    {
+      "id": 1,
+      "group": 1,
+      "slot": 1
+    },
+    {
+      "id": 2,
+      "group": 1,
+      "slot": 2
+    },
+    {
+      "id": 3,
+      "group": 1,
+      "slot": 3
+    },
+    {
+      "id": 4,
+      "group": 1,
+      "slot": 4
+    },
+    {
+      "id": 5,
+      "group": 1,
+      "slot": 5
+    },
+    {
+      "id": 6,
+      "group": 2,
+      "slot": 2
+    }
+  ]
+}

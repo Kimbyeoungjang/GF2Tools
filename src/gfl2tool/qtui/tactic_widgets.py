@@ -1,0 +1,988 @@
+from __future__ import annotations
+
+import math
+
+from PySide6.QtCore import QPoint, QPointF, QRect, QRectF, QSize, Qt, Signal
+from PySide6.QtGui import QColor, QFont, QImage, QPainter, QPen, QPolygonF
+from PySide6.QtWidgets import QDialog, QGridLayout, QLabel, QScrollArea, QVBoxLayout, QWidget
+
+from ..settings import TacticVisualSettings
+from ..tactics import MAX_MARKERS_PER_STEP, Tactic, TacticMarker
+from . import theme
+from .widgets import dialog_layout
+
+
+_VISUALS = TacticVisualSettings()
+
+
+def apply_visual_settings(visuals: TacticVisualSettings | None = None) -> None:
+    global _VISUALS
+    _VISUALS = (visuals or TacticVisualSettings()).normalized()
+
+
+def _visual(name: str, default: str) -> str:
+    value = str(getattr(_VISUALS, name, "") or "")
+    return value or default
+
+
+
+def _color(value: str, alpha: int = 255) -> QColor:
+    color = QColor(value)
+    color.setAlpha(max(0, min(255, int(alpha))))
+    return color
+
+
+def _board_geometry(bounds: QRect, rows: int, cols: int, *, margin: int = 12) -> QRectF:
+    usable_w = max(40, bounds.width() - margin * 2)
+    usable_h = max(40, bounds.height() - margin * 2)
+    cell = max(2.0, min(usable_w / max(1, cols), usable_h / max(1, rows)))
+    width = cell * cols
+    height = cell * rows
+    left = bounds.left() + (bounds.width() - width) / 2.0
+    top = bounds.top() + (bounds.height() - height) / 2.0
+    return QRectF(left, top, width, height)
+
+
+def _cell_center(board: QRectF, rows: int, cols: int, row: int, col: int) -> QPointF:
+    cw = board.width() / max(1, cols)
+    ch = board.height() / max(1, rows)
+    return QPointF(board.left() + (col + 0.5) * cw, board.top() + (row + 0.5) * ch)
+
+
+def _cell_rect(board: QRectF, rows: int, cols: int, row: int, col: int, *, inset: float = 2.0) -> QRectF:
+    cw = board.width() / max(1, cols)
+    ch = board.height() / max(1, rows)
+    return QRectF(
+        board.left() + col * cw + inset,
+        board.top() + row * ch + inset,
+        max(1.0, cw - inset * 2),
+        max(1.0, ch - inset * 2),
+    )
+
+
+def _draw_arrow(painter: QPainter, start: QPointF, end: QPointF, *, alpha: int = 255) -> None:
+    line_color = _color(_visual("arrow", theme.ACCENT), alpha)
+    painter.setPen(QPen(line_color, 3, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+    painter.drawLine(start, end)
+    dx = end.x() - start.x()
+    dy = end.y() - start.y()
+    length = math.hypot(dx, dy)
+    if length < 1:
+        return
+    ux, uy = dx / length, dy / length
+    px, py = -uy, ux
+    size = max(8.0, min(18.0, length * 0.20))
+    base = QPointF(end.x() - ux * size, end.y() - uy * size)
+    poly = QPolygonF([
+        end,
+        QPointF(base.x() + px * size * 0.50, base.y() + py * size * 0.50),
+        QPointF(base.x() - px * size * 0.50, base.y() - py * size * 0.50),
+    ])
+    painter.setBrush(line_color)
+    painter.setPen(Qt.PenStyle.NoPen)
+    painter.drawPolygon(poly)
+
+
+def _draw_cover(painter: QPainter, rect: QRectF, edges: str, *, alpha: int = 255) -> None:
+    thickness = max(4.0, min(rect.width(), rect.height()) * 0.18)
+    pen = QPen(_color(_visual("cover", theme.COVER), alpha), thickness, Qt.PenStyle.SolidLine, Qt.PenCapStyle.SquareCap)
+    painter.setPen(pen)
+    if "N" in edges:
+        painter.drawLine(QPointF(rect.left(), rect.top()), QPointF(rect.right(), rect.top()))
+    if "E" in edges:
+        painter.drawLine(QPointF(rect.right(), rect.top()), QPointF(rect.right(), rect.bottom()))
+    if "S" in edges:
+        painter.drawLine(QPointF(rect.left(), rect.bottom()), QPointF(rect.right(), rect.bottom()))
+    if "W" in edges:
+        painter.drawLine(QPointF(rect.left(), rect.top()), QPointF(rect.left(), rect.bottom()))
+
+
+def draw_tactic_step(
+    painter: QPainter,
+    tactic: Tactic,
+    step_index: int,
+    bounds: QRect,
+    *,
+    show_previous: bool | None = None,
+    background_alpha: int = 242,
+) -> None:
+    if not tactic.steps:
+        return
+    index = max(0, min(int(step_index), len(tactic.steps) - 1))
+    rows, cols = tactic.grid_size(index)
+    board = _board_geometry(bounds, rows, cols)
+    painter.save()
+    painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
+    painter.fillRect(board, _color(_visual("background", theme.PANEL), background_alpha))
+
+    cw = board.width() / cols
+    ch = board.height() / rows
+    painter.setPen(QPen(_color(_visual("grid", theme.BORDER), 210), 1))
+    for col in range(cols + 1):
+        x = board.left() + col * cw
+        painter.drawLine(QPointF(x, board.top()), QPointF(x, board.bottom()))
+    for row in range(rows + 1):
+        y = board.top() + row * ch
+        painter.drawLine(QPointF(board.left(), y), QPointF(board.right(), y))
+
+    previous_enabled = tactic.show_previous if show_previous is None else bool(show_previous)
+    if previous_enabled and index > 0 and tactic.grid_size(index - 1) == (rows, cols):
+        painter.save()
+        painter.setPen(QPen(_color(theme.MUTED, 92), 2, Qt.PenStyle.DashLine))
+        font = painter.font()
+        font.setBold(True)
+        font.setPointSizeF(max(6.0, min(cw, ch) * 0.26))
+        painter.setFont(font)
+        for marker in tactic.steps[index - 1].markers:
+            if marker.kind == "unit":
+                painter.drawText(
+                    _cell_rect(board, rows, cols, marker.row, marker.col, inset=3),
+                    Qt.AlignmentFlag.AlignCenter,
+                    tactic.marker_label(marker)[:6],
+                )
+        painter.restore()
+
+    step = tactic.steps[index]
+    for marker in step.markers:
+        if marker.kind == "arrow":
+            end_row = marker.to_row if marker.to_row is not None else marker.row
+            end_col = marker.to_col if marker.to_col is not None else marker.col
+            _draw_arrow(
+                painter,
+                _cell_center(board, rows, cols, marker.row, marker.col),
+                _cell_center(board, rows, cols, end_row, end_col),
+            )
+            continue
+        rect = QRectF(
+            board.left() + marker.col * cw + 2,
+            board.top() + marker.row * ch + 2,
+            max(1.0, marker.width * cw - 4),
+            max(1.0, marker.height * ch - 4),
+        )
+        if marker.kind == "blocked":
+            painter.fillRect(rect, _color(_visual("blocked", theme.TERRAIN_BLOCK), 245))
+            continue
+        if marker.kind == "cover":
+            _draw_cover(painter, _cell_rect(board, rows, cols, marker.row, marker.col, inset=1), marker.edges)
+            continue
+        if marker.kind == "boss":
+            painter.fillRect(rect, _color(_visual("boss", theme.INFO), 215))
+            painter.setPen(_color(_visual("text", theme.TEXT)))
+            font = painter.font()
+            font.setBold(True)
+            font.setPointSizeF(max(7.0, min(rect.width(), rect.height()) * 0.11))
+            painter.setFont(font)
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, marker.label or "보스")
+            continue
+        if marker.kind == "summon":
+            painter.setPen(QPen(_color(_visual("summon", theme.ACCENT), 235), max(2.0, min(cw, ch) * 0.07)))
+            painter.setBrush(_color(_visual("summon", theme.ACCENT), 34))
+            painter.drawEllipse(rect.adjusted(3, 3, -3, -3))
+            painter.setPen(_color(_visual("text", theme.TEXT)))
+            font = painter.font()
+            font.setBold(True)
+            font.setPointSizeF(max(8.0, min(cw, ch) * 0.34))
+            painter.setFont(font)
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, marker.label or "*")
+            continue
+        if marker.kind == "custom":
+            misc = _visual("boss", theme.ACCENT)
+            painter.setPen(QPen(_color(misc, 230), max(1.5, min(cw, ch) * 0.045), Qt.PenStyle.DashLine))
+            painter.setBrush(_color(misc, 25))
+            painter.drawRoundedRect(rect, 4, 4)
+            painter.setPen(_color(_visual("text", theme.TEXT)))
+            font = painter.font()
+            font.setBold(True)
+            font.setPointSizeF(max(6.5, min(cw, ch) * 0.24))
+            painter.setFont(font)
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, (marker.label or "기타")[:12])
+            continue
+        painter.setPen(_color(_visual("unit", theme.TEXT)))
+        font = painter.font()
+        font.setBold(True)
+        font.setPointSizeF(max(7.0, min(cw, ch) * 0.31))
+        painter.setFont(font)
+        painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, tactic.marker_label(marker)[:6])
+    painter.restore()
+
+
+class TacticGridWidget(QWidget):
+    modified = Signal()
+    hoverChanged = Signal(str)
+
+    def __init__(
+        self,
+        tactic: Tactic,
+        parent: QWidget | None = None,
+        *,
+        editable: bool = True,
+        move_only: bool = False,
+    ):
+        super().__init__(parent)
+        self.tactic = tactic
+        self.step_index = 0
+        self.editable = bool(editable)
+        self.move_only = bool(move_only)
+        self.tool = "move"
+        self.unit_label = "마"
+        self.unit_key = ""
+        self.summon_label = "*"
+        self.custom_label = ""
+        self.boss_size = (3, 3)
+        self.cover_edge = "N"
+        self._arrow_start: tuple[int, int] | None = None
+        self._selected_marker: TacticMarker | None = None
+        self._selected_origin: tuple[int, int] | None = None
+        self._move_press_cell: tuple[int, int] | None = None
+        self._move_initial: tuple[int, int, int | None, int | None] | None = None
+        self._move_changed = False
+        self._hover_cell: tuple[int, int] | None = None
+        self._drag_tool: str | None = None
+        self._drag_enable = True
+        self._drag_seen: set[tuple[int, int]] = set()
+        self.setMinimumSize(420, 420)
+        self.setMouseTracking(True)
+
+    def refresh_theme(self) -> None:
+        self.update()
+
+    def sizeHint(self) -> QSize:
+        return QSize(560, 560)
+
+    def _grid_size(self) -> tuple[int, int]:
+        return self.tactic.grid_size(self.step_index)
+
+    def set_tactic(self, tactic: Tactic) -> None:
+        self.tactic = tactic
+        self.step_index = min(self.step_index, max(0, len(tactic.steps) - 1))
+        self._arrow_start = None
+        self._selected_marker = None
+        self._selected_origin = None
+        self._reset_move_drag()
+        self._hover_cell = None
+        self._reset_drag()
+        self.update()
+
+    def set_step_index(self, index: int) -> None:
+        self.step_index = max(0, min(int(index), max(0, len(self.tactic.steps) - 1)))
+        self._arrow_start = None
+        self._selected_marker = None
+        self._selected_origin = None
+        self._reset_move_drag()
+        self._hover_cell = None
+        self._reset_drag()
+        self.update()
+
+    def set_tool(self, tool: str) -> None:
+        valid_tools = {"move", "unit", "summon", "custom", "boss", "blocked", "cover", "arrow", "clear"}
+        self.tool = "move" if self.move_only else (tool if tool in valid_tools else "move")
+        self._arrow_start = None
+        self._selected_marker = None
+        self._selected_origin = None
+        self._reset_move_drag()
+        self._reset_drag()
+        self.update()
+
+    def _board(self) -> QRectF:
+        rows, cols = self._grid_size()
+        return _board_geometry(self.rect(), rows, cols, margin=14)
+
+    def _cell_at(self, pos: QPoint) -> tuple[int, int] | None:
+        rows, cols = self._grid_size()
+        board = self._board()
+        if not board.contains(QPointF(pos)):
+            return None
+        col = int((pos.x() - board.left()) / (board.width() / cols))
+        row = int((pos.y() - board.top()) / (board.height() / rows))
+        if 0 <= row < rows and 0 <= col < cols:
+            return row, col
+        return None
+
+    @staticmethod
+    def _marker_contains(marker: TacticMarker, row: int, col: int) -> bool:
+        if marker.kind == "arrow":
+            return (marker.row, marker.col) == (row, col) or (marker.to_row, marker.to_col) == (row, col)
+        return marker.row <= row < marker.row + marker.height and marker.col <= col < marker.col + marker.width
+
+    def _marker_at(self, row: int, col: int) -> TacticMarker | None:
+        step = self.tactic.steps[self.step_index]
+        priority = {"unit": 7, "summon": 6, "custom": 5, "boss": 4, "arrow": 3, "cover": 2, "blocked": 1}
+        candidates = [marker for marker in step.markers if self._marker_contains(marker, row, col)]
+        if not candidates:
+            return None
+        return max(candidates, key=lambda marker: (priority.get(marker.kind, 0), step.markers.index(marker)))
+
+    def _reset_move_drag(self) -> None:
+        self._move_press_cell = None
+        self._move_initial = None
+        self._move_changed = False
+        if QWidget.mouseGrabber() is self:
+            self.releaseMouse()
+        self.unsetCursor()
+
+    def _begin_move_drag(self, marker: TacticMarker, row: int, col: int) -> None:
+        self._selected_marker = marker
+        self._selected_origin = (row, col)
+        self._move_press_cell = (row, col)
+        self._move_initial = (marker.row, marker.col, marker.to_row, marker.to_col)
+        self._move_changed = False
+        self.grabMouse()
+        self.setCursor(Qt.CursorShape.ClosedHandCursor)
+
+    def _drag_selected_to(self, row: int, col: int) -> bool:
+        marker = self._selected_marker
+        initial = self._move_initial
+        press = self._move_press_cell
+        if marker is None or initial is None or press is None:
+            return False
+        rows, cols = self._grid_size()
+        delta_row = row - press[0]
+        delta_col = col - press[1]
+        origin_row, origin_col, origin_to_row, origin_to_col = initial
+        if marker.kind == "arrow":
+            end_row = origin_to_row if origin_to_row is not None else origin_row
+            end_col = origin_to_col if origin_to_col is not None else origin_col
+            min_delta_row = -min(origin_row, end_row)
+            max_delta_row = rows - 1 - max(origin_row, end_row)
+            min_delta_col = -min(origin_col, end_col)
+            max_delta_col = cols - 1 - max(origin_col, end_col)
+            delta_row = max(min_delta_row, min(max_delta_row, delta_row))
+            delta_col = max(min_delta_col, min(max_delta_col, delta_col))
+            new_values = (
+                origin_row + delta_row,
+                origin_col + delta_col,
+                end_row + delta_row,
+                end_col + delta_col,
+            )
+            old_values = (marker.row, marker.col, marker.to_row, marker.to_col)
+            if new_values == old_values:
+                return False
+            marker.row, marker.col, marker.to_row, marker.to_col = new_values
+            return True
+
+        target_row = origin_row + delta_row
+        target_col = origin_col + delta_col
+        target_row = max(0, min(rows - marker.height, target_row))
+        target_col = max(0, min(cols - marker.width, target_col))
+        if (target_row, target_col) == (marker.row, marker.col):
+            return False
+        marker.row = target_row
+        marker.col = target_col
+        return True
+
+    def _move_selected_to(self, row: int, col: int) -> bool:
+        marker = self._selected_marker
+        if marker is None:
+            return False
+        rows, cols = self._grid_size()
+        origin_row, origin_col = self._selected_origin or (marker.row, marker.col)
+        delta_row = row - origin_row
+        delta_col = col - origin_col
+        if marker.kind == "arrow":
+            end_row = marker.to_row if marker.to_row is not None else marker.row
+            end_col = marker.to_col if marker.to_col is not None else marker.col
+            min_row = min(marker.row, end_row) + delta_row
+            max_row = max(marker.row, end_row) + delta_row
+            min_col = min(marker.col, end_col) + delta_col
+            max_col = max(marker.col, end_col) + delta_col
+            if min_row < 0 or max_row >= rows or min_col < 0 or max_col >= cols:
+                return False
+            marker.row += delta_row
+            marker.col += delta_col
+            marker.to_row = end_row + delta_row
+            marker.to_col = end_col + delta_col
+        else:
+            new_row = max(0, min(rows - marker.height, marker.row + delta_row))
+            new_col = max(0, min(cols - marker.width, marker.col + delta_col))
+            if (new_row, new_col) == (marker.row, marker.col):
+                return False
+            marker.row = new_row
+            marker.col = new_col
+        self._selected_origin = (marker.row, marker.col)
+        return True
+
+    def _erase_at(self, row: int, col: int) -> bool:
+        step = self.tactic.steps[self.step_index]
+        before = len(step.markers)
+        step.markers = [marker for marker in step.markers if not self._marker_contains(marker, row, col)]
+        self._arrow_start = None
+        return len(step.markers) != before
+
+    def _reset_drag(self) -> None:
+        self._drag_tool = None
+        self._drag_enable = True
+        self._drag_seen.clear()
+
+    def _blocked_at(self, row: int, col: int) -> TacticMarker | None:
+        step = self.tactic.steps[self.step_index]
+        return next(
+            (marker for marker in step.markers if marker.kind == "blocked" and marker.row == row and marker.col == col),
+            None,
+        )
+
+    def _cover_at(self, row: int, col: int) -> TacticMarker | None:
+        step = self.tactic.steps[self.step_index]
+        return next(
+            (marker for marker in step.markers if marker.kind == "cover" and marker.row == row and marker.col == col),
+            None,
+        )
+
+    def _set_blocked(self, row: int, col: int, enabled: bool) -> bool:
+        step = self.tactic.steps[self.step_index]
+        existing = self._blocked_at(row, col)
+        if enabled and existing is None:
+            if len(step.markers) >= MAX_MARKERS_PER_STEP:
+                return False
+            step.markers.append(TacticMarker(kind="blocked", row=row, col=col))
+            return True
+        if not enabled and existing is not None:
+            step.markers.remove(existing)
+            return True
+        return False
+
+    def _set_cover_edge(self, row: int, col: int, edge: str, enabled: bool) -> bool:
+        step = self.tactic.steps[self.step_index]
+        edge = edge if edge in "NESW" else "N"
+        existing = self._cover_at(row, col)
+        if existing is None:
+            if enabled:
+                if len(step.markers) >= MAX_MARKERS_PER_STEP:
+                    return False
+                step.markers.append(TacticMarker(kind="cover", row=row, col=col, edges=edge))
+                return True
+            return False
+        edges = set(existing.edges)
+        before = set(edges)
+        if enabled:
+            edges.add(edge)
+        else:
+            edges.discard(edge)
+        if edges == before:
+            return False
+        existing.edges = "".join(item for item in "NESW" if item in edges)
+        if not existing.edges:
+            step.markers.remove(existing)
+        return True
+
+    def _apply_drag_cell(self, row: int, col: int) -> bool:
+        cell = (row, col)
+        if cell in self._drag_seen:
+            return False
+        self._drag_seen.add(cell)
+        if self._drag_tool == "clear":
+            return self._erase_at(row, col)
+        if self._drag_tool == "blocked":
+            return self._set_blocked(row, col, self._drag_enable)
+        if self._drag_tool == "cover":
+            return self._set_cover_edge(row, col, self.cover_edge, self._drag_enable)
+        return False
+
+    def mouseMoveEvent(self, event):  # noqa: N802
+        cell = self._cell_at(event.position().toPoint())
+        if cell != self._hover_cell:
+            self._hover_cell = cell
+            if cell is None:
+                self.hoverChanged.emit("")
+            else:
+                row, col = cell
+                self.hoverChanged.emit(f"행 {row + 1} · 열 {col + 1}")
+            self.update()
+        if self._drag_tool is not None and not (
+            event.buttons() & (Qt.MouseButton.LeftButton | Qt.MouseButton.RightButton)
+        ):
+            self._reset_drag()
+        if self.editable and self.tool == "move" and self._move_press_cell is None:
+            if cell is not None and self._marker_at(*cell) is not None:
+                self.setCursor(Qt.CursorShape.OpenHandCursor)
+            else:
+                self.unsetCursor()
+        if (
+            self.editable
+            and self.tool == "move"
+            and self._move_press_cell is not None
+            and cell is not None
+            and event.buttons() & Qt.MouseButton.LeftButton
+        ):
+            self.setCursor(Qt.CursorShape.ClosedHandCursor)
+            if self._drag_selected_to(*cell):
+                self._move_changed = True
+                self.update()
+        if self.editable and self._drag_tool is not None and cell is not None:
+            if self._apply_drag_cell(*cell):
+                self.modified.emit()
+                self.update()
+        return super().mouseMoveEvent(event)
+
+    def leaveEvent(self, event):  # noqa: N802
+        self._hover_cell = None
+        self.hoverChanged.emit("")
+        if self._move_press_cell is None:
+            self.unsetCursor()
+        self.update()
+        return super().leaveEvent(event)
+
+    def mousePressEvent(self, event):  # noqa: N802
+        if not self.editable:
+            return super().mousePressEvent(event)
+        cell = self._cell_at(event.position().toPoint())
+        if cell is None:
+            return super().mousePressEvent(event)
+        row, col = cell
+
+        if self.move_only and event.button() == Qt.MouseButton.RightButton:
+            return super().mousePressEvent(event)
+        if event.button() == Qt.MouseButton.RightButton or self.tool == "clear":
+            self._drag_tool = "clear"
+            self._drag_seen.clear()
+            if self._apply_drag_cell(row, col):
+                self.modified.emit()
+                self.update()
+            return
+        if event.button() != Qt.MouseButton.LeftButton:
+            return super().mousePressEvent(event)
+
+        step = self.tactic.steps[self.step_index]
+        rows, cols = self._grid_size()
+        changed = True
+        if self.tool == "move":
+            self._reset_drag()
+            clicked = self._marker_at(row, col)
+            if clicked is not None:
+                self._begin_move_drag(clicked, row, col)
+                self.update()
+                return
+            if self._selected_marker is not None:
+                # Keep click-then-click as an accessibility fallback while the
+                # primary mouse workflow is direct drag-and-drop.
+                changed = self._move_selected_to(row, col)
+                self._selected_marker = None
+                self._selected_origin = None
+                self._reset_move_drag()
+            else:
+                changed = False
+        elif self.tool == "boss":
+            width = min(self.boss_size[0], cols)
+            height = min(self.boss_size[1], rows)
+            col = min(col, cols - width)
+            row = min(row, rows - height)
+            step.markers = [marker for marker in step.markers if marker.kind != "boss"]
+            step.markers.append(TacticMarker(kind="boss", row=row, col=col, label="보스", width=width, height=height))
+        elif self.tool == "blocked":
+            self._drag_tool = "blocked"
+            self._drag_enable = self._blocked_at(row, col) is None
+            self._drag_seen.clear()
+            changed = self._apply_drag_cell(row, col)
+        elif self.tool == "cover":
+            self._drag_tool = "cover"
+            edge = self.cover_edge if self.cover_edge in "NESW" else "N"
+            existing = self._cover_at(row, col)
+            self._drag_enable = existing is None or edge not in existing.edges
+            self._drag_seen.clear()
+            changed = self._apply_drag_cell(row, col)
+        elif self.tool == "arrow":
+            self._reset_drag()
+            if self._arrow_start is None:
+                self._arrow_start = (row, col)
+                self.update()
+                return
+            start_row, start_col = self._arrow_start
+            self._arrow_start = None
+            if (start_row, start_col) == (row, col):
+                self.update()
+                return
+            if len(step.markers) >= MAX_MARKERS_PER_STEP:
+                self.update()
+                return
+            step.markers.append(TacticMarker(kind="arrow", row=start_row, col=start_col, to_row=row, to_col=col))
+        else:
+            self._reset_drag()
+            if self.tool == "summon":
+                kind = "summon"
+                label = (self.summon_label or "*")[:12]
+                unit_key = ""
+            elif self.tool == "custom":
+                kind = "custom"
+                label = (self.custom_label or "기타")[:24]
+                unit_key = ""
+            else:
+                kind = "unit"
+                label = (self.unit_label or "?")[:12]
+                unit_key = self.unit_key
+            existing = next(
+                (marker for marker in step.markers if marker.kind == kind and marker.row == row and marker.col == col),
+                None,
+            )
+            if existing is None:
+                if len(step.markers) >= MAX_MARKERS_PER_STEP:
+                    return
+                step.markers.append(TacticMarker(kind=kind, row=row, col=col, label=label, unit_key=unit_key))
+            elif existing.label != label or existing.unit_key != unit_key:
+                existing.label = label
+                existing.unit_key = unit_key
+            else:
+                changed = False
+        if changed:
+            self.modified.emit()
+            self.update()
+
+    def mouseReleaseEvent(self, event):  # noqa: N802
+        self._reset_drag()
+        if event.button() == Qt.MouseButton.LeftButton and self._move_press_cell is not None:
+            moved = self._move_changed
+            self._reset_move_drag()
+            if moved:
+                self._selected_marker = None
+                self._selected_origin = None
+                self.modified.emit()
+                self.update()
+        return super().mouseReleaseEvent(event)
+
+    def paintEvent(self, _event):  # noqa: N802
+        painter = QPainter(self)
+        draw_tactic_step(painter, self.tactic, self.step_index, self.rect())
+        rows, cols = self._grid_size()
+        board = self._board()
+        if self._hover_cell is not None and self.editable:
+            row, col = self._hover_cell
+            hover = _cell_rect(board, rows, cols, row, col, inset=2)
+            painter.setPen(QPen(_color(theme.ACCENT, 180), 2))
+            painter.setBrush(_color(theme.ACCENT, 24))
+            painter.drawRect(hover)
+        if self._selected_marker is not None:
+            marker = self._selected_marker
+            if marker.kind == "arrow":
+                end_row = marker.to_row if marker.to_row is not None else marker.row
+                end_col = marker.to_col if marker.to_col is not None else marker.col
+                start = _cell_center(board, rows, cols, marker.row, marker.col)
+                end = _cell_center(board, rows, cols, end_row, end_col)
+                painter.setPen(QPen(_color(theme.ACCENT, 230), 3, Qt.PenStyle.DashLine))
+                painter.drawLine(start, end)
+            else:
+                rect = QRectF(
+                    board.left() + marker.col * board.width() / cols + 2,
+                    board.top() + marker.row * board.height() / rows + 2,
+                    max(1.0, marker.width * board.width() / cols - 4),
+                    max(1.0, marker.height * board.height() / rows - 4),
+                )
+                painter.setPen(QPen(_color(theme.ACCENT, 240), 3, Qt.PenStyle.DashLine))
+                painter.setBrush(Qt.BrushStyle.NoBrush)
+                painter.drawRect(rect)
+        if self._arrow_start is not None:
+            row, col = self._arrow_start
+            center = _cell_center(board, rows, cols, row, col)
+            painter.setPen(QPen(_color(theme.ACCENT), 2))
+            painter.setBrush(_color(theme.ACCENT, 80))
+            radius = max(5.0, min(board.width() / cols, board.height() / rows) * 0.18)
+            painter.drawEllipse(center, radius, radius)
+
+
+def _export_draw_step(painter: QPainter, tactic: Tactic, step_index: int, bounds: QRect) -> None:
+    """Draw one tactic board with the active theme/custom tactic palette.
+
+    Empty visual overrides follow the current application theme, while user
+    overrides are applied consistently to the editor, overlay and PNG export.
+    """
+    if not tactic.steps:
+        return
+    rows, cols = tactic.grid_size(step_index)
+    board = _board_geometry(bounds, rows, cols, margin=10)
+    painter.fillRect(board, QColor(_visual("background", theme.PANEL)))
+    cw = board.width() / max(1, cols)
+    ch = board.height() / max(1, rows)
+    painter.setPen(QPen(QColor(_visual("grid", theme.BORDER)), 1))
+    for col in range(cols + 1):
+        x = board.left() + col * cw
+        painter.drawLine(QPointF(x, board.top()), QPointF(x, board.bottom()))
+    for row in range(rows + 1):
+        y = board.top() + row * ch
+        painter.drawLine(QPointF(board.left(), y), QPointF(board.right(), y))
+
+    step = tactic.steps[step_index]
+    for marker in step.markers:
+        if marker.kind == "arrow":
+            end_row = marker.to_row if marker.to_row is not None else marker.row
+            end_col = marker.to_col if marker.to_col is not None else marker.col
+            painter.save()
+            painter.setPen(QPen(QColor(_visual("arrow", theme.ACCENT)), 3, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+            start = _cell_center(board, rows, cols, marker.row, marker.col)
+            end = _cell_center(board, rows, cols, end_row, end_col)
+            painter.drawLine(start, end)
+            painter.restore()
+            continue
+        rect = QRectF(
+            board.left() + marker.col * cw + 1,
+            board.top() + marker.row * ch + 1,
+            max(1.0, marker.width * cw - 2),
+            max(1.0, marker.height * ch - 2),
+        )
+        if marker.kind == "blocked":
+            painter.fillRect(rect, QColor(_visual("blocked", theme.TERRAIN_BLOCK)))
+            continue
+        if marker.kind == "cover":
+            painter.save()
+            thickness = max(4.0, min(cw, ch) * 0.16)
+            painter.setPen(QPen(QColor(_visual("cover", theme.COVER)), thickness, Qt.PenStyle.SolidLine, Qt.PenCapStyle.SquareCap))
+            cell = _cell_rect(board, rows, cols, marker.row, marker.col, inset=1)
+            if "N" in marker.edges:
+                painter.drawLine(QPointF(cell.left(), cell.top()), QPointF(cell.right(), cell.top()))
+            if "E" in marker.edges:
+                painter.drawLine(QPointF(cell.right(), cell.top()), QPointF(cell.right(), cell.bottom()))
+            if "S" in marker.edges:
+                painter.drawLine(QPointF(cell.left(), cell.bottom()), QPointF(cell.right(), cell.bottom()))
+            if "W" in marker.edges:
+                painter.drawLine(QPointF(cell.left(), cell.top()), QPointF(cell.left(), cell.bottom()))
+            painter.restore()
+            continue
+        if marker.kind == "boss":
+            painter.fillRect(rect, QColor(_visual("boss", theme.INFO)))
+            painter.setPen(QColor(_visual("text", theme.TEXT)))
+            font = QFont(painter.font())
+            font.setBold(True)
+            font.setPointSizeF(max(8.0, min(rect.width(), rect.height()) * 0.12))
+            painter.setFont(font)
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, marker.label or "보스")
+            continue
+        if marker.kind == "custom":
+            marker_color, fallback = "boss", theme.ACCENT
+        elif marker.kind == "summon":
+            marker_color, fallback = "summon", theme.ACCENT
+        else:
+            marker_color, fallback = "unit", theme.TEXT
+        painter.setPen(QColor(_visual(marker_color, fallback)))
+        font = QFont(painter.font())
+        font.setBold(True)
+        font.setPointSizeF(max(7.5, min(cw, ch) * (0.28 if marker.kind == "custom" else 0.34)))
+        painter.setFont(font)
+        label = marker.label if marker.kind in {"summon", "custom"} else tactic.marker_label(marker)
+        painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, (label or "*")[:12])
+
+
+def _draw_cycle_summary(painter: QPainter, tactic: Tactic, rect: QRect) -> None:
+    painter.setPen(QPen(QColor(theme.BORDER), 1))
+    painter.setBrush(QColor(theme.PANEL))
+    painter.drawRoundedRect(rect, 10, 10)
+    rows = max(1, len(tactic.steps))
+    top = rect.top() + 14
+    left = rect.left() + 12
+    width = rect.width() - 24
+    row_h = max(31, min(48, (rect.height() - 28) // rows))
+    label_w = 45
+    small = QFont(painter.font())
+    small.setPointSize(8)
+    for index, step in enumerate(tactic.steps):
+        y = top + index * row_h
+        if y + row_h > rect.bottom() - 4:
+            break
+        painter.fillRect(QRect(left, y, label_w, row_h), QColor(theme.PANEL_ALT))
+        painter.setPen(QColor(theme.BORDER))
+        painter.drawRect(QRect(left, y, width, row_h))
+        painter.drawLine(left + label_w, y, left + label_w, y + row_h)
+        painter.setFont(small)
+        painter.setPen(QColor(theme.TEXT))
+        bold = QFont(small)
+        bold.setBold(True)
+        painter.setFont(bold)
+        painter.drawText(QRect(left, y, label_w, row_h), Qt.AlignmentFlag.AlignCenter, step.name or f"T{index + 1}")
+        painter.setFont(small)
+        painter.drawText(
+            QRect(left + label_w + 8, y + 2, width - label_w - 14, row_h - 4),
+            Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextWordWrap,
+            step.cycle.strip() or "—",
+        )
+
+
+def render_tactic_sheet(tactic: Tactic, *, cell_panel: QSize = QSize(322, 388)) -> QImage:
+    """Render a share-friendly sheet matching common community tactic layouts.
+
+    * title centered at the top
+    * up to three board cards per row
+    * when skill cycles exist, a compact T1..Tn cycle table occupies the next
+      grid slot (instead of stretching every board with long prose)
+    * character build/spec rows are placed underneath the board grid
+    * a positioning-only tactic with no cycles omits all cycle UI entirely
+    """
+    has_cycles = any(step.cycle.strip() for step in tactic.steps)
+    item_count = len(tactic.steps) + (1 if has_cycles and tactic.steps else 0)
+    columns = 3 if item_count >= 5 else 2 if item_count >= 3 else 1
+    rows = max(1, math.ceil(max(1, item_count) / columns))
+    margin = 18
+    gap = 14
+    title_h = 58
+    panel_w = cell_panel.width()
+    panel_h = cell_panel.height() if has_cycles else max(332, cell_panel.height() - 48)
+    specs_row_h = 74
+    specs_header_h = 44
+    specs_h = specs_header_h + max(1, len(tactic.units)) * specs_row_h + 22
+    width = margin * 2 + columns * panel_w + (columns - 1) * gap
+    grid_h = rows * panel_h + (rows - 1) * gap
+    height = title_h + margin + grid_h + margin + specs_h + margin
+
+    image = QImage(width, height, QImage.Format.Format_ARGB32_Premultiplied)
+    image.fill(QColor(_visual("background", theme.BG)))
+    painter = QPainter(image)
+    painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
+
+    title_font = QFont(painter.font())
+    title_font.setBold(True)
+    title_font.setPointSize(22)
+    painter.setFont(title_font)
+    painter.setPen(QColor(theme.TEXT))
+    title_text = tactic.title + (f" · {tactic.category}" if tactic.category.strip() else "")
+    painter.drawText(QRect(margin, 8, width - margin * 2, 42), Qt.AlignmentFlag.AlignCenter, title_text)
+
+    content_top = title_h + margin
+    for index, step in enumerate(tactic.steps):
+        col = index % columns
+        row = index // columns
+        left = margin + col * (panel_w + gap)
+        top = content_top + row * (panel_h + gap)
+        card = QRect(left, top, panel_w, panel_h)
+        painter.setPen(QPen(QColor(theme.BORDER), 1))
+        painter.setBrush(QColor(theme.PANEL))
+        painter.drawRoundedRect(card, 11, 11)
+        rows_n, cols_n = tactic.grid_size(index)
+        board_bottom = 50 if has_cycles else 14
+        board_rect = QRect(left + 8, top + 8, panel_w - 16, panel_h - board_bottom - 8)
+        _export_draw_step(painter, tactic, index, board_rect)
+        if has_cycles:
+            cycle_rect = QRect(left + 8, top + panel_h - 42, panel_w - 16, 32)
+            painter.setPen(QColor(theme.BORDER))
+            painter.drawRect(cycle_rect)
+            cycle_font = QFont(painter.font())
+            cycle_font.setPointSize(8)
+            painter.setFont(cycle_font)
+            painter.setPen(QColor(theme.TEXT))
+            painter.drawText(
+                cycle_rect.adjusted(7, 1, -7, -1),
+                Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextWordWrap,
+                step.cycle.strip() or "—",
+            )
+        # Tiny corner size note is useful when source boards mix 9x9/11x11.
+        size_font = QFont(painter.font())
+        size_font.setPointSize(7)
+        painter.setFont(size_font)
+        painter.setPen(QColor(theme.MUTED))
+        painter.drawText(QRect(left + panel_w - 56, top + 4, 48, 18), Qt.AlignmentFlag.AlignRight, f"{rows_n}×{cols_n}")
+
+    if has_cycles and tactic.steps:
+        index = len(tactic.steps)
+        col = index % columns
+        row = index // columns
+        left = margin + col * (panel_w + gap)
+        top = content_top + row * (panel_h + gap)
+        _draw_cycle_summary(painter, tactic, QRect(left, top, panel_w, panel_h))
+
+    specs_top = content_top + grid_h + margin
+    small_caps = QFont(painter.font())
+    small_caps.setBold(True)
+    small_caps.setPointSize(8)
+    small_caps.setLetterSpacing(QFont.SpacingType.AbsoluteSpacing, 1.1)
+    painter.setFont(small_caps)
+    painter.setPen(QColor(theme.MUTED))
+    painter.drawText(
+        QRect(margin + 10, specs_top, width - margin * 2, 24),
+        Qt.AlignmentFlag.AlignVCenter,
+        "CHARACTER SPECS",
+    )
+
+    table_top = specs_top + 28
+    table_left = margin + 10
+    table_w = width - margin * 2 - 20
+    headers = ("인형 / 돌파", "무기", "고유키", "도약키", "공용키", "비고")
+    ratios = (0.17, 0.22, 0.18, 0.16, 0.18, 0.09)
+    col_widths = [int(table_w * r) for r in ratios]
+    col_widths[-1] += table_w - sum(col_widths)
+    painter.setPen(QColor(theme.BORDER))
+    painter.drawLine(table_left, table_top + 28, table_left + table_w, table_top + 28)
+    header_font = QFont(painter.font())
+    header_font.setPointSize(8)
+    painter.setFont(header_font)
+    x = table_left
+    for label, col_w in zip(headers, col_widths):
+        painter.setPen(QColor(theme.MUTED))
+        painter.drawText(QRect(x + 8, table_top, col_w - 12, 28), Qt.AlignmentFlag.AlignVCenter, label)
+        x += col_w
+
+    units = tactic.units or []
+    row_font = QFont(painter.font())
+    row_font.setPointSize(9)
+    for row_idx in range(max(1, len(units))):
+        y = table_top + 28 + row_idx * specs_row_h
+        painter.setPen(QColor(theme.BORDER))
+        painter.drawLine(table_left, y + specs_row_h, table_left + table_w, y + specs_row_h)
+        if row_idx >= len(units):
+            painter.setPen(QColor(theme.MUTED))
+            painter.setFont(row_font)
+            painter.drawText(
+                QRect(table_left + 8, y, table_w - 16, specs_row_h),
+                Qt.AlignmentFlag.AlignVCenter,
+                "등록된 사용 인형 없음",
+            )
+            continue
+        unit = units[row_idx]
+        values = (
+            f"{unit.name or '인형'}  {int(unit.rank)}돌",
+            unit.weapon.strip() or "미입력",
+            "\n".join(unit.unique_keys) if unit.unique_keys else "미장착",
+            unit.expansion_label(include_prefix=False),
+            "\n".join(unit.common_keys) if unit.common_keys else "미장착",
+            unit.display_label(),
+        )
+        x = table_left
+        for col_idx, (value, col_w) in enumerate(zip(values, col_widths)):
+            font = QFont(row_font)
+            font.setBold(col_idx == 0)
+            painter.setFont(font)
+            painter.setPen(QColor(theme.TEXT))
+            painter.drawText(
+                QRect(x + 8, y + 4, col_w - 12, specs_row_h - 8),
+                Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextWordWrap,
+                value,
+            )
+            x += col_w
+
+    painter.end()
+    return image
+
+
+class TacticSheetPreviewDialog(QDialog):
+    def __init__(self, tactic: Tactic, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(f"{tactic.title} · 전체 미리보기")
+        self.resize(1040, 760)
+        self.setMinimumSize(760, 560)
+        root = dialog_layout(self)
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        body = QWidget()
+        grid = QGridLayout(body)
+        grid.setContentsMargins(8, 8, 8, 8)
+        grid.setSpacing(12)
+        has_cycles = any(step.cycle.strip() for step in tactic.steps)
+        for index, step in enumerate(tactic.steps):
+            panel = QWidget()
+            panel_layout = QVBoxLayout(panel)
+            panel_layout.setContentsMargins(8, 8, 8, 8)
+            panel_layout.setSpacing(5)
+            rows, cols = tactic.grid_size(index)
+            title = QLabel(f"{step.name} · {rows}×{cols}")
+            title.setObjectName("SectionTitle")
+            panel_layout.addWidget(title)
+            board = TacticGridWidget(tactic, editable=False)
+            board.setMinimumSize(300, 300)
+            board.set_step_index(index)
+            panel_layout.addWidget(board, 1)
+            if has_cycles:
+                cycle = QLabel("스킬 사이클 · " + (step.cycle or "—"))
+                cycle.setObjectName("SectionTitle")
+                cycle.setWordWrap(True)
+                panel_layout.addWidget(cycle)
+            note = QLabel(step.note or "설명 없음")
+            note.setObjectName("Muted")
+            note.setWordWrap(True)
+            panel_layout.addWidget(note)
+            grid.addWidget(panel, index // 2, index % 2)
+        grid.setColumnStretch(0, 1)
+        grid.setColumnStretch(1, 1)
+        scroll.setWidget(body)
+        root.addWidget(scroll, 1)

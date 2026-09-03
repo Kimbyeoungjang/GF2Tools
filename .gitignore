@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+data/*.db
+data/*.db-*
+data/latest.json
+build/
+dist/
+*.egg-info/
+
+# Local generated runtime (never commit/package)
+.gfl2_runtime/
+.venv*/

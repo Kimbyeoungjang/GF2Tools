@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gfl2-tools"
+dynamic = ["version"]
+description = "Offline planning, OCR, overlay, and data interchange tools for Girls' Frontline 2"
+readme = "README.md"
+license = "GPL-3.0-only"
+requires-python = ">=3.11,<3.14"
+dependencies = ["PySide6-Essentials>=6.8,<7", "Pillow>=10"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+build = ["pytest>=8", "pyinstaller>=6.11,<7"]
+
+[project.scripts]
+gfl2tool = "gfl2tool.cli:main"
+gfl2gui = "gfl2tool.qtgui:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "gfl2tool._version.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+gfl2tool = ["reference_data/*.json", "resources/*.json"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

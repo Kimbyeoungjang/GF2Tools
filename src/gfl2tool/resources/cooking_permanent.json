@@ -1,0 +1,1165 @@
+{
+  "schema": 2,
+  "source_url": "https://agress0r.github.io/gf2disheslibrary/",
+  "source_repository": "Agress0r/gf2disheslibrary",
+  "success_points": 4,
+  "great_success_points": 5,
+  "level_thresholds": [
+    10,
+    25,
+    50
+  ],
+  "ingredient_localization": {
+    "Synthetic Fish Meat": "합성 어육",
+    "Synthetic Red Meat": "합성 짐승고기",
+    "Synthetic White Meat": "합성 새고기",
+    "Rice": "백미",
+    "Grains": "밀",
+    "Purple Sweet Potato": "고구마",
+    "Greenhouse Vegetables": "온실 채소",
+    "Greenhouse Cucumber": "온실 오이",
+    "Greenhouse Bell Pepper": "온실 파프리카",
+    "Tomato": "토마토",
+    "Onions": "양파"
+  },
+  "dishes": [
+    {
+      "source_id": 17,
+      "effect": "연소 보너스",
+      "category": "위상 속성",
+      "source_name": "Green Pepper Kushiyaki",
+      "recipes": [
+        {
+          "ingredients": [
+            "합성 어육",
+            "합성 짐승고기",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Fish Meat",
+            "Synthetic Red Meat",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "합성 짐승고기",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Synthetic Red Meat",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "백미",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Rice",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "온실 파프리카",
+            "토마토"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Greenhouse Bell Pepper",
+            "Tomato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Greenhouse Bell Pepper"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 5
+    },
+    {
+      "source_id": 19,
+      "effect": "방어력",
+      "category": "기본 능력",
+      "source_name": "Sweet and Sour Chicken",
+      "recipes": [
+        {
+          "ingredients": [
+            "합성 어육",
+            "합성 새고기",
+            "합성 새고기"
+          ],
+          "source_ingredients": [
+            "Synthetic Fish Meat",
+            "Synthetic White Meat",
+            "Synthetic White Meat"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "합성 새고기",
+            "합성 새고기"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Synthetic White Meat",
+            "Synthetic White Meat"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기",
+            "합성 새고기"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat",
+            "Synthetic White Meat"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기",
+            "백미"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat",
+            "Rice"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기",
+            "밀"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat",
+            "Grains"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기",
+            "온실 채소"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat",
+            "Greenhouse Vegetables"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기",
+            "토마토"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat",
+            "Tomato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기",
+            "양파"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat",
+            "Onions"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 7
+    },
+    {
+      "source_id": 22,
+      "effect": "물리 보너스",
+      "category": "위상 속성",
+      "source_name": "Purple Sweet Potato Rolls",
+      "recipes": [
+        {
+          "ingredients": [
+            "합성 어육",
+            "합성 새고기",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Synthetic Fish Meat",
+            "Synthetic White Meat",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "합성 새고기",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Synthetic White Meat",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "백미",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Rice",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "밀",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Grains",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "고구마",
+            "온실 채소"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Purple Sweet Potato",
+            "Greenhouse Vegetables"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "고구마",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Purple Sweet Potato",
+            "Greenhouse Cucumber"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "고구마",
+            "토마토"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Purple Sweet Potato",
+            "Tomato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "고구마",
+            "양파"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Purple Sweet Potato",
+            "Onions"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 8
+    },
+    {
+      "source_id": 24,
+      "effect": "탁류 보너스",
+      "category": "위상 속성",
+      "source_name": "Cold Shredded Pork",
+      "recipes": [
+        {
+          "ingredients": [
+            "합성 어육",
+            "합성 새고기",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Synthetic Fish Meat",
+            "Synthetic White Meat",
+            "Greenhouse Cucumber"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "합성 새고기",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Synthetic White Meat",
+            "Greenhouse Cucumber"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat",
+            "Greenhouse Cucumber"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "백미",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Rice",
+            "Greenhouse Cucumber"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "밀",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Grains",
+            "Greenhouse Cucumber"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "온실 채소",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Greenhouse Vegetables",
+            "Greenhouse Cucumber"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "온실 오이",
+            "토마토"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Greenhouse Cucumber",
+            "Tomato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Greenhouse Cucumber"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 7
+    },
+    {
+      "source_id": 25,
+      "effect": "빙결 보너스",
+      "category": "위상 속성",
+      "source_name": "Spicy Diced Chicken",
+      "recipes": [
+        {
+          "ingredients": [
+            "합성 어육",
+            "합성 새고기",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Fish Meat",
+            "Synthetic White Meat",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "합성 새고기",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Synthetic White Meat",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "합성 새고기",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Synthetic White Meat",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "백미",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Rice",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "밀",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Grains",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "온실 채소",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Greenhouse Vegetables",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "온실 파프리카",
+            "토마토"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Greenhouse Bell Pepper",
+            "Tomato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "합성 새고기"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Synthetic White Meat"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 8
+    },
+    {
+      "source_id": 37,
+      "effect": "전도 보너스",
+      "category": "위상 속성",
+      "source_name": "Pepper Tofu Buns",
+      "recipes": [
+        {
+          "ingredients": [
+            "합성 어육",
+            "밀",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Fish Meat",
+            "Grains",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "밀",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Grains",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "백미",
+            "밀",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Rice",
+            "Grains",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "밀",
+            "밀",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Grains",
+            "Grains",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "밀",
+            "온실 채소",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Grains",
+            "Greenhouse Vegetables",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "밀",
+            "온실 파프리카",
+            "토마토"
+          ],
+          "source_ingredients": [
+            "Grains",
+            "Greenhouse Bell Pepper",
+            "Tomato"
+          ]
+        },
+        {
+          "ingredients": [
+            "밀",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Grains",
+            "Greenhouse Bell Pepper"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 6
+    },
+    {
+      "source_id": 39,
+      "effect": "체력",
+      "category": "기본 능력",
+      "source_name": "Purple Sweet Potato Buns",
+      "recipes": [
+        {
+          "ingredients": [
+            "합성 어육",
+            "고구마",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Synthetic Fish Meat",
+            "Purple Sweet Potato",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "고구마",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Purple Sweet Potato",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "고구마",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Purple Sweet Potato",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "백미",
+            "고구마",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Rice",
+            "Purple Sweet Potato",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "밀",
+            "고구마",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Grains",
+            "Purple Sweet Potato",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "고구마",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Purple Sweet Potato",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "고구마",
+            "온실 채소"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Purple Sweet Potato",
+            "Greenhouse Vegetables"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "고구마",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Purple Sweet Potato",
+            "Greenhouse Cucumber"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "고구마",
+            "토마토"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Purple Sweet Potato",
+            "Tomato"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Purple Sweet Potato"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "고구마",
+            "양파"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Purple Sweet Potato",
+            "Onions"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 9
+    },
+    {
+      "source_id": 42,
+      "effect": "산성 보너스",
+      "category": "위상 속성",
+      "source_name": "Spicy Purple Sweet Potato Buns",
+      "recipes": [
+        {
+          "ingredients": [
+            "합성 어육",
+            "고구마",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Fish Meat",
+            "Purple Sweet Potato",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 짐승고기",
+            "고구마",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Red Meat",
+            "Purple Sweet Potato",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "합성 새고기",
+            "고구마",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic White Meat",
+            "Purple Sweet Potato",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "백미",
+            "고구마",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Rice",
+            "Purple Sweet Potato",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "밀",
+            "고구마",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Grains",
+            "Purple Sweet Potato",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "고구마",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Purple Sweet Potato",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "온실 채소",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Greenhouse Vegetables",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "온실 오이",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Greenhouse Cucumber",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "온실 파프리카",
+            "토마토"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Greenhouse Bell Pepper",
+            "Tomato"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "고구마"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Purple Sweet Potato"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 9
+    },
+    {
+      "source_id": 51,
+      "effect": "공격력",
+      "category": "기본 능력",
+      "source_name": "Stir-Fried Peppers",
+      "recipes": [
+        {
+          "ingredients": [
+            "합성 어육",
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Synthetic Fish Meat",
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "백미",
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Rice",
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "밀",
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Grains",
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "고구마",
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Purple Sweet Potato",
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 채소",
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Greenhouse Vegetables",
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 오이",
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Greenhouse Cucumber",
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Greenhouse Bell Pepper"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "온실 파프리카"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Greenhouse Bell Pepper"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 7
+    },
+    {
+      "source_id": 56,
+      "effect": "모든 위상 속성 보너스",
+      "category": "범용 위상",
+      "source_name": "Sweet and Sour Vegetables",
+      "recipes": [
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "합성 어육"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Synthetic Fish Meat"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "합성 짐승고기"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Synthetic Red Meat"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "백미"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Rice"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "밀"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Grains"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "온실 채소"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Greenhouse Vegetables"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "온실 오이"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Greenhouse Cucumber"
+          ]
+        },
+        {
+          "ingredients": [
+            "온실 파프리카",
+            "양파",
+            "토마토"
+          ],
+          "source_ingredients": [
+            "Greenhouse Bell Pepper",
+            "Onions",
+            "Tomato"
+          ]
+        }
+      ],
+      "recommended_recipe_index": 0
+    }
+  ]
+}
