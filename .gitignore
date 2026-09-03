@@ -12,3 +12,4 @@ dist/
 # Local generated runtime (never commit/package)
 .gfl2_runtime/
 .venv*/
+.idea
