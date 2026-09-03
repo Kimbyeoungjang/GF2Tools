@@ -13,7 +13,7 @@ from PIL import Image, ImageEnhance, ImageFilter, ImageOps, ImageStat
 
 from . import reference
 from .tactics import MAX_GRID_EDGE, MIN_GRID_EDGE, Tactic, TacticMarker, TacticStep
-from .services.ocr_import import find_tesseract
+from .services.ocr_import import find_tesseract, ocr_subprocess_kwargs
 
 ANALYSIS_MAX_EDGE = 2200
 MAX_INPUT_PIXELS = 64_000_000
@@ -531,6 +531,7 @@ def _run_tesseract(
             errors="replace",
             timeout=12,
             check=False,
+            **ocr_subprocess_kwargs(),
         )
         if completed.returncode != 0:
             return ""
@@ -1019,6 +1020,7 @@ def _run_single_cell_ocr(executable: str, image: Image.Image, *, psm: int) -> st
             errors="replace",
             timeout=8,
             check=False,
+            **ocr_subprocess_kwargs(),
         )
         if completed.returncode != 0:
             return ""
@@ -1100,6 +1102,7 @@ def _run_unit_board_tsv(
             ],
             capture_output=True, text=True, encoding="utf-8", errors="replace",
             timeout=12, check=False,
+            **ocr_subprocess_kwargs(),
         )
         if completed.returncode != 0:
             return []

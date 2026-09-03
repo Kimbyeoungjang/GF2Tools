@@ -415,3 +415,30 @@ def test_delete_remolding_detaches_formation_and_pattern_source(tmp_path):
             "SELECT source_remolding_uid FROM remolding_pattern_slots WHERE pattern_id=? AND slot_index=1", (pattern,)
         ).fetchone()[0]
         assert source is None
+
+
+def test_formation_and_general_skill_cycles_are_separate_and_queryable(tmp_path):
+    from gfl2tool.services.doll_skill_cycles import DollSkillCycleStore
+    from gfl2tool.services.formation_preferences import (
+        FormationMemberPreferenceStore,
+        FormationSkillCycleAdapter,
+        formation_cycle_candidates,
+    )
+
+    data_dir = tmp_path / "cycle-data"
+    with Repository(data_dir / "gfl2.db") as repo:
+        repo.replace_dolls([Doll(1001, "A", 60, 1)])
+        plan_id = FormationService(repo).create("테스트 제대")
+        FormationService(repo).set_member(plan_id, 1, 1001)
+        general = DollSkillCycleStore(data_dir)
+        general.set_actions(1001, ["일반1", "일반2"])
+        formation = FormationMemberPreferenceStore(data_dir)
+        adapter = FormationSkillCycleAdapter(formation, plan_id, 1, 1001)
+        assert adapter.actions_for(1001) == []
+        adapter.set_actions(1001, ["제대1", "제대2", "제대3"])
+        assert general.actions_for(1001) == ["일반1", "일반2"]
+        assert adapter.actions_for(1001) == ["제대1", "제대2", "제대3"]
+        candidates = formation_cycle_candidates(repo, formation, 1001)
+        assert [(row["plan_name"], row["position"], row["actions"]) for row in candidates] == [
+            ("테스트 제대", 1, ["제대1", "제대2", "제대3"])
+        ]

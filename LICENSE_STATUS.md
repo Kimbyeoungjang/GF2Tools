@@ -1,6 +1,6 @@
 # GFL2 Tools project license status
 
-GFL2 Tools 1.0.0 original project source code is licensed under the **GNU General Public License version 3 only (GPL-3.0-only)**.
+GFL2 Tools 1.0.1 original project source code is licensed under the **GNU General Public License version 3 only (GPL-3.0-only)**.
 
 The complete GPLv3 license text is provided in the project root as `LICENSE`. Source releases and Windows executable releases should keep the project license notice and the applicable third-party notices together with the distributed program.
 

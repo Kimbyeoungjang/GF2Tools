@@ -229,7 +229,6 @@ class TacticGridWidget(QWidget):
         self.summon_label = "*"
         self.custom_label = ""
         self.boss_size = (3, 3)
-        self.cover_edge = "N"
         self._arrow_start: tuple[int, int] | None = None
         self._selected_marker: TacticMarker | None = None
         self._selected_origin: tuple[int, int] | None = None
@@ -237,9 +236,10 @@ class TacticGridWidget(QWidget):
         self._move_initial: tuple[int, int, int | None, int | None] | None = None
         self._move_changed = False
         self._hover_cell: tuple[int, int] | None = None
+        self._hover_cover_target: tuple[int, int, str] | None = None
         self._drag_tool: str | None = None
         self._drag_enable = True
-        self._drag_seen: set[tuple[int, int]] = set()
+        self._drag_seen: set[tuple[object, ...]] = set()
         self.setMinimumSize(420, 420)
         self.setMouseTracking(True)
 
@@ -260,6 +260,7 @@ class TacticGridWidget(QWidget):
         self._selected_origin = None
         self._reset_move_drag()
         self._hover_cell = None
+        self._hover_cover_target = None
         self._reset_drag()
         self.update()
 
@@ -270,6 +271,7 @@ class TacticGridWidget(QWidget):
         self._selected_origin = None
         self._reset_move_drag()
         self._hover_cell = None
+        self._hover_cover_target = None
         self._reset_drag()
         self.update()
 
@@ -280,6 +282,7 @@ class TacticGridWidget(QWidget):
         self._selected_marker = None
         self._selected_origin = None
         self._reset_move_drag()
+        self._hover_cover_target = None
         self._reset_drag()
         self.update()
 
@@ -297,6 +300,34 @@ class TacticGridWidget(QWidget):
         if 0 <= row < rows and 0 <= col < cols:
             return row, col
         return None
+
+    def _cover_target_at(self, pos: QPoint) -> tuple[int, int, str] | None:
+        """Return the cell edge closest to the pointer.
+
+        Cover is a line on a cell boundary, not a filled cell.  Choosing the
+        edge from the pointer position makes painting deterministic and removes
+        the old global N/E/S/W direction selector.
+        """
+        cell = self._cell_at(pos)
+        if cell is None:
+            return None
+        row, col = cell
+        rows, cols = self._grid_size()
+        board = self._board()
+        cw = board.width() / max(1, cols)
+        ch = board.height() / max(1, rows)
+        left = board.left() + col * cw
+        top = board.top() + row * ch
+        x = float(pos.x())
+        y = float(pos.y())
+        distances = {
+            "N": abs(y - top),
+            "E": abs((left + cw) - x),
+            "S": abs((top + ch) - y),
+            "W": abs(x - left),
+        }
+        edge = min(("N", "E", "S", "W"), key=lambda value: (distances[value], "NESW".index(value)))
+        return row, col, edge
 
     @staticmethod
     def _marker_contains(marker: TacticMarker, row: int, col: int) -> bool:
@@ -473,9 +504,14 @@ class TacticGridWidget(QWidget):
             return self._erase_at(row, col)
         if self._drag_tool == "blocked":
             return self._set_blocked(row, col, self._drag_enable)
-        if self._drag_tool == "cover":
-            return self._set_cover_edge(row, col, self.cover_edge, self._drag_enable)
         return False
+
+    def _apply_cover_target(self, row: int, col: int, edge: str) -> bool:
+        key = ("cover", row, col, edge)
+        if key in self._drag_seen:
+            return False
+        self._drag_seen.add(key)
+        return self._set_cover_edge(row, col, edge, self._drag_enable)
 
     def mouseMoveEvent(self, event):  # noqa: N802
         cell = self._cell_at(event.position().toPoint())
@@ -486,6 +522,10 @@ class TacticGridWidget(QWidget):
             else:
                 row, col = cell
                 self.hoverChanged.emit(f"행 {row + 1} · 열 {col + 1}")
+            self.update()
+        cover_target = self._cover_target_at(event.position().toPoint()) if self.editable and self.tool == "cover" else None
+        if cover_target != self._hover_cover_target:
+            self._hover_cover_target = cover_target
             self.update()
         if self._drag_tool is not None and not (
             event.buttons() & (Qt.MouseButton.LeftButton | Qt.MouseButton.RightButton)
@@ -507,14 +547,22 @@ class TacticGridWidget(QWidget):
             if self._drag_selected_to(*cell):
                 self._move_changed = True
                 self.update()
-        if self.editable and self._drag_tool is not None and cell is not None:
-            if self._apply_drag_cell(*cell):
+        if self.editable and self._drag_tool is not None:
+            changed = False
+            if self._drag_tool == "cover":
+                target = self._cover_target_at(event.position().toPoint())
+                if target is not None:
+                    changed = self._apply_cover_target(*target)
+            elif cell is not None:
+                changed = self._apply_drag_cell(*cell)
+            if changed:
                 self.modified.emit()
                 self.update()
         return super().mouseMoveEvent(event)
 
     def leaveEvent(self, event):  # noqa: N802
         self._hover_cell = None
+        self._hover_cover_target = None
         self.hoverChanged.emit("")
         if self._move_press_cell is None:
             self.unsetCursor()
@@ -573,12 +621,15 @@ class TacticGridWidget(QWidget):
             self._drag_seen.clear()
             changed = self._apply_drag_cell(row, col)
         elif self.tool == "cover":
+            target = self._cover_target_at(event.position().toPoint())
+            if target is None:
+                return
+            target_row, target_col, edge = target
             self._drag_tool = "cover"
-            edge = self.cover_edge if self.cover_edge in "NESW" else "N"
-            existing = self._cover_at(row, col)
+            existing = self._cover_at(target_row, target_col)
             self._drag_enable = existing is None or edge not in existing.edges
             self._drag_seen.clear()
-            changed = self._apply_drag_cell(row, col)
+            changed = self._apply_cover_target(target_row, target_col, edge)
         elif self.tool == "arrow":
             self._reset_drag()
             if self._arrow_start is None:
@@ -648,6 +699,18 @@ class TacticGridWidget(QWidget):
             painter.setPen(QPen(_color(theme.ACCENT, 180), 2))
             painter.setBrush(_color(theme.ACCENT, 24))
             painter.drawRect(hover)
+        if self._hover_cover_target is not None and self.editable and self.tool == "cover":
+            row, col, edge = self._hover_cover_target
+            cell_rect = _cell_rect(board, rows, cols, row, col, inset=2)
+            painter.setPen(QPen(_color(theme.ACCENT, 235), 5, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+            if edge == "N":
+                painter.drawLine(QPointF(cell_rect.left(), cell_rect.top()), QPointF(cell_rect.right(), cell_rect.top()))
+            elif edge == "E":
+                painter.drawLine(QPointF(cell_rect.right(), cell_rect.top()), QPointF(cell_rect.right(), cell_rect.bottom()))
+            elif edge == "S":
+                painter.drawLine(QPointF(cell_rect.left(), cell_rect.bottom()), QPointF(cell_rect.right(), cell_rect.bottom()))
+            else:
+                painter.drawLine(QPointF(cell_rect.left(), cell_rect.top()), QPointF(cell_rect.left(), cell_rect.bottom()))
         if self._selected_marker is not None:
             marker = self._selected_marker
             if marker.kind == "arrow":

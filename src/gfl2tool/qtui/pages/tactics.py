@@ -28,7 +28,7 @@ from PySide6.QtWidgets import (
 from ...atomic_io import atomic_write_bytes, atomic_write_json
 from ...repository import Repository
 from ...services.tactic_equipment import TacticEquipmentCatalog
-from ...services.doll_skill_cycles import DollSkillCycleStore, apply_skill_cycles_to_tactic
+from ...services.doll_skill_cycles import apply_skill_cycles_to_tactic
 from ...tactic_image_import import TacticImageImportResult, import_tactic_image
 from ...tactics import (
     MAX_STEPS,
@@ -107,7 +107,6 @@ class TacticsPage(DeferredRefreshPage):
         self.portraits = portraits
         self.store = TacticStore(repo.path.parent)
         self.equipment_catalog = TacticEquipmentCatalog(repo)
-        self.skill_cycle_store = DollSkillCycleStore(repo.path.parent)
         self.settings = AppSettings()
         self._equipment_data = self.equipment_catalog.load()
         self.pool = QThreadPool.globalInstance()
@@ -304,12 +303,6 @@ class TacticsPage(DeferredRefreshPage):
         self.boss_w.valueChanged.connect(self._boss_size_changed)
         self.boss_h.valueChanged.connect(self._boss_size_changed)
 
-        self.cover_edge_title = QLabel("엄폐 방향")
-        self.cover_edge = QComboBox()
-        for label, value in (("위", "N"), ("오른쪽", "E"), ("아래", "S"), ("왼쪽", "W")):
-            self.cover_edge.addItem(label, value)
-        self.cover_edge.currentIndexChanged.connect(self._cover_edge_changed)
-
         for widget in (
             QLabel("도구"),
             self.tool_combo,
@@ -322,8 +315,6 @@ class TacticsPage(DeferredRefreshPage):
             self.boss_size_title,
             self.boss_w,
             self.boss_h,
-            self.cover_edge_title,
-            self.cover_edge,
         ):
             tool_row.addWidget(widget)
         tool_row.addStretch(1)
@@ -652,8 +643,6 @@ class TacticsPage(DeferredRefreshPage):
         self.boss_size_title.setVisible(is_boss)
         self.boss_w.setVisible(is_boss)
         self.boss_h.setVisible(is_boss)
-        self.cover_edge_title.setVisible(is_cover)
-        self.cover_edge.setVisible(is_cover)
         help_text = {
             "move": "배치된 오브젝트를 마우스로 잡아 원하는 칸까지 드래그합니다. 클릭 후 다른 칸을 누르는 방식도 보조 조작으로 지원합니다.",
             "unit": "사용 인형에서 선택한 인형을 칸에 배치합니다. 보유하지 않은 인형도 사용 인형 목록에 등록할 수 있습니다.",
@@ -661,7 +650,7 @@ class TacticsPage(DeferredRefreshPage):
             "custom": "사용자가 지정한 짧은 문구를 한 칸에 배치합니다. 기믹, 방향, 순서 같은 자유 표기에 사용할 수 있습니다.",
             "boss": "시작 칸을 클릭해 보스 점유 영역을 배치합니다.",
             "blocked": "클릭 또는 드래그로 이동 불가 칸을 칠하거나 지웁니다. 첫 칸 상태에 맞춰 같은 동작이 이어집니다.",
-            "cover": "선택한 방향의 엄폐선을 클릭 또는 드래그로 칠하거나 지웁니다. 한 칸에 여러 방향을 지정할 수 있습니다.",
+            "cover": "마우스 포인터와 가장 가까운 격자 변에 엄폐선을 그립니다. 클릭 또는 드래그로 칠하고, 이미 칠해진 변에서 시작하면 같은 방식으로 지웁니다.",
             "arrow": "출발 칸과 도착 칸을 차례로 클릭합니다.",
             "clear": "클릭 또는 드래그로 칸의 요소를 지웁니다. 어떤 도구에서도 우클릭 드래그로 빠르게 지울 수 있습니다.",
         }.get(tool, "")
@@ -728,7 +717,7 @@ class TacticsPage(DeferredRefreshPage):
                         marker.label = old.display_label() if old is not None else (marker.label or "?")
                         marker.unit_key = ""
         tactic.units = list(dialog.result_units)
-        cycle_changed = apply_skill_cycles_to_tactic(tactic, self.skill_cycle_store)
+        cycle_changed = apply_skill_cycles_to_tactic(tactic)
         self._refresh_roster_summary()
         if cycle_changed:
             self._refresh_steps(select=max(0, self.step_list.currentRow()))
@@ -746,9 +735,6 @@ class TacticsPage(DeferredRefreshPage):
 
     def _boss_size_changed(self, *_args) -> None:
         self.grid.boss_size = (self.boss_w.value(), self.boss_h.value())
-
-    def _cover_edge_changed(self, *_args) -> None:
-        self.grid.cover_edge = str(self.cover_edge.currentData() or "N")
 
     def _content_modified(self) -> None:
         self._update_marker_summary()

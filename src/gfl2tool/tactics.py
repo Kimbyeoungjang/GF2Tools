@@ -38,6 +38,15 @@ def _clean_str_list(value: Any, *, limit: int = 3, item_limit: int = 80) -> list
     return out
 
 
+
+
+def _clean_skill_cycle(value: Any) -> list[str]:
+    rows = value if isinstance(value, list) else []
+    out = [str(item or "").strip()[:240] for item in rows[:64]]
+    while out and not out[-1]:
+        out.pop()
+    return out
+
 def _bounded_int(value: Any, minimum: int, maximum: int, default: int) -> int:
     try:
         return max(minimum, min(maximum, int(value)))
@@ -105,6 +114,10 @@ class TacticUnit:
     common_keys: list[str] = field(default_factory=list)
     unique_keys: list[str] = field(default_factory=list)
     expansion_level: int = 0
+    skill_cycle: list[str] = field(default_factory=list)
+    skill_cycle_source: str = ""
+    formation_plan_id: int | None = None
+    formation_position: int = 0
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> "TacticUnit":
@@ -119,6 +132,13 @@ class TacticUnit:
         common_keys = _clean_str_list(raw.get("common_keys"))
         unique_keys = _clean_str_list(raw.get("unique_keys"))
         expansion_level = _bounded_int(raw.get("expansion_level"), 0, 2, 0)
+        skill_cycle = _clean_skill_cycle(raw.get("skill_cycle"))
+        formation_plan_id = None
+        try:
+            if raw.get("formation_plan_id") not in (None, ""):
+                formation_plan_id = int(raw.get("formation_plan_id"))
+        except (TypeError, ValueError):
+            formation_plan_id = None
 
         return cls(
             unit_key=key,
@@ -130,6 +150,10 @@ class TacticUnit:
             common_keys=common_keys,
             unique_keys=unique_keys,
             expansion_level=expansion_level,
+            skill_cycle=skill_cycle,
+            skill_cycle_source=str(raw.get("skill_cycle_source") or "")[:120],
+            formation_plan_id=formation_plan_id,
+            formation_position=_bounded_int(raw.get("formation_position"), 0, 6, 0),
         )
 
     def display_label(self) -> str:

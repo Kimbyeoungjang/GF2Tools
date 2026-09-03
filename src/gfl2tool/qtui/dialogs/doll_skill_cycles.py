@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Callable
+
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QAbstractItemView,
@@ -26,11 +28,17 @@ class DollSkillCycleDialog(QDialog):
         doll_id: int,
         doll_name: str,
         parent=None,
+        sync_from_label: str = "",
+        sync_from: Callable[[], list[str] | None] | None = None,
+        sync_to_label: str = "",
+        sync_to: Callable[[list[str]], object] | None = None,
     ):
         super().__init__(parent)
         self.store = store
         self.doll_id = int(doll_id)
         self.doll_name = str(doll_name or f"인형 {doll_id}")
+        self._sync_from = sync_from
+        self._sync_to = sync_to
 
         self.setWindowTitle(f"{self.doll_name} · 스킬 사이클")
         self.resize(760, 660)
@@ -70,6 +78,21 @@ class DollSkillCycleDialog(QDialog):
         edit_row.addStretch(1)
         edit_row.addWidget(clear)
         root.addLayout(edit_row)
+
+        if sync_from is not None or sync_to is not None:
+            sync_row = QHBoxLayout()
+            sync_hint = QLabel("필요할 때만 다른 사이클과 값을 복사합니다. 두 설정은 기본적으로 서로 독립적입니다.")
+            sync_hint.setObjectName("Muted")
+            sync_row.addWidget(sync_hint, 1)
+            if sync_from is not None:
+                button = QPushButton(sync_from_label or "다른 사이클 불러오기")
+                button.clicked.connect(self._sync_from_actions)
+                sync_row.addWidget(button)
+            if sync_to is not None:
+                button = QPushButton(sync_to_label or "다른 사이클에 저장")
+                button.clicked.connect(self._sync_to_actions)
+                sync_row.addWidget(button)
+            root.addLayout(sync_row)
 
         footer = QHBoxLayout()
         footer.addStretch(1)
@@ -165,6 +188,30 @@ class DollSkillCycleDialog(QDialog):
         self.table.setRowCount(1)
         self.table.setItem(0, 1, QTableWidgetItem(""))
         self._renumber()
+
+    def _sync_from_actions(self) -> None:
+        if self._sync_from is None:
+            return
+        try:
+            actions = self._sync_from()
+        except Exception as exc:
+            QMessageBox.warning(self, "스킬 사이클 동기화", str(exc))
+            return
+        if actions is None:
+            return
+        self._load(list(actions))
+
+    def _sync_to_actions(self) -> None:
+        if self._sync_to is None:
+            return
+        try:
+            result = self._sync_to(self._actions())
+        except Exception as exc:
+            QMessageBox.warning(self, "스킬 사이클 동기화", str(exc))
+            return
+        if result is False:
+            return
+        QMessageBox.information(self, "스킬 사이클 동기화", "현재 사이클을 선택한 대상에 복사했습니다.")
 
     def _accept(self) -> None:
         self.store.set_actions(self.doll_id, self._actions())

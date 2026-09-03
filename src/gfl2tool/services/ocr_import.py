@@ -70,6 +70,23 @@ def find_tesseract() -> str | None:
     return None
 
 
+
+
+def ocr_subprocess_kwargs() -> dict[str, object]:
+    """Keep Tesseract subprocesses invisible in Windows GUI builds."""
+    if os.name != "nt":
+        return {}
+    kwargs: dict[str, object] = {
+        "creationflags": int(getattr(subprocess, "CREATE_NO_WINDOW", 0)),
+    }
+    startup_cls = getattr(subprocess, "STARTUPINFO", None)
+    if startup_cls is not None:
+        startup = startup_cls()
+        startup.dwFlags |= int(getattr(subprocess, "STARTF_USESHOWWINDOW", 0))
+        startup.wShowWindow = 0
+        kwargs["startupinfo"] = startup
+    return kwargs
+
 def ocr_engine_status() -> dict[str, Any]:
     executable = find_tesseract()
     if not executable:
@@ -84,6 +101,7 @@ def ocr_engine_status() -> dict[str, Any]:
             timeout=8,
             check=False,
             env=os.environ.copy(),
+            **ocr_subprocess_kwargs(),
         )
     except (OSError, subprocess.SubprocessError):
         return {"available": False, "executable": executable, "languages": []}
@@ -129,6 +147,7 @@ def _run_ocr_variant(executable: str, image: Image.Image, *, language: str, psm:
                 timeout=90,
                 check=False,
                 env=os.environ.copy(),
+                **ocr_subprocess_kwargs(),
             )
         except subprocess.TimeoutExpired as exc:
             raise RuntimeError("OCR 처리 시간이 너무 오래 걸려 중단했습니다.") from exc

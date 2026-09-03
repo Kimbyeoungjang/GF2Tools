@@ -125,22 +125,20 @@ class DollSkillCycleStore:
         return self.save(profiles)
 
 
-def apply_skill_cycles_to_tactic(tactic, store: DollSkillCycleStore) -> bool:
-    """Fill blank/previously-auto cycle fields from the tactic roster presets.
+def apply_skill_cycles_to_tactic(tactic) -> bool:
+    """Compose tactic step text from cycles explicitly loaded into its roster.
 
-    Manual cycle text is never overwritten. Missing T steps are appended up to
-    the longest applicable Doll profile. Breakthrough rank is intentionally not
-    part of this mapping: each Doll owns one user-authored repeating sequence.
+    Tactic roster entries intentionally start with no cycle.  A user may load a
+    general Doll cycle, a formation-local cycle, or type a tactic-only cycle.
+    Manual step text is never overwritten; only blank/previously-auto fields are
+    maintained by this function.
     """
     from ..tactics import MAX_STEPS, TacticStep
 
-    profiles = store.load()
     by_unit: list[tuple[object, list[str]]] = []
     max_turns = 0
     for unit in tactic.units:
-        if unit.doll_id is None:
-            continue
-        actions = list(profiles.get(int(unit.doll_id), []))
+        actions = _normalize_actions(getattr(unit, "skill_cycle", []))
         if not actions:
             continue
         by_unit.append((unit, actions))
@@ -183,3 +181,4 @@ def apply_skill_cycles_to_tactic(tactic, store: DollSkillCycleStore) -> bool:
                 step.cycle_auto = bool(composed)
                 changed = True
     return changed
+

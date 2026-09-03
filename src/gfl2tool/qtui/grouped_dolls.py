@@ -183,8 +183,11 @@ class ElementGroupedDollView(QWidget):
         proxy.sort(0)
 
         view = _AutoHeightDollListView(section, grid_size=grid_size)
-        if self.multi_select:
-            view.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
+        view.setSelectionMode(
+            QAbstractItemView.SelectionMode.MultiSelection
+            if self.multi_select
+            else QAbstractItemView.SelectionMode.SingleSelection
+        )
         delegate = DollCardDelegate(
             view,
             card_size=card_size,
@@ -249,9 +252,21 @@ class ElementGroupedDollView(QWidget):
         if not current.isValid():
             return
         if not self.multi_select:
+            # Every element section owns an independent QListView.  Clearing only
+            # the selection leaves the old view's current index alive, which can
+            # make two cards look selected after returning from a modal dialog and
+            # then choosing a Doll in another element section.  Clear both the
+            # selection and current index so the grouped browser behaves like one
+            # logical single-selection view.
             for view in self._views.values():
-                if view is not owner:
-                    view.clearSelection()
+                if view is owner:
+                    continue
+                selection = view.selectionModel()
+                if selection is not None:
+                    selection.clearSelection()
+                    selection.setCurrentIndex(
+                        QModelIndex(), QItemSelectionModel.SelectionFlag.NoUpdate
+                    )
         entry = current.data(ENTRY_ROLE) or {}
         if entry:
             self.entrySelected.emit(dict(entry))
@@ -299,7 +314,14 @@ class ElementGroupedDollView(QWidget):
 
     def clear_selection(self) -> None:
         for view in self._views.values():
-            view.clearSelection()
+            selection = view.selectionModel()
+            if selection is None:
+                continue
+            selection.clearSelection()
+            if not self.multi_select:
+                selection.setCurrentIndex(
+                    QModelIndex(), QItemSelectionModel.SelectionFlag.NoUpdate
+                )
 
     def select_many_by(self, field: str, values: set[Any]) -> int:
         wanted = set(values)
@@ -325,6 +347,8 @@ class ElementGroupedDollView(QWidget):
         return count
 
     def select_by(self, field: str, value: Any) -> bool:
+        if not self.multi_select:
+            self.clear_selection()
         for element in (*ELEMENT_ORDER, "__unknown__"):
             section = self._sections[element]
             proxy = self._proxies[element]

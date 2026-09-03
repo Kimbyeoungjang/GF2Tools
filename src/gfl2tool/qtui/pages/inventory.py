@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
     QFileDialog,
     QFrame,
     QHBoxLayout,
+    QInputDialog,
     QLabel,
     QLineEdit,
     QMessageBox,
@@ -25,6 +26,7 @@ from ... import reference
 from ...repository import Repository
 from ...services.doll_categories import DollCategoryStore
 from ...services.doll_skill_cycles import DollSkillCycleStore
+from ...services.formation_preferences import FormationMemberPreferenceStore, formation_cycle_candidates
 from ...services.tactic_equipment import ImportedEquipmentStore, TacticEquipmentCatalog
 from ...services.remolding_csv import (
     default_remoldings_csv_name,
@@ -58,6 +60,7 @@ class InventoryPage(DeferredRefreshPage):
         self.pool = QThreadPool.globalInstance()
         self.category_store = DollCategoryStore(repo.path.parent)
         self.skill_cycle_store = DollSkillCycleStore(repo.path.parent)
+        self.formation_cycle_store = FormationMemberPreferenceStore(repo.path.parent)
 
         self._selected_doll_id: int | None = None
         self._selected_remolding_uid: str = ""
@@ -797,12 +800,54 @@ class InventoryPage(DeferredRefreshPage):
             QMessageBox.information(self, "스킬 사이클", "먼저 인형을 선택하세요.")
             return
         row = dict(entry.get("row") or {})
+        doll_id = int(entry.get("doll_id") or 0)
         DollSkillCycleDialog(
             self.skill_cycle_store,
-            doll_id=int(entry.get("doll_id") or 0),
+            doll_id=doll_id,
             doll_name=str(entry.get("name") or "인형"),
             parent=self,
+            sync_from_label="제대 사이클 불러오기…",
+            sync_from=lambda did=doll_id: self._choose_formation_cycle(did),
+            sync_to_label="제대 사이클에 저장…",
+            sync_to=lambda actions, did=doll_id: self._save_to_formation_cycle(did, actions),
         ).exec()
+
+    def _formation_cycle_choice(self, doll_id: int, *, require_existing: bool) -> dict[str, Any] | None:
+        candidates = formation_cycle_candidates(
+            self.repo, self.formation_cycle_store, doll_id, include_empty=not require_existing
+        )
+        if not candidates:
+            QMessageBox.information(
+                self, "제대 스킬 사이클",
+                "이 인형에 저장된 제대 전용 사이클이 없습니다." if require_existing
+                else "이 인형이 배치된 저장 제대를 찾지 못했습니다.",
+            )
+            return None
+        labels = [
+            f"{row['plan_name']} · {int(row['position'])}번 슬롯 · "
+            + (f"T1~T{len(row['actions'])}" if row["actions"] else "사이클 미설정")
+            for row in candidates
+        ]
+        selected, ok = QInputDialog.getItem(
+            self, "제대 스킬 사이클", "대상 제대를 선택하세요.", labels, 0, False
+        )
+        if not ok:
+            return None
+        index = labels.index(str(selected)) if str(selected) in labels else -1
+        return candidates[index] if index >= 0 else None
+
+    def _choose_formation_cycle(self, doll_id: int) -> list[str] | None:
+        choice = self._formation_cycle_choice(doll_id, require_existing=True)
+        return list(choice.get("actions") or []) if choice else None
+
+    def _save_to_formation_cycle(self, doll_id: int, actions: list[str]) -> bool:
+        choice = self._formation_cycle_choice(doll_id, require_existing=False)
+        if not choice:
+            return False
+        self.formation_cycle_store.set_skill_actions(
+            int(choice["plan_id"]), int(choice["position"]), int(doll_id), actions
+        )
+        return True
 
     def _selected_character_key(self) -> str:
         if self._selected_doll_id is None:

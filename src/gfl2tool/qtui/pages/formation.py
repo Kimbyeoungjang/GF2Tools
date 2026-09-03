@@ -394,10 +394,22 @@ class FormationPage(DeferredRefreshPage):
         doll_id = int(member.get("doll_id") or 0)
         name = str(self._doll_info().get(doll_id, {}).get("name") or member.get("doll_name") or doll_id)
         adapter = FormationSkillCycleAdapter(
-            self.member_preferences, self.plan_id, position, doll_id, fallback_store=self.global_skill_cycles
+            self.member_preferences, self.plan_id, position, doll_id
         )
-        dialog = DollSkillCycleDialog(adapter, doll_id=doll_id, doll_name=f"{name} · 이 제대 전용", parent=self)
-        dialog.setToolTip("저장하면 이 제대 슬롯에서만 사용할 사이클로 보관됩니다. 처음에는 인형 전역 사이클을 불러옵니다.")
+        dialog = DollSkillCycleDialog(
+            adapter,
+            doll_id=doll_id,
+            doll_name=f"{name} · 이 제대 전용",
+            parent=self,
+            sync_from_label="일반 사이클 불러오기",
+            sync_from=lambda: self.global_skill_cycles.actions_for(doll_id),
+            sync_to_label="일반 사이클에 저장",
+            sync_to=lambda actions: self.global_skill_cycles.set_actions(doll_id, actions),
+        )
+        dialog.setToolTip(
+            "이 제대 슬롯의 사이클과 보유 현황의 일반 사이클은 기본적으로 별도 저장됩니다. "
+            "필요할 때만 아래 동기화 버튼으로 값을 복사하세요."
+        )
         dialog.exec()
 
     def _render_members(self, plan: dict | None) -> None:

@@ -111,21 +111,43 @@ class FormationSkillCycleAdapter:
 
     def __init__(
         self, store: FormationMemberPreferenceStore, plan_id: int, position: int, doll_id: int,
-        *, fallback_store=None,
     ):
         self.store = store
         self.plan_id = int(plan_id)
         self.position = int(position)
         self.doll_id = int(doll_id)
-        self.fallback_store = fallback_store
 
     def actions_for(self, _doll_id: int | None) -> list[str]:
-        local = self.store.skill_actions(self.plan_id, self.position, self.doll_id)
-        if local:
-            return local
-        if self.fallback_store is not None:
-            return list(self.fallback_store.actions_for(self.doll_id))
-        return []
+        return self.store.skill_actions(self.plan_id, self.position, self.doll_id)
 
     def set_actions(self, _doll_id: int, actions: list[str]) -> Path:
         return self.store.set_skill_actions(self.plan_id, self.position, self.doll_id, actions)
+
+
+def formation_cycle_candidates(
+    repo, store: FormationMemberPreferenceStore, doll_id: int, *, include_empty: bool = False
+) -> list[dict[str, Any]]:
+    """Return saved formation slots for one Doll and their local cycles."""
+    out: list[dict[str, Any]] = []
+    rows = repo.con.execute(
+        """SELECT p.id AS plan_id,p.name AS plan_name,m.position
+           FROM formation_members AS m
+           JOIN formation_plans AS p ON p.id=m.plan_id
+           WHERE m.doll_id=?
+           ORDER BY p.updated_at DESC,p.id DESC,m.position""",
+        (int(doll_id),),
+    )
+    for raw in rows:
+        plan_id = int(raw["plan_id"])
+        position = int(raw["position"])
+        actions = store.skill_actions(plan_id, position, int(doll_id))
+        if not actions and not include_empty:
+            continue
+        out.append({
+            "plan_id": plan_id,
+            "plan_name": str(raw["plan_name"] or f"제대 {plan_id}"),
+            "position": position,
+            "actions": actions,
+        })
+    return out
+

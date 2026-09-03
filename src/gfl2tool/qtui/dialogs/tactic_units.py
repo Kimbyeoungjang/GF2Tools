@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
     QDialog,
     QFormLayout,
     QHBoxLayout,
+    QInputDialog,
     QLabel,
     QListWidget,
     QListWidgetItem,
@@ -22,12 +23,30 @@ from PySide6.QtWidgets import (
 
 from ...tactics import MAX_TACTIC_UNITS, TacticUnit
 from ...services.doll_skill_cycles import DollSkillCycleStore
+from ...services.formation_preferences import FormationMemberPreferenceStore, formation_cycle_candidates
+from ...services.formations import FormationService
 from ..data import OwnedDollCatalog
 from ..dialogs.doll_picker import DollPickerDialog
 from ..dialogs.doll_skill_cycles import DollSkillCycleDialog
 from ..images import PortraitLoader
 from ..rich_text import game_markup_to_qt_html
 from ..widgets import dialog_layout, help_icon, page_title, section_panel
+
+
+class _TacticUnitSkillCycleAdapter:
+    def __init__(self, unit: TacticUnit):
+        self.unit = unit
+
+    def actions_for(self, _doll_id: int | None) -> list[str]:
+        return list(self.unit.skill_cycle)
+
+    def set_actions(self, _doll_id: int, actions: list[str]):
+        self.unit.skill_cycle = [str(value or "").strip()[:240] for value in actions[:64]]
+        while self.unit.skill_cycle and not self.unit.skill_cycle[-1]:
+            self.unit.skill_cycle.pop()
+        if not self.unit.skill_cycle:
+            self.unit.skill_cycle_source = ""
+        return None
 
 
 class TacticUnitsDialog(QDialog):
@@ -50,6 +69,8 @@ class TacticUnitsDialog(QDialog):
         self.portraits = portraits
         self.equipment_data = dict(equipment_data or {})
         self.skill_cycle_store = DollSkillCycleStore(repo.path.parent)
+        self.formation_cycle_store = FormationMemberPreferenceStore(repo.path.parent)
+        self.formation_service = FormationService(repo)
         self.units = [TacticUnit.from_dict(asdict(unit)) for unit in units]
         self.result_units = [TacticUnit.from_dict(asdict(unit)) for unit in units]
         self._updating = False
@@ -83,15 +104,18 @@ class TacticUnitsDialog(QDialog):
 
         actions = QHBoxLayout()
         add = QPushButton("+ 인형 여러 개")
+        import_formation = QPushButton("제대에서 가져오기…")
         move_up = QPushButton("↑ 위로")
         move_down = QPushButton("↓ 아래로")
         remove = QPushButton("선택 제거")
         remove.setObjectName("DangerButton")
         add.clicked.connect(self._add_units)
+        import_formation.clicked.connect(self._import_from_formation)
         move_up.clicked.connect(lambda: self._move_unit(-1))
         move_down.clicked.connect(lambda: self._move_unit(1))
         remove.clicked.connect(self._remove_unit)
         actions.addWidget(add)
+        actions.addWidget(import_formation)
         actions.addWidget(move_up)
         actions.addWidget(move_down)
         actions.addWidget(remove)
@@ -112,16 +136,26 @@ class TacticUnitsDialog(QDialog):
         self.apply_imported.clicked.connect(self._apply_imported_values)
         right_layout.addWidget(self.apply_imported)
 
-        self.skill_cycle_status = QLabel("스킬 사이클 미설정")
+        self.skill_cycle_status = QLabel("이 택틱에서는 스킬 사이클 미지정")
         self.skill_cycle_status.setObjectName("Muted")
         self.skill_cycle_status.setWordWrap(True)
         right_layout.addWidget(self.skill_cycle_status)
-        self.edit_skill_cycles = QPushButton("T1~Tn 스킬 사이클 편집…")
-        self.edit_skill_cycles.setToolTip(
-            "이 인형의 T1~Tn 반복 행동을 저장합니다. 택틱 작성 시 자동 적용됩니다."
-        )
+        cycle_row = QHBoxLayout()
+        self.load_formation_cycle = QPushButton("제대 사이클 불러오기…")
+        self.load_general_cycle = QPushButton("일반 사이클 불러오기")
+        self.edit_skill_cycles = QPushButton("직접 편집…")
+        self.clear_skill_cycles = QPushButton("비우기")
+        self.load_formation_cycle.setToolTip("제대 편성에서 이 인형에 별도로 저장한 사이클을 선택해 이 택틱에 복사합니다.")
+        self.load_general_cycle.setToolTip("보유 현황에서 이 인형에 저장한 일반 사이클을 이 택틱에 복사합니다.")
+        self.edit_skill_cycles.setToolTip("이 택틱에서만 사용할 T1~Tn 사이클을 직접 편집합니다.")
+        self.clear_skill_cycles.setToolTip("이 택틱에서 불러온 사이클만 비웁니다. 원본 일반/제대 사이클은 삭제하지 않습니다.")
+        self.load_formation_cycle.clicked.connect(self._load_formation_cycle)
+        self.load_general_cycle.clicked.connect(self._load_general_cycle)
         self.edit_skill_cycles.clicked.connect(self._edit_skill_cycles)
-        right_layout.addWidget(self.edit_skill_cycles)
+        self.clear_skill_cycles.clicked.connect(self._clear_skill_cycle)
+        for button in (self.load_formation_cycle, self.load_general_cycle, self.edit_skill_cycles, self.clear_skill_cycles):
+            cycle_row.addWidget(button)
+        right_layout.addLayout(cycle_row)
         right_layout.addStretch(1)
         split.addWidget(right)
         split.setStretchFactor(0, 2)
@@ -221,6 +255,8 @@ class TacticUnitsDialog(QDialog):
             parts.append(f"고유 {len(unit.unique_keys)}")
         if unit.expansion_level:
             parts.append(f"도약 {unit.expansion_level}단계")
+        if unit.skill_cycle:
+            parts.append(f"사이클 T{len(unit.skill_cycle)}")
         return " · ".join(parts)
 
     def _rebuild_list(self, *, select: int = -1) -> None:
@@ -280,6 +316,53 @@ class TacticUnitsDialog(QDialog):
         self._rebuild_list(select=len(self.units) - 1)
         if added == 0:
             QMessageBox.information(self, "사용 인형", "선택한 인형은 이미 모두 등록되어 있습니다.")
+
+    def _import_from_formation(self) -> None:
+        plans = self.formation_service.list()
+        if not plans:
+            QMessageBox.information(self, "제대에서 가져오기", "저장된 제대가 없습니다. 먼저 제대 편성에서 제대를 만들어 주세요.")
+            return
+        labels = [f"{row['name']} · {int(row.get('member_count') or 0)}명" for row in plans]
+        selected, ok = QInputDialog.getItem(
+            self, "제대에서 가져오기", "사용 인형을 가져올 제대를 선택하세요.", labels, 0, False
+        )
+        if not ok or str(selected) not in labels:
+            return
+        plan = self.formation_service.get(int(plans[labels.index(str(selected))]['id']))
+        members = sorted(plan.get("members") or [], key=lambda row: int(row.get("position") or 0))[:MAX_TACTIC_UNITS]
+        if not members:
+            QMessageBox.information(self, "제대에서 가져오기", "선택한 제대에 인형이 없습니다.")
+            return
+        if self.units:
+            answer = QMessageBox.question(
+                self, "제대에서 가져오기",
+                "현재 택틱의 사용 인형 목록을 선택한 제대 인형으로 교체할까요?\n"
+                "스킬 사이클은 자동으로 불러오지 않고 빈칸으로 유지됩니다.",
+            )
+            if answer != QMessageBox.StandardButton.Yes:
+                return
+        entries = {
+            int(row.get("doll_id")): dict(row)
+            for row in self.catalog.entries_with_portraits()
+            if row.get("doll_id") is not None
+        }
+        imported: list[TacticUnit] = []
+        plan_id = int(plan.get("id") or 0)
+        for member in members:
+            doll_id = int(member.get("doll_id") or 0)
+            if doll_id <= 0:
+                continue
+            entry = entries.get(doll_id, {})
+            owned = dict(entry.get("row") or {})
+            imported.append(TacticUnit(
+                doll_id=doll_id,
+                name=str(entry.get("name") or member.get("doll_name") or doll_id),
+                rank=max(0, min(6, int(owned.get("rank") or 0))),
+                formation_plan_id=plan_id or None,
+                formation_position=int(member.get("position") or 0),
+            ))
+        self.units = imported
+        self._rebuild_list(select=0)
 
     def _remove_unit(self) -> None:
         row = self.list.currentRow()
@@ -397,8 +480,9 @@ class TacticUnitsDialog(QDialog):
         self.expansion_level.setCurrentIndex(0)
         self.imported_status.setText("가져온 장착값 없음")
         self.apply_imported.setEnabled(False)
-        self.skill_cycle_status.setText("스킬 사이클 미설정")
-        self.edit_skill_cycles.setEnabled(False)
+        self.skill_cycle_status.setText("이 택틱에서는 스킬 사이클 미지정")
+        for button in (self.load_formation_cycle, self.load_general_cycle, self.edit_skill_cycles, self.clear_skill_cycles):
+            button.setEnabled(False)
 
     def _selected(self, row: int) -> None:
         self._updating = True
@@ -428,7 +512,8 @@ class TacticUnitsDialog(QDialog):
             )
             self.expansion_level.setCurrentIndex(max(0, min(2, int(unit.expansion_level))))
             self._update_imported_status(imported)
-            self.edit_skill_cycles.setEnabled(unit.doll_id is not None)
+            for button in (self.load_formation_cycle, self.load_general_cycle, self.edit_skill_cycles, self.clear_skill_cycles):
+                button.setEnabled(unit.doll_id is not None)
             self._refresh_skill_cycle_status(unit)
         finally:
             self._updating = False
@@ -451,27 +536,74 @@ class TacticUnitsDialog(QDialog):
 
     def _refresh_skill_cycle_status(self, unit: TacticUnit) -> None:
         if unit.doll_id is None:
-            self.skill_cycle_status.setText("인형 ID가 없어 스킬 사이클을 저장할 수 없습니다.")
+            self.skill_cycle_status.setText("인형 ID가 없어 스킬 사이클을 사용할 수 없습니다.")
             return
-        actions = self.skill_cycle_store.actions_for(int(unit.doll_id))
+        actions = list(unit.skill_cycle)
         if not actions:
-            self.skill_cycle_status.setText("스킬 사이클 미설정")
+            self.skill_cycle_status.setText("이 택틱에서는 스킬 사이클 미지정 · 필요할 때 아래 버튼으로 불러오세요.")
             return
         filled = sum(1 for action in actions if str(action).strip())
-        self.skill_cycle_status.setText(f"저장됨 · T1~T{len(actions)} · 행동 {filled}개")
+        source = str(unit.skill_cycle_source or "직접 편집")
+        self.skill_cycle_status.setText(f"{source} · T1~T{len(actions)} · 행동 {filled}개")
 
     def _edit_skill_cycles(self) -> None:
         unit = self._current()
         if unit is None or unit.doll_id is None:
             return
+        adapter = _TacticUnitSkillCycleAdapter(unit)
         dialog = DollSkillCycleDialog(
-            self.skill_cycle_store,
-            doll_id=int(unit.doll_id),
-            doll_name=unit.name,
-            parent=self,
+            adapter, doll_id=int(unit.doll_id), doll_name=f"{unit.name} · 이 택틱 전용", parent=self
         )
         if dialog.exec() == QDialog.DialogCode.Accepted:
+            if unit.skill_cycle:
+                unit.skill_cycle_source = "직접 편집"
             self._refresh_skill_cycle_status(unit)
+
+    def _load_general_cycle(self) -> None:
+        unit = self._current()
+        if unit is None or unit.doll_id is None:
+            return
+        actions = self.skill_cycle_store.actions_for(int(unit.doll_id))
+        if not actions:
+            QMessageBox.information(self, "일반 스킬 사이클", "보유 현황에 저장된 일반 사이클이 없습니다.")
+            return
+        unit.skill_cycle = list(actions)
+        unit.skill_cycle_source = "일반 사이클"
+        self._refresh_skill_cycle_status(unit)
+
+    def _load_formation_cycle(self) -> None:
+        unit = self._current()
+        if unit is None or unit.doll_id is None:
+            return
+        candidates = formation_cycle_candidates(self.repo, self.formation_cycle_store, int(unit.doll_id))
+        if not candidates:
+            QMessageBox.information(self, "제대 스킬 사이클", "이 인형에 저장된 제대 전용 사이클이 없습니다.")
+            return
+        labels = [f"{row['plan_name']} · {int(row['position'])}번 슬롯 · T1~T{len(row['actions'])}" for row in candidates]
+        default_index = 0
+        for index, row in enumerate(candidates):
+            if unit.formation_plan_id == int(row['plan_id']) and unit.formation_position == int(row['position']):
+                default_index = index
+                break
+        selected, ok = QInputDialog.getItem(
+            self, "제대 스킬 사이클", "불러올 제대 사이클을 선택하세요.", labels, default_index, False
+        )
+        if not ok or str(selected) not in labels:
+            return
+        row = candidates[labels.index(str(selected))]
+        unit.skill_cycle = list(row['actions'])
+        unit.skill_cycle_source = f"제대 · {row['plan_name']}"[:120]
+        unit.formation_plan_id = int(row['plan_id'])
+        unit.formation_position = int(row['position'])
+        self._refresh_skill_cycle_status(unit)
+
+    def _clear_skill_cycle(self) -> None:
+        unit = self._current()
+        if unit is None:
+            return
+        unit.skill_cycle = []
+        unit.skill_cycle_source = ""
+        self._refresh_skill_cycle_status(unit)
 
     @staticmethod
     def _selected_values(combos: list[QComboBox]) -> list[str]:
