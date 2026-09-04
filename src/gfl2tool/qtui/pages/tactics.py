@@ -28,7 +28,7 @@ from PySide6.QtWidgets import (
 from ...atomic_io import atomic_write_bytes, atomic_write_json
 from ...repository import Repository
 from ...services.tactic_equipment import TacticEquipmentCatalog
-from ...services.doll_skill_cycles import apply_skill_cycles_to_tactic
+from ...services.doll_skill_cycles import replace_skill_cycles_in_tactic
 from ...tactic_image_import import TacticImageImportResult, import_tactic_image
 from ...tactics import (
     MAX_STEPS,
@@ -222,6 +222,14 @@ class TacticsPage(DeferredRefreshPage):
         self.manage_roster.setObjectName("AccentButton")
         self.manage_roster.clicked.connect(self._manage_roster)
         layout.addWidget(self.manage_roster)
+
+        self.replace_skill_cycle = QPushButton("내 인형 사이클로 교체…")
+        self.replace_skill_cycle.setToolTip(
+            "사용 인형 관리에서 각 인형에 불러온 일반/제대/직접 사이클을 기준으로 "
+            "현재 택틱의 T1~Tn 스킬 사이클 문구만 교체합니다. OCR/불러오기 직후에도 자동 실행하지 않습니다."
+        )
+        self.replace_skill_cycle.clicked.connect(self._replace_skill_cycle_from_roster)
+        layout.addWidget(self.replace_skill_cycle)
         return panel
 
     def _build_editor_form(self, layout) -> None:
@@ -717,12 +725,49 @@ class TacticsPage(DeferredRefreshPage):
                         marker.label = old.display_label() if old is not None else (marker.label or "?")
                         marker.unit_key = ""
         tactic.units = list(dialog.result_units)
-        cycle_changed = apply_skill_cycles_to_tactic(tactic)
         self._refresh_roster_summary()
-        if cycle_changed:
-            self._refresh_steps(select=max(0, self.step_list.currentRow()))
         self.grid.update()
         self._queue_save()
+
+    def _replace_skill_cycle_from_roster(self) -> None:
+        tactic = self._current_tactic()
+        if tactic is None:
+            QMessageBox.information(self, "스킬 사이클 교체", "먼저 택틱을 만들거나 선택해 주세요.")
+            return
+        if not tactic.units:
+            QMessageBox.information(
+                self,
+                "스킬 사이클 교체",
+                "먼저 '사용 인형 · 장비 관리'에서 이 택틱을 내 인형과 연결해 주세요.",
+            )
+            return
+        linked = [unit for unit in tactic.units if any(str(value or "").strip() for value in unit.skill_cycle)]
+        if not linked:
+            QMessageBox.information(
+                self,
+                "스킬 사이클 교체",
+                "현재 택틱 사용 인형에 불러온 사이클이 없습니다.\n"
+                "인형별로 '제대 사이클 불러오기', '일반 사이클 불러오기' 또는 '직접 편집'을 먼저 사용해 주세요.",
+            )
+            return
+        answer = QMessageBox.question(
+            self,
+            "내 인형 사이클로 교체",
+            f"{len(linked)}명의 현재 택틱용 사이클로 T1~Tn 문구를 교체할까요?\n\n"
+            "OCR/JSON에서 불러온 기존 스킬 사이클 문구는 대체되지만 격자, 배치, 엄폐물, 메모는 그대로 유지됩니다.",
+        )
+        if answer != QMessageBox.StandardButton.Yes:
+            return
+        if not replace_skill_cycles_in_tactic(tactic):
+            QMessageBox.information(self, "스킬 사이클 교체", "교체할 스킬 사이클 변경사항이 없습니다.")
+            return
+        self._refresh_steps(select=max(0, self.step_list.currentRow()))
+        self._queue_save()
+        QMessageBox.information(
+            self,
+            "스킬 사이클 교체",
+            f"현재 택틱의 스킬 사이클을 내 인형 {len(linked)}명의 설정으로 교체했습니다.",
+        )
 
     def _open_visual_settings(self) -> None:
         TacticVisualSettingsDialog(self.settings, on_changed=self._visuals_changed, parent=self).exec()

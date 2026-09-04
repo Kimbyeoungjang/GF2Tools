@@ -173,6 +173,80 @@ class OwnedDollCatalog:
             entry["gacha_art_path"] = resolve_gacha_art_path(self.repo, int(entry.get("doll_id") or 0))
         return entries
 
+    def all_reference_entries_with_portraits(self) -> list[dict[str, Any]]:
+        """Return owned + program-catalog Dolls for manual/tactic pickers.
+
+        Fresh installs can have a complete REST/offline program catalog while
+        the user-owned ``dolls`` table is still empty.  Building the unowned
+        rows here keeps those pickers on the same resolver and asset-cache path
+        as the normal inventory instead of falling back to retired illustration
+        locations.
+        """
+        owned = {int(row.get("doll_id") or 0): dict(row) for row in self.entries_with_portraits()}
+        factor_names = reference.remolding_rules().get("factor_names", {})
+        element_names = reference.remolding_rules().get("element_names", {})
+        display_names = reference.bundled_doll_display_names()
+        program = reference.program_dolls()
+        doll_ids = set(display_names) | set(program) | set(owned)
+        duty_to_factor = {
+            "센티널": "sentinel", "센티넬": "sentinel", "뱅가드": "vanguard",
+            "불워크": "bulwark", "서포트": "support",
+        }
+        rows: list[dict[str, Any]] = []
+        for did in doll_ids:
+            if did <= 0:
+                continue
+            existing = owned.get(int(did))
+            if existing is not None:
+                entry = dict(existing)
+                entry["portrait_path"] = str(entry.get("portrait_path") or "")
+                entry["owned"] = True
+            else:
+                key = self.resolver.character_key_for_doll(int(did))
+                try:
+                    char = self.resolver.recommendation.get_character(key) if key else None
+                except ValueError:
+                    char = None
+                program_meta = dict(program.get(int(did), {}) or {})
+                factor = str(
+                    (char or {}).get("dollType")
+                    or duty_to_factor.get(str(program_meta.get("duty_ko") or ""), "")
+                )
+                element = str((char or {}).get("elementType") or program_meta.get("element_type") or "")
+                name = str(display_names.get(int(did)) or program_meta.get("name_ko") or f"인형 {did}")
+                portrait = remote_asset_cache_path(self.repo.path.parent, int(did), kind="portrait")
+                entry = {
+                    "row": {"doll_id": int(did), "name": name, "level": 60, "rank": 0},
+                    "doll_id": int(did),
+                    "name": name,
+                    "character_key": key,
+                    "character": char,
+                    "factor_type": factor,
+                    "factor_label": str(factor_names.get(factor, factor)) if factor else "분류 미확인",
+                    "element_type": element,
+                    "element_label": str(element_names.get(element, element)) if element else "속성 미확인",
+                    "favorite": False,
+                    "program_meta": program_meta,
+                    "weapon_type_label": str(program_meta.get("weapon_type_ko") or ""),
+                    "rarity": int(program_meta.get("rarity") or 0),
+                    "portrait_path": str(portrait),
+                    "gacha_art_path": str(resolve_gacha_art_path(self.repo, int(did)) or ""),
+                    "owned": False,
+                }
+            entry["search_text"] = " ".join((
+                str(entry.get("name") or ""), str(did),
+                str(entry.get("factor_label") or ""), str(entry.get("element_label") or ""),
+                "보유" if entry.get("owned") else "미보유",
+            )).casefold()
+            entry["sort_key"] = (
+                0 if entry.get("owned") else 1,
+                str(entry.get("name") or "").casefold(),
+                int(did),
+            )
+            rows.append(entry)
+        rows.sort(key=lambda row: row.get("sort_key") or (1, "", 0))
+        return rows
+
 
 def resolve_gacha_art_path(repo: Repository, doll_id: int) -> Path | None:
     if int(doll_id) <= 0:

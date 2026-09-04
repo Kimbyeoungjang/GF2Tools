@@ -266,59 +266,18 @@ class DollPickerDialog(QDialog):
         return selected
 
     def _rebuild_entries(self, preserve_id: int | None = None) -> None:
-        entries: list[dict] = []
-        owned = {int(row.get("doll_id") or 0): dict(row) for row in self.catalog.entries_with_portraits()}
         if self.include_unowned:
-            factor_names = reference.remolding_rules().get("factor_names", {})
-            element_names = reference.remolding_rules().get("element_names", {})
-            illustration_dir = self.repo.path.parent / "master_data" / "illustrations"
-            for did, name in sorted(
-                reference.bundled_doll_display_names().items(),
-                key=lambda item: str(item[1]).casefold(),
-            ):
-                existing = owned.get(int(did))
-                if existing is not None:
-                    entry = dict(existing)
-                    path = entry.get("portrait_path")
-                    entry["portrait_path"] = str(path) if path else ""
-                    entry["owned"] = True
-                else:
-                    key = self.catalog.resolver.character_key_for_doll(int(did))
-                    try:
-                        char = self.catalog.resolver.recommendation.get_character(key) if key else None
-                    except ValueError:
-                        char = None
-                    factor = str((char or {}).get("dollType") or "")
-                    element = str((char or {}).get("elementType") or "")
-                    portrait = illustration_dir / f"doll_{int(did)}.png"
-                    entry = {
-                        "row": {"doll_id": int(did), "name": str(name), "level": 60, "rank": 0},
-                        "doll_id": int(did),
-                        "name": str(name),
-                        "character_key": key,
-                        "character": char,
-                        "factor_type": factor,
-                        "factor_label": str(factor_names.get(factor, factor)) if factor else "분류 미확인",
-                        "element_type": element,
-                        "element_label": str(element_names.get(element, element)) if element else "속성 미확인",
-                        "favorite": False,
-                        "portrait_path": str(portrait),
-                        "owned": False,
-                    }
-                entry["search_text"] = " ".join((
-                    str(entry.get("name") or ""), str(did),
-                    str(entry.get("factor_label") or ""), str(entry.get("element_label") or ""),
-                    "보유" if entry.get("owned") else "미보유",
-                )).casefold()
-                entry["sort_key"] = (0 if entry.get("owned") else 1, str(entry.get("name") or "").casefold(), int(did))
-                entries.append(entry)
+            entries = [dict(row) for row in self.catalog.all_reference_entries_with_portraits()]
         else:
-            for raw in owned.values():
+            entries = []
+            for raw in self.catalog.entries_with_portraits():
                 entry = dict(raw)
                 path = entry.get("portrait_path")
                 entry["portrait_path"] = str(path) if path else ""
                 entry["owned"] = True
-                entry["sort_key"] = (0, str(entry.get("name") or "").casefold(), int(entry.get("doll_id") or 0))
+                entry["sort_key"] = (
+                    0, str(entry.get("name") or "").casefold(), int(entry.get("doll_id") or 0)
+                )
                 entries.append(entry)
         self.model.set_entries(entries)
         if preserve_id is not None and hasattr(self, "groups"):

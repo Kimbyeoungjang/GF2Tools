@@ -20,7 +20,6 @@ from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
     QListWidget,
-    QListWidgetItem,
     QMessageBox,
     QPushButton,
     QSpinBox,
@@ -32,7 +31,7 @@ from PySide6.QtWidgets import (
 from .. import reference
 from ..models import Doll, Remolding, RemoldingSlot
 from ..repository import Repository
-from ..services.ocr_import import ocr_engine_status, ocr_image, parse_inventory_ocr
+from ..services.ocr_import import ContinuousOcrGate, ocr_engine_status, ocr_image, parse_inventory_ocr
 from .data import OwnedDollCatalog
 from .dialogs.doll_picker import DollPickerDialog
 from .images import PortraitLoader
@@ -354,16 +353,19 @@ class OcrInventoryWidget(QWidget):
         self._live_enabled = False
         self._live_region: QRect | None = None
         self._live_screen_index = 0
-        self._live_last_seen: bytes | None = None
-        self._live_candidate: bytes | None = None
-        self._live_candidate_since = 0.0
-        self._live_last_ocr: bytes | None = None
+        self._live_gate = ContinuousOcrGate()
         self._live_groups: list[list[dict]] = []
+        self._live_raw_group_index: int | None = None
         self._live_snapshots = 0
         self._live_failures = 0
         self._live_timer = QTimer(self)
-        self._live_timer.setInterval(500)
+        # Screen transitions can be shorter than the old 500 ms polling period.
+        # Signature checks are cheap, so sample more frequently while keeping the
+        # expensive OCR work debounced by ContinuousOcrGate.
+        self._live_timer.setInterval(150)
         self._live_timer.timeout.connect(self._poll_live_scan)
+        self._live_next_ready_at = 0.0
+        self._live_ready_summary = ""
         self._raw_parse_timer = QTimer(self)
         self._raw_parse_timer.setSingleShot(True)
         self._raw_parse_timer.setInterval(450)
@@ -416,14 +418,18 @@ class OcrInventoryWidget(QWidget):
         self.live_status.setWordWrap(True)
         live_layout.addWidget(self.live_status)
         self.live_queue = QListWidget()
+        self.live_queue.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.live_queue.setMaximumHeight(126)
-        self.live_queue.setToolTip("각 줄은 서로 다른 화면 변화에서 인식한 리몰딩 1개 후보입니다.")
+        self.live_queue.setToolTip("각 줄은 서로 다른 화면 변화에서 인식한 리몰딩 1개 후보입니다. Shift/Ctrl로 여러 후보를 골라 삭제할 수 있습니다.")
         live_layout.addWidget(self.live_queue)
         live_actions = QHBoxLayout()
         self.live_add_all = QPushButton("대기열 전체 반영")
         self.live_add_all.setEnabled(False)
+        self.live_remove_selected = QPushButton("선택 후보 삭제")
+        self.live_remove_selected.setEnabled(False)
         self.live_clear = QPushButton("대기열 비우기")
         live_actions.addWidget(self.live_add_all)
+        live_actions.addWidget(self.live_remove_selected)
         live_actions.addWidget(self.live_clear)
         live_actions.addStretch(1)
         live_layout.addLayout(live_actions)
@@ -448,27 +454,19 @@ class OcrInventoryWidget(QWidget):
         raw_layout.addLayout(raw_actions)
         root.addWidget(raw_panel)
 
-        option_panel, option_layout = section_panel(
-            "인식된 리몰딩 옵션",
-            "두 가지 게임 리몰딩 화면의 어두운 옵션 행에 맞춘 다중 OCR 패스를 사용합니다. 같은 리몰딩의 옵션을 최대 3개 선택해 추가하세요.",
-        )
-        self.options = QListWidget()
-        self.options.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
-        option_layout.addWidget(self.options, 1)
-        add_options = QPushButton("선택 옵션 → 리몰딩 1개 추가")
-        add_options.clicked.connect(self._add_selected_options)
-        option_layout.addWidget(add_options)
-        root.addWidget(option_panel, 1)
-
         self.open_button.clicked.connect(self._choose_image)
         self.clipboard_button.clicked.connect(self._clipboard_ocr)
-        self.parse_button.clicked.connect(self._parse_text)
+        self.parse_button.clicked.connect(lambda: self._parse_text())
         self.repair_button.clicked.connect(self._repair_ocr)
         self.live_screen.currentIndexChanged.connect(self._live_screen_changed)
         self.live_region_button.clicked.connect(self._select_live_region)
         self.live_once.clicked.connect(self._recognize_live_once)
         self.live_toggle.clicked.connect(self._toggle_live_scan)
         self.live_add_all.clicked.connect(self._add_live_queue)
+        self.live_remove_selected.clicked.connect(self._remove_selected_live_queue)
+        self.live_queue.itemSelectionChanged.connect(
+            lambda: self.live_remove_selected.setEnabled(bool(self.live_queue.selectedItems()))
+        )
         self.live_clear.clicked.connect(self._clear_live_queue)
         self.refresh_ocr_status()
 
@@ -494,12 +492,6 @@ class OcrInventoryWidget(QWidget):
             Qt.TransformationMode.SmoothTransformation,
         ).convertToFormat(QImage.Format.Format_Grayscale8)
         return scaled.constBits().tobytes()[: scaled.bytesPerLine() * scaled.height()]
-
-    @staticmethod
-    def _signature_delta(left: bytes | None, right: bytes | None) -> float:
-        if left is None or right is None or len(left) != len(right) or not left:
-            return 255.0
-        return sum(abs(a - b) for a, b in zip(left, right)) / len(left)
 
     def _live_screen_changed(self, index: int) -> None:
         self.stop_continuous()
@@ -562,11 +554,10 @@ class OcrInventoryWidget(QWidget):
             )
             return
         self._live_enabled = True
-        self._live_last_seen = None
-        self._live_candidate = None
-        self._live_last_ocr = None
-        self._live_candidate_since = 0.0
+        self._live_gate.reset()
         self._live_failures = 0
+        self._live_next_ready_at = 0.0
+        self._live_ready_summary = ""
         self.live_toggle.setText("연속 인식 중지")
         self.live_status.setText("화면 감시 중 · 현재 항목부터 약 0.5초 안정되면 인식하고, 이후 작은 옵션 변화도 자동 감지합니다.")
         self._live_timer.start()
@@ -576,8 +567,12 @@ class OcrInventoryWidget(QWidget):
         self._live_timer.stop()
         if hasattr(self, "live_toggle"):
             self.live_toggle.setText("연속 인식 시작")
+        self._live_next_ready_at = 0.0
+        self._live_ready_summary = ""
         if hasattr(self, "live_status") and self._live_region is not None:
-            self.live_status.setText("연속 인식 중지됨 · 같은 영역에서 다시 시작할 수 있습니다.")
+            option_count = sum(len(group) for group in self._live_groups)
+            suffix = f" · 누적 옵션 {option_count}개" if option_count else ""
+            self.live_status.setText(f"연속 인식 중지됨{suffix} · 같은 영역에서 다시 시작할 수 있습니다.")
 
     def _grab_live_image(self):
         screen = self._selected_screen()
@@ -623,29 +618,37 @@ class OcrInventoryWidget(QWidget):
             return
         signature = self._image_signature(image)
         now = time.monotonic()
-        if self._live_last_seen is None:
-            self._live_last_seen = signature
-            self._live_candidate = signature
-            self._live_candidate_since = now
+        state, delta = self._live_gate.observe(signature, now)
+        cooldown = max(0.0, float(self._live_next_ready_at) - now)
+        if state == "ready":
+            # Do not advertise the next page until the previous OCR worker has
+            # fully finished and a short guard interval has elapsed. We still
+            # observe signatures during the guard so an impatient/fast page
+            # turn is not lost; OCR simply waits until the guard expires.
+            if cooldown > 0.0:
+                self.live_status.setText(
+                    f"인식 완료 · 다음 항목 준비 중 {cooldown:.1f}초 · "
+                    f"화면 변화량 {delta:.1f}"
+                )
+                return
+            self._live_ready_summary = ""
+            self._live_next_ready_at = 0.0
+            self._start_live_ocr(image, signature)
             return
-        delta = self._signature_delta(signature, self._live_last_seen)
-        self._live_last_seen = signature
-        if delta >= 2.4:
-            self._live_candidate = signature
-            self._live_candidate_since = now
-            self.live_status.setText(f"화면 변화 감지 · 안정화 대기 ({delta:.1f})")
+        if cooldown > 0.0:
+            suffix = " · 화면 전환도 감지 중" if state in {"changed", "stabilizing"} else ""
+            self.live_status.setText(f"인식 완료 · 다음 항목 준비 중 {cooldown:.1f}초{suffix}")
             return
-        if self._live_candidate is None or now - self._live_candidate_since < 0.55:
+        if self._live_ready_summary and state == "unchanged":
+            self.live_status.setText(f"{self._live_ready_summary} · 다음 항목으로 넘겨도 됩니다.")
+            self._live_ready_summary = ""
             return
-        if self._signature_delta(signature, self._live_candidate) >= 1.8:
-            self._live_candidate = signature
-            self._live_candidate_since = now
-            return
-        if self._signature_delta(signature, self._live_last_ocr) < 1.25:
-            self._live_candidate = None
-            return
-        self._live_candidate = None
-        self._start_live_ocr(image, signature)
+        if state in {"changed", "stabilizing"}:
+            elapsed = min(self._live_gate.settling_elapsed(now), self._live_gate.max_settle_seconds)
+            self.live_status.setText(
+                f"화면 변화 감지 · 안정화 {elapsed:.1f}/{self._live_gate.max_settle_seconds:.1f}초 · "
+                f"변화량 {delta:.1f} · 전환이 감지되면 동일 수치라도 새 항목으로 인식합니다."
+            )
 
     def _start_live_ocr(self, image, signature: bytes) -> None:
         path = self.repo.path.parent / ".ocr_live_scan.png"
@@ -666,7 +669,7 @@ class OcrInventoryWidget(QWidget):
         )
 
     def _live_ocr_failed(self, signature: bytes, error: str) -> None:
-        self._live_last_ocr = signature
+        self._live_gate.mark_ocr(signature)
         self._live_failures += 1
         self.live_status.setText(f"연속 OCR 실패 ({self._live_failures}/3) · {error}")
         if self._live_failures >= 3:
@@ -677,7 +680,7 @@ class OcrInventoryWidget(QWidget):
             )
 
     def _live_ocr_ready(self, signature: bytes, result: object) -> None:
-        self._live_last_ocr = signature
+        self._live_gate.mark_ocr(signature)
         self._live_failures = 0
         text = str(result or "").strip()
         self._live_snapshots += 1
@@ -697,18 +700,65 @@ class OcrInventoryWidget(QWidget):
                 }
                 for row in options
             ]
-            self._live_groups.append(group)
-            label = " · ".join(f"{row['name']} Lv.{row['level']}" for row in group)
-            self.live_queue.addItem(f"#{len(self._live_groups)} · {label}")
-            self.live_add_all.setEnabled(True)
-            self.live_status.setText(
-                f"연속 OCR {self._live_snapshots}회 · 리몰딩 후보 {len(self._live_groups)}개 누적 · 다음 항목으로 넘겨도 됩니다."
-            )
+            self._live_raw_group_index = self._append_live_group(group)
+            if self._live_enabled:
+                # The result callback runs just before the worker's finished
+                # callback. Do not tell the user to flip pages yet; arm that
+                # message only after _ocr_finished confirms the worker is idle.
+                self._live_ready_summary = (
+                    f"연속 OCR {self._live_snapshots}회 · 리몰딩 후보 {len(self._live_groups)}개 누적"
+                )
+                self.live_status.setText(f"{self._live_ready_summary} · 인식 마무리 중…")
+            else:
+                self._live_ready_summary = ""
+                self._live_next_ready_at = 0.0
+                self.live_status.setText(
+                    f"현재 영역 1회 OCR 완료 · 리몰딩 후보 {len(self._live_groups)}개가 대기열에 있습니다."
+                )
         else:
+            self._live_raw_group_index = None
             self.live_status.setText(
                 f"연속 OCR {self._live_snapshots}회 · 옵션 {len(options)}개 검출. 1~3개가 아니어서 자동 대기열에는 넣지 않았습니다."
             )
-        self._parse_text()
+        self._parse_text(sync_live_queue=False)
+
+    def _append_live_group(self, group: list[dict], *, suffix: str = "") -> int:
+        # Do not deduplicate by option values. Two distinct remolding pieces can
+        # legitimately have identical stats. ContinuousOcrGate suppresses a
+        # truly unchanged screen; once a page transition is observed every OCR
+        # result represents another physical item and must remain in the queue.
+        self._live_groups.append(group)
+        index = len(self._live_groups) - 1
+        label = " · ".join(f"{row['name']} Lv.{row['level']}" for row in group)
+        extra = f" · {suffix}" if suffix else ""
+        self.live_queue.addItem(f"#{index + 1} · {label}{extra}")
+        self.live_add_all.setEnabled(True)
+        return index
+
+    def _refresh_live_queue(self) -> None:
+        self.live_queue.clear()
+        for index, group in enumerate(self._live_groups, 1):
+            label = " · ".join(f"{row['name']} Lv.{row['level']}" for row in group)
+            self.live_queue.addItem(f"#{index} · {label}")
+        self.live_add_all.setEnabled(bool(self._live_groups))
+        self.live_remove_selected.setEnabled(False)
+
+    def _remove_selected_live_queue(self) -> None:
+        rows = sorted({self.live_queue.row(item) for item in self.live_queue.selectedItems()}, reverse=True)
+        if not rows:
+            return
+        edit_index = self._live_raw_group_index
+        for row in rows:
+            if 0 <= row < len(self._live_groups):
+                self._live_groups.pop(row)
+                if edit_index is not None:
+                    if row == edit_index:
+                        edit_index = None
+                    elif row < edit_index:
+                        edit_index -= 1
+        self._live_raw_group_index = edit_index
+        self._refresh_live_queue()
+        self.live_status.setText(f"선택 후보 {len(rows)}개를 삭제했습니다 · 대기열 {len(self._live_groups)}개")
 
     def _add_live_queue(self) -> None:
         if not self._live_groups:
@@ -726,8 +776,10 @@ class OcrInventoryWidget(QWidget):
 
     def _clear_live_queue(self) -> None:
         self._live_groups.clear()
+        self._live_raw_group_index = None
         self.live_queue.clear()
         self.live_add_all.setEnabled(False)
+        self.live_remove_selected.setEnabled(False)
 
     def _choose_image(self) -> None:
         path, _filter = QFileDialog.getOpenFileName(
@@ -765,32 +817,68 @@ class OcrInventoryWidget(QWidget):
         )
 
     def _ocr_ready(self, result: object) -> None:
-        self.raw_text.setPlainText(str(result or ""))
-        self._parse_text()
-
-    def _ocr_finished(self) -> None:
-        self._working = False
-        self.open_button.set_busy(False)
-        self.clipboard_button.set_busy(False)
-        self.refresh_ocr_status()
-
-    def _parse_text(self) -> None:
-        _dolls, options = parse_inventory_ocr(self.raw_text.toPlainText())
-        self.options.clear()
-        for row in options:
-            item = QListWidgetItem(f"{row.name} Lv.{row.level} · {row.source_line}")
-            item.setData(
-                Qt.ItemDataRole.UserRole,
+        self._live_raw_group_index = None
+        text = str(result or "").strip()
+        self.raw_text.blockSignals(True)
+        self.raw_text.setPlainText(text)
+        self.raw_text.blockSignals(False)
+        _dolls, options = parse_inventory_ocr(text)
+        if 1 <= len(options) <= 3:
+            group = [
                 {
                     "option_key": row.option_key,
                     "name": row.name,
                     "level": row.level,
                     "factor_type": row.factor_type,
                     "element_type": row.element_type,
-                },
+                }
+                for row in options
+            ]
+            self._live_raw_group_index = self._append_live_group(group, suffix="단발 OCR")
+            self.live_status.setText(
+                f"단발 OCR 완료 · 리몰딩 후보 {len(self._live_groups)}개가 대기열에 있습니다."
             )
-            self.options.addItem(item)
-            item.setSelected(True)
+        else:
+            self.live_status.setText(
+                f"단발 OCR 완료 · 옵션 {len(options)}개 검출. 1~3개가 아니어서 대기열에는 넣지 않았습니다."
+            )
+        self._parse_text(sync_live_queue=False)
+
+    def _ocr_finished(self) -> None:
+        self._working = False
+        self.open_button.set_busy(False)
+        self.clipboard_button.set_busy(False)
+        self.refresh_ocr_status()
+        if self._live_enabled and self._live_ready_summary:
+            # A short post-OCR guard prevents an immediate page turn from
+            # happening while the worker completion/UI callbacks are still
+            # settling. Signature polling continues during this window.
+            self._live_next_ready_at = time.monotonic() + 1.0
+            self.live_status.setText(f"{self._live_ready_summary} · 다음 항목 준비 중 1.0초")
+
+    def _parse_text(self, *, sync_live_queue: bool = True) -> None:
+        _dolls, options = parse_inventory_ocr(self.raw_text.toPlainText())
+
+        if sync_live_queue and self._live_raw_group_index is not None and 1 <= len(options) <= 3:
+            index = int(self._live_raw_group_index)
+            if 0 <= index < len(self._live_groups):
+                self._live_groups[index] = [
+                    {
+                        "option_key": row.option_key,
+                        "name": row.name,
+                        "level": row.level,
+                        "factor_type": row.factor_type,
+                        "element_type": row.element_type,
+                    }
+                    for row in options
+                ]
+                self._refresh_live_queue()
+                if 0 <= index < self.live_queue.count():
+                    self.live_queue.setCurrentRow(index)
+                self.live_status.setText(
+                    f"수정 OCR 원문 적용 · 대기열 #{index + 1} 리몰딩을 현재 값으로 갱신했습니다."
+                )
+
         self.status.setText(f"리몰딩 OCR 분석 · 옵션 {len(options)}개 후보")
         self.status.setObjectName("AccentText")
         self.status.style().unpolish(self.status)
@@ -811,34 +899,8 @@ class OcrInventoryWidget(QWidget):
             }
             for row in options
         ]
-        signature = tuple((row["option_key"], int(row["level"])) for row in group)
-        if any(
-            tuple((item["option_key"], int(item["level"])) for item in existing) == signature
-            for existing in self._live_groups
-        ):
-            QMessageBox.information(self, "OCR 원문 대기열", "같은 옵션/레벨 조합이 이미 대기열에 있습니다.")
-            return
-        self._live_groups.append(group)
-        label = " · ".join(f"{row['name']} Lv.{row['level']}" for row in group)
-        self.live_queue.addItem(f"#{len(self._live_groups)} · {label} · 수동 교정")
-        self.live_add_all.setEnabled(True)
+        self._live_raw_group_index = self._append_live_group(group, suffix="수동 교정")
         self.live_status.setText(f"수정한 OCR 원문을 대기열에 추가했습니다 · 총 {len(self._live_groups)}개")
-
-    def _add_selected_options(self) -> None:
-        selected = [dict(item.data(Qt.ItemDataRole.UserRole) or {}) for item in self.options.selectedItems()]
-        if not selected:
-            QMessageBox.information(self, "OCR 리몰딩 추가", "같은 리몰딩에 속한 옵션을 선택해 주세요.")
-            return
-        if len(selected) > 3:
-            QMessageBox.information(self, "OCR 리몰딩 추가", "한 번에 최대 3개 옵션만 한 리몰딩으로 묶을 수 있습니다.")
-            return
-        try:
-            self.repo.merge_remoldings([_manual_remolding(selected)])
-        except Exception as exc:
-            show_error(self, "OCR 리몰딩 추가 실패", exc)
-            return
-        self.dataChanged.emit()
-        QMessageBox.information(self, "OCR 리몰딩 추가", "선택한 옵션을 리몰딩 1개로 추가했습니다.")
 
     def _repair_ocr(self) -> None:
         if getattr(sys, "frozen", False):

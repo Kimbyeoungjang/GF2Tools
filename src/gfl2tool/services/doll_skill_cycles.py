@@ -125,13 +125,13 @@ class DollSkillCycleStore:
         return self.save(profiles)
 
 
-def apply_skill_cycles_to_tactic(tactic) -> bool:
-    """Compose tactic step text from cycles explicitly loaded into its roster.
+def replace_skill_cycles_in_tactic(tactic) -> bool:
+    """Explicitly replace every tactic step cycle from its linked roster.
 
-    Tactic roster entries intentionally start with no cycle.  A user may load a
-    general Doll cycle, a formation-local cycle, or type a tactic-only cycle.
-    Manual step text is never overwritten; only blank/previously-auto fields are
-    maintained by this function.
+    This operation is intentionally destructive for the *cycle text only*: imported/OCR/manual T1..Tn text is
+    replaced when the user presses the dedicated replacement button. Grid
+    markers, notes, names and dimensions stay untouched. If no roster member
+    currently has a tactic-local cycle, nothing is changed.
     """
     from ..tactics import MAX_STEPS, TacticStep
 
@@ -144,15 +144,10 @@ def apply_skill_cycles_to_tactic(tactic) -> bool:
         by_unit.append((unit, actions))
         max_turns = max(max_turns, len(actions))
     max_turns = min(MAX_STEPS, max_turns)
-    changed = False
     if max_turns <= 0:
-        for step in tactic.steps:
-            if step.cycle_auto and (step.cycle or step.cycle_auto):
-                step.cycle = ""
-                step.cycle_auto = False
-                changed = True
-        return changed
+        return False
 
+    changed = False
     while len(tactic.steps) < max_turns:
         index = len(tactic.steps)
         previous = tactic.steps[-1] if tactic.steps else None
@@ -175,10 +170,10 @@ def apply_skill_cycles_to_tactic(tactic) -> bool:
                 label = unit.display_label().strip() or "?"
                 fragments.append(action if action.startswith(label) else f"{label} {action}")
         composed = " · ".join(fragments)[:2000]
-        if step.cycle_auto or not step.cycle.strip():
-            if step.cycle != composed or step.cycle_auto != bool(composed):
-                step.cycle = composed
-                step.cycle_auto = bool(composed)
-                changed = True
+        auto = bool(composed)
+        if step.cycle != composed or step.cycle_auto != auto:
+            step.cycle = composed
+            step.cycle_auto = auto
+            changed = True
     return changed
 

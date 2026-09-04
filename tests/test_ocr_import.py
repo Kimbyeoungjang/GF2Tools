@@ -42,7 +42,7 @@ def test_inventory_ocr_parser_handles_both_remolding_detail_layouts():
     _dolls, first_options = parse_inventory_ocr(first)
     assert [(item.name, item.level) for item in first_options] == [
         ("생명 강화", 3),
-        ("탁류 내성", 3),
+        ("탁류 저항", 3),
     ]
 
     second = "Lv.3 왕좌 분쇄\nLv.2 탁류 강화\nLv.1 저격 엘리트\n"

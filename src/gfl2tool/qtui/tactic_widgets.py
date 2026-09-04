@@ -12,6 +12,7 @@ from . import theme
 from .widgets import dialog_layout
 
 
+
 _VISUALS = TacticVisualSettings()
 
 
@@ -740,19 +741,22 @@ class TacticGridWidget(QWidget):
 
 
 def _export_draw_step(painter: QPainter, tactic: Tactic, step_index: int, bounds: QRect) -> None:
-    """Draw one tactic board with the active theme/custom tactic palette.
+    """Draw one tactic board with an OCR-friendly export palette.
 
-    Empty visual overrides follow the current application theme, while user
-    overrides are applied consistently to the editor, overlay and PNG export.
+    The interactive editor/overlay follows the live theme, but exported PNGs
+    intentionally use a high-contrast light palette and stronger line weights so
+    messengers and OCR engines preserve the grid and labels more reliably.
+    User visual overrides still take precedence when explicitly configured.
     """
     if not tactic.steps:
         return
     rows, cols = tactic.grid_size(step_index)
     board = _board_geometry(bounds, rows, cols, margin=10)
-    painter.fillRect(board, QColor(_visual("background", theme.PANEL)))
+    painter.fillRect(board, QColor(_visual("background", theme.EXPORT_BACKGROUND)))
     cw = board.width() / max(1, cols)
     ch = board.height() / max(1, rows)
-    painter.setPen(QPen(QColor(_visual("grid", theme.BORDER)), 1))
+    grid_pen = QPen(QColor(_visual("grid", theme.EXPORT_GRID)), 1.35)
+    painter.setPen(grid_pen)
     for col in range(cols + 1):
         x = board.left() + col * cw
         painter.drawLine(QPointF(x, board.top()), QPointF(x, board.bottom()))
@@ -766,7 +770,7 @@ def _export_draw_step(painter: QPainter, tactic: Tactic, step_index: int, bounds
             end_row = marker.to_row if marker.to_row is not None else marker.row
             end_col = marker.to_col if marker.to_col is not None else marker.col
             painter.save()
-            painter.setPen(QPen(QColor(_visual("arrow", theme.ACCENT)), 3, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+            painter.setPen(QPen(QColor(_visual("arrow", theme.EXPORT_ARROW)), 3, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
             start = _cell_center(board, rows, cols, marker.row, marker.col)
             end = _cell_center(board, rows, cols, end_row, end_col)
             painter.drawLine(start, end)
@@ -779,12 +783,12 @@ def _export_draw_step(painter: QPainter, tactic: Tactic, step_index: int, bounds
             max(1.0, marker.height * ch - 2),
         )
         if marker.kind == "blocked":
-            painter.fillRect(rect, QColor(_visual("blocked", theme.TERRAIN_BLOCK)))
+            painter.fillRect(rect, QColor(_visual("blocked", theme.EXPORT_BLOCKED)))
             continue
         if marker.kind == "cover":
             painter.save()
             thickness = max(4.0, min(cw, ch) * 0.16)
-            painter.setPen(QPen(QColor(_visual("cover", theme.COVER)), thickness, Qt.PenStyle.SolidLine, Qt.PenCapStyle.SquareCap))
+            painter.setPen(QPen(QColor(_visual("cover", theme.EXPORT_COVER)), thickness, Qt.PenStyle.SolidLine, Qt.PenCapStyle.SquareCap))
             cell = _cell_rect(board, rows, cols, marker.row, marker.col, inset=1)
             if "N" in marker.edges:
                 painter.drawLine(QPointF(cell.left(), cell.top()), QPointF(cell.right(), cell.top()))
@@ -797,8 +801,8 @@ def _export_draw_step(painter: QPainter, tactic: Tactic, step_index: int, bounds
             painter.restore()
             continue
         if marker.kind == "boss":
-            painter.fillRect(rect, QColor(_visual("boss", theme.INFO)))
-            painter.setPen(QColor(_visual("text", theme.TEXT)))
+            painter.fillRect(rect, QColor(_visual("boss", theme.EXPORT_BOSS)))
+            painter.setPen(QColor(_visual("text", theme.EXPORT_TEXT)))
             font = QFont(painter.font())
             font.setBold(True)
             font.setPointSizeF(max(8.0, min(rect.width(), rect.height()) * 0.12))
@@ -806,11 +810,11 @@ def _export_draw_step(painter: QPainter, tactic: Tactic, step_index: int, bounds
             painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, marker.label or "보스")
             continue
         if marker.kind == "custom":
-            marker_color, fallback = "boss", theme.ACCENT
+            marker_color, fallback = "boss", theme.EXPORT_ARROW
         elif marker.kind == "summon":
-            marker_color, fallback = "summon", theme.ACCENT
+            marker_color, fallback = "summon", theme.EXPORT_SUMMON
         else:
-            marker_color, fallback = "unit", theme.TEXT
+            marker_color, fallback = "unit", theme.EXPORT_TEXT
         painter.setPen(QColor(_visual(marker_color, fallback)))
         font = QFont(painter.font())
         font.setBold(True)
@@ -820,10 +824,49 @@ def _export_draw_step(painter: QPainter, tactic: Tactic, step_index: int, bounds
         painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, (label or "*")[:12])
 
 
+def _export_step_label(step_name: str, index: int) -> str:
+    label = str(step_name or f"T{index + 1}").strip()
+    if label.replace(" ", "") == "제대배치":
+        return "제대\n배치"
+    return label
+
+
+def _export_unit_values(unit) -> tuple[str, str, str, str, str, str]:
+    return (
+        f"{unit.name or '인형'}  {int(unit.rank)}돌",
+        unit.weapon.strip() or "미입력",
+        "\n".join(unit.unique_keys) if unit.unique_keys else "미장착",
+        unit.expansion_label(include_prefix=False),
+        "\n".join(unit.common_keys) if unit.common_keys else "미장착",
+        unit.display_label(),
+    )
+
+
+def _export_text_units(value: str) -> int:
+    total = 0
+    for char in str(value):
+        if char == "\n":
+            continue
+        total += 2 if ord(char) >= 0x2E80 else 1
+    return total
+
+
+def _estimate_export_row_height(values: tuple[str, ...], col_widths: list[int]) -> int:
+    max_lines = 1
+    for value, col_w in zip(values, col_widths):
+        explicit = str(value).splitlines() or [""]
+        capacity = max(8, int(max(1, col_w - 18) / 6.6))
+        lines = 0
+        for line in explicit:
+            lines += max(1, math.ceil(_export_text_units(line) / capacity))
+        max_lines = max(max_lines, lines)
+    return max(82, min(190, 22 + max_lines * 19))
+
+
 def _draw_cycle_summary(painter: QPainter, tactic: Tactic, rect: QRect) -> None:
-    painter.setPen(QPen(QColor(theme.BORDER), 1))
-    painter.setBrush(QColor(theme.PANEL))
-    painter.drawRoundedRect(rect, 10, 10)
+    painter.setPen(QPen(QColor(theme.EXPORT_BORDER), 1.2))
+    painter.setBrush(QColor(theme.EXPORT_PANEL))
+    painter.drawRoundedRect(rect, 7, 7)
     rows = max(1, len(tactic.steps))
     top = rect.top() + 14
     left = rect.left() + 12
@@ -836,16 +879,20 @@ def _draw_cycle_summary(painter: QPainter, tactic: Tactic, rect: QRect) -> None:
         y = top + index * row_h
         if y + row_h > rect.bottom() - 4:
             break
-        painter.fillRect(QRect(left, y, label_w, row_h), QColor(theme.PANEL_ALT))
-        painter.setPen(QColor(theme.BORDER))
+        painter.fillRect(QRect(left, y, label_w, row_h), QColor(theme.EXPORT_PANEL_ALT))
+        painter.setPen(QColor(theme.EXPORT_BORDER))
         painter.drawRect(QRect(left, y, width, row_h))
         painter.drawLine(left + label_w, y, left + label_w, y + row_h)
         painter.setFont(small)
-        painter.setPen(QColor(theme.TEXT))
+        painter.setPen(QColor(theme.EXPORT_TEXT))
         bold = QFont(small)
         bold.setBold(True)
         painter.setFont(bold)
-        painter.drawText(QRect(left, y, label_w, row_h), Qt.AlignmentFlag.AlignCenter, step.name or f"T{index + 1}")
+        painter.drawText(
+            QRect(left, y, label_w, row_h),
+            Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextWordWrap,
+            _export_step_label(step.name, index),
+        )
         painter.setFont(small)
         painter.drawText(
             QRect(left + label_w + 8, y + 2, width - label_w - 14, row_h - 4),
@@ -854,15 +901,19 @@ def _draw_cycle_summary(painter: QPainter, tactic: Tactic, rect: QRect) -> None:
         )
 
 
-def render_tactic_sheet(tactic: Tactic, *, cell_panel: QSize = QSize(322, 388)) -> QImage:
-    """Render a share-friendly sheet matching common community tactic layouts.
+def render_tactic_sheet(
+    tactic: Tactic,
+    *,
+    cell_panel: QSize = QSize(322, 388),
+    export_scale: float = theme.EXPORT_SCALE,
+) -> QImage:
+    """Render the established GF2Tools tactic sheet at high pixel resolution.
 
-    * title centered at the top
-    * up to three board cards per row
-    * when skill cycles exist, a compact T1..Tn cycle table occupies the next
-      grid slot (instead of stretching every board with long prose)
-    * character build/spec rows are placed underneath the board grid
-    * a positioning-only tactic with no cycles omits all cycle UI entirely
+    The original GF2Tools layout is deliberately preserved: title, board-card
+    grid, optional cycle summary and character specification table keep their
+    existing positions. Export-specific styling only changes contrast, line
+    weight and palette so the sheet remains recognisable as GF2Tools while
+    surviving messenger recompression and OCR round-trips more reliably.
     """
     has_cycles = any(step.cycle.strip() for step in tactic.steps)
     item_count = len(tactic.steps) + (1 if has_cycles and tactic.steps else 0)
@@ -873,25 +924,44 @@ def render_tactic_sheet(tactic: Tactic, *, cell_panel: QSize = QSize(322, 388)) 
     title_h = 58
     panel_w = cell_panel.width()
     panel_h = cell_panel.height() if has_cycles else max(332, cell_panel.height() - 48)
-    specs_row_h = 74
     specs_header_h = 44
-    specs_h = specs_header_h + max(1, len(tactic.units)) * specs_row_h + 22
     width = margin * 2 + columns * panel_w + (columns - 1) * gap
+    table_w = width - margin * 2 - 20
+    ratios = (0.15, 0.18, 0.24, 0.14, 0.20, 0.09)
+    col_widths = [int(table_w * r) for r in ratios]
+    col_widths[-1] += table_w - sum(col_widths)
+    units = tactic.units or []
+    unit_values = [_export_unit_values(unit) for unit in units]
+    row_heights = [_estimate_export_row_height(values, col_widths) for values in unit_values]
+    if not row_heights:
+        row_heights = [82]
+    specs_h = specs_header_h + sum(row_heights) + 22
     grid_h = rows * panel_h + (rows - 1) * gap
     height = title_h + margin + grid_h + margin + specs_h + margin
 
-    image = QImage(width, height, QImage.Format.Format_ARGB32_Premultiplied)
-    image.fill(QColor(_visual("background", theme.BG)))
+    scale = max(1.0, float(export_scale))
+    out_w = max(1, round(width * scale))
+    out_h = max(1, round(height * scale))
+    image = QImage(out_w, out_h, QImage.Format.Format_ARGB32_Premultiplied)
+    image.fill(QColor(theme.EXPORT_BACKGROUND))
+    # Do not override the QImage DPI. QFont point sizes use the paint device DPI;
+    # forcing 300 DPI made text physically scale up inside the unchanged logical
+    # layout. Pixel resolution is improved solely through painter scaling.
     painter = QPainter(image)
     painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
+    painter.setRenderHint(QPainter.RenderHint.TextAntialiasing, True)
+    painter.scale(scale, scale)
 
     title_font = QFont(painter.font())
     title_font.setBold(True)
     title_font.setPointSize(22)
     painter.setFont(title_font)
-    painter.setPen(QColor(theme.TEXT))
+    painter.setPen(QColor(theme.EXPORT_TEXT))
     title_text = tactic.title + (f" · {tactic.category}" if tactic.category.strip() else "")
     painter.drawText(QRect(margin, 8, width - margin * 2, 42), Qt.AlignmentFlag.AlignCenter, title_text)
+    painter.setPen(QPen(QColor(theme.EXPORT_BOSS), 2.2, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+    center_x = width // 2
+    painter.drawLine(center_x - 34, 51, center_x + 34, 51)
 
     content_top = title_h + margin
     for index, step in enumerate(tactic.steps):
@@ -900,21 +970,21 @@ def render_tactic_sheet(tactic: Tactic, *, cell_panel: QSize = QSize(322, 388)) 
         left = margin + col * (panel_w + gap)
         top = content_top + row * (panel_h + gap)
         card = QRect(left, top, panel_w, panel_h)
-        painter.setPen(QPen(QColor(theme.BORDER), 1))
-        painter.setBrush(QColor(theme.PANEL))
-        painter.drawRoundedRect(card, 11, 11)
+        painter.setPen(QPen(QColor(theme.EXPORT_BORDER), 1.4))
+        painter.setBrush(QColor(theme.EXPORT_PANEL))
+        painter.drawRoundedRect(card, 7, 7)
         rows_n, cols_n = tactic.grid_size(index)
         board_bottom = 50 if has_cycles else 14
         board_rect = QRect(left + 8, top + 8, panel_w - 16, panel_h - board_bottom - 8)
         _export_draw_step(painter, tactic, index, board_rect)
         if has_cycles:
             cycle_rect = QRect(left + 8, top + panel_h - 42, panel_w - 16, 32)
-            painter.setPen(QColor(theme.BORDER))
+            painter.setPen(QColor(theme.EXPORT_BORDER))
             painter.drawRect(cycle_rect)
             cycle_font = QFont(painter.font())
             cycle_font.setPointSize(8)
             painter.setFont(cycle_font)
-            painter.setPen(QColor(theme.TEXT))
+            painter.setPen(QColor(theme.EXPORT_TEXT))
             painter.drawText(
                 cycle_rect.adjusted(7, 1, -7, -1),
                 Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextWordWrap,
@@ -924,7 +994,7 @@ def render_tactic_sheet(tactic: Tactic, *, cell_panel: QSize = QSize(322, 388)) 
         size_font = QFont(painter.font())
         size_font.setPointSize(7)
         painter.setFont(size_font)
-        painter.setPen(QColor(theme.MUTED))
+        painter.setPen(QColor(theme.EXPORT_MUTED))
         painter.drawText(QRect(left + panel_w - 56, top + 4, 48, 18), Qt.AlignmentFlag.AlignRight, f"{rows_n}×{cols_n}")
 
     if has_cycles and tactic.steps:
@@ -941,7 +1011,7 @@ def render_tactic_sheet(tactic: Tactic, *, cell_panel: QSize = QSize(322, 388)) 
     small_caps.setPointSize(8)
     small_caps.setLetterSpacing(QFont.SpacingType.AbsoluteSpacing, 1.1)
     painter.setFont(small_caps)
-    painter.setPen(QColor(theme.MUTED))
+    painter.setPen(QColor(theme.EXPORT_MUTED))
     painter.drawText(
         QRect(margin + 10, specs_top, width - margin * 2, 24),
         Qt.AlignmentFlag.AlignVCenter,
@@ -950,59 +1020,48 @@ def render_tactic_sheet(tactic: Tactic, *, cell_panel: QSize = QSize(322, 388)) 
 
     table_top = specs_top + 28
     table_left = margin + 10
-    table_w = width - margin * 2 - 20
     headers = ("인형 / 돌파", "무기", "고유키", "도약키", "공용키", "비고")
-    ratios = (0.17, 0.22, 0.18, 0.16, 0.18, 0.09)
-    col_widths = [int(table_w * r) for r in ratios]
-    col_widths[-1] += table_w - sum(col_widths)
-    painter.setPen(QColor(theme.BORDER))
+    painter.setPen(QColor(theme.EXPORT_BORDER))
     painter.drawLine(table_left, table_top + 28, table_left + table_w, table_top + 28)
     header_font = QFont(painter.font())
     header_font.setPointSize(8)
     painter.setFont(header_font)
     x = table_left
     for label, col_w in zip(headers, col_widths):
-        painter.setPen(QColor(theme.MUTED))
+        painter.setPen(QColor(theme.EXPORT_MUTED))
         painter.drawText(QRect(x + 8, table_top, col_w - 12, 28), Qt.AlignmentFlag.AlignVCenter, label)
         x += col_w
 
-    units = tactic.units or []
     row_font = QFont(painter.font())
     row_font.setPointSize(9)
-    for row_idx in range(max(1, len(units))):
-        y = table_top + 28 + row_idx * specs_row_h
-        painter.setPen(QColor(theme.BORDER))
-        painter.drawLine(table_left, y + specs_row_h, table_left + table_w, y + specs_row_h)
+    y = table_top + 28
+    for row_idx, row_h in enumerate(row_heights):
+        painter.setPen(QColor(theme.EXPORT_BORDER))
+        painter.drawLine(table_left, y + row_h, table_left + table_w, y + row_h)
         if row_idx >= len(units):
-            painter.setPen(QColor(theme.MUTED))
+            painter.setPen(QColor(theme.EXPORT_MUTED))
             painter.setFont(row_font)
             painter.drawText(
-                QRect(table_left + 8, y, table_w - 16, specs_row_h),
+                QRect(table_left + 8, y, table_w - 16, row_h),
                 Qt.AlignmentFlag.AlignVCenter,
                 "등록된 사용 인형 없음",
             )
+            y += row_h
             continue
-        unit = units[row_idx]
-        values = (
-            f"{unit.name or '인형'}  {int(unit.rank)}돌",
-            unit.weapon.strip() or "미입력",
-            "\n".join(unit.unique_keys) if unit.unique_keys else "미장착",
-            unit.expansion_label(include_prefix=False),
-            "\n".join(unit.common_keys) if unit.common_keys else "미장착",
-            unit.display_label(),
-        )
+        values = unit_values[row_idx]
         x = table_left
         for col_idx, (value, col_w) in enumerate(zip(values, col_widths)):
             font = QFont(row_font)
             font.setBold(col_idx == 0)
             painter.setFont(font)
-            painter.setPen(QColor(theme.TEXT))
+            painter.setPen(QColor(theme.EXPORT_TEXT))
             painter.drawText(
-                QRect(x + 8, y + 4, col_w - 12, specs_row_h - 8),
+                QRect(x + 8, y + 4, col_w - 12, row_h - 8),
                 Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextWordWrap,
                 value,
             )
             x += col_w
+        y += row_h
 
     painter.end()
     return image

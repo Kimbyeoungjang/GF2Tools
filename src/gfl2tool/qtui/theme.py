@@ -319,6 +319,23 @@ def _rgba(hex_color: str, alpha: int) -> str:
 # Stable light palette used only for share/export images. Keeping these in the
 # theme module preserves the project's single color contract while exports stay
 # readable regardless of the active application theme.
+# Share-image palette. This intentionally differs from common community sheet
+# colors so exported GF2Tools images keep their own visual identity while
+# remaining high contrast enough for screenshot/OCR round trips.
+EXPORT_BACKGROUND = "#eef3f6"
+EXPORT_PANEL = "#fbfcfd"
+EXPORT_PANEL_ALT = "#e7eef2"
+EXPORT_BORDER = "#b7c4cd"
+EXPORT_GRID = "#8295a2"
+EXPORT_TEXT = "#17242d"
+EXPORT_MUTED = "#667681"
+EXPORT_BOSS = "#F26C1C"
+EXPORT_BLOCKED = "#687780"
+EXPORT_COVER = "#53656f"
+EXPORT_ARROW = "#F26C1C"
+EXPORT_SUMMON = "#E85F14"
+EXPORT_SCALE = 2.0
+
 def stylesheet() -> str:
     return f"""
     * {{

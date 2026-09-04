@@ -33,6 +33,95 @@ class OcrOptionCandidate:
     source_line: str
 
 
+@dataclass
+class ContinuousOcrGate:
+    """Debounce repeated screen captures without getting stuck on UI animation.
+
+    ``observe`` waits for a genuinely changed frame to settle, but forces a
+    capture after ``max_settle_seconds`` when tiny animated pixels keep moving.
+    The last OCR signature remains the duplicate guard, so the forced settle
+    cannot repeatedly OCR the exact same remolding.
+    """
+
+    change_threshold: float = 1.25
+    settle_threshold: float = 3.2
+    stable_seconds: float = 0.45
+    max_settle_seconds: float = 2.0
+    last_seen: bytes | None = None
+    last_ocr: bytes | None = None
+    candidate: bytes | None = None
+    changed_since: float | None = None
+    stable_since: float | None = None
+
+    @staticmethod
+    def delta(left: bytes | None, right: bytes | None) -> float:
+        if left is None or right is None or len(left) != len(right) or not left:
+            return 255.0
+        return sum(abs(a - b) for a, b in zip(left, right)) / len(left)
+
+    def reset(self) -> None:
+        self.last_seen = None
+        self.last_ocr = None
+        self.candidate = None
+        self.changed_since = None
+        self.stable_since = None
+
+    def mark_ocr(self, signature: bytes) -> None:
+        self.last_ocr = signature
+        self.last_seen = signature
+        self.candidate = None
+        self.changed_since = None
+        self.stable_since = None
+
+    def settling_elapsed(self, now: float) -> float:
+        if self.changed_since is None:
+            return 0.0
+        return max(0.0, float(now) - float(self.changed_since))
+
+    def observe(self, signature: bytes, now: float) -> tuple[str, float]:
+        if self.last_seen is None:
+            self.last_seen = signature
+            self.candidate = signature
+            self.changed_since = now
+            self.stable_since = now
+            return "stabilizing", 255.0
+
+        frame_delta = self.delta(signature, self.last_seen)
+        self.last_seen = signature
+        from_last_ocr = self.delta(signature, self.last_ocr)
+
+        # Only classify a frame as unchanged while no transition is active.
+        # During a real page transition the animation can briefly resemble the
+        # previous frame again. The old implementation cancelled the transition
+        # at that point, resetting changed_since forever on some GF2 screens.
+        # Once a meaningful change has started, keep tracking it until the new
+        # page settles or max_settle_seconds forces a capture. This also lets
+        # two distinct remoldings with identical visible stats be captured when
+        # the navigation animation proves that the user moved to another item.
+        if self.candidate is None:
+            if self.last_ocr is not None and from_last_ocr < self.change_threshold:
+                return "unchanged", from_last_ocr
+            self.candidate = signature
+            self.changed_since = now
+            self.stable_since = now
+            return "changed", from_last_ocr
+
+        if frame_delta <= self.settle_threshold:
+            if self.stable_since is None:
+                self.stable_since = now
+        else:
+            # The screen is still moving. Keep the original changed_since so a
+            # perpetual animation cannot extend stabilization indefinitely.
+            self.stable_since = now
+        self.candidate = signature
+
+        stable_for = now - (self.stable_since if self.stable_since is not None else now)
+        settling_for = self.settling_elapsed(now)
+        if stable_for >= self.stable_seconds or settling_for >= self.max_settle_seconds:
+            return "ready", from_last_ocr
+        return "stabilizing", from_last_ocr
+
+
 def _project_root() -> Path:
     return install_root()
 
