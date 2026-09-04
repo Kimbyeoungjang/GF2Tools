@@ -12,6 +12,56 @@ def _norm(value: str | None) -> str:
     return re.sub(r"[^a-z0-9]", "", (value or "").lower())
 
 
+# Some remodel/upgrade forms share one ownership record in the imported account
+# data while the planner must expose both playable forms as distinct Dolls.  Keep
+# the relationship ID-based so display-name changes/localization cannot collapse
+# the two identities again.
+_LINKED_OWNERSHIP_GROUPS: tuple[tuple[int, ...], ...] = (
+    (1008, 1075),  # 네메시스 / 네메시스·연광
+)
+
+
+def expand_linked_owned_doll_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Return presentation rows with linked upgrade forms mirrored as owned.
+
+    The repository remains faithful to the imported account payload (which may
+    contain only one member of a linked group).  Presentation/planning layers get
+    a synthetic row for the missing form so both IDs remain independently
+    selectable without mutating or duplicating the user's stored ownership data.
+    """
+
+    actual = {
+        int(row.get("doll_id") or 0): dict(row)
+        for row in rows
+        if int(row.get("doll_id") or 0) > 0
+    }
+    expanded = [dict(row) for row in rows]
+    program = reference.program_dolls()
+    for group in _LINKED_OWNERSHIP_GROUPS:
+        owned = [did for did in group if did in actual]
+        if not owned:
+            continue
+        source_id = owned[0]
+        source = actual[source_id]
+        for did in group:
+            if did in actual:
+                continue
+            mirrored = dict(source)
+            mirrored["doll_id"] = int(did)
+            mirrored["name"] = str(
+                (program.get(int(did)) or {}).get("name_ko")
+                or reference.bundled_dolls().get(int(did))
+                or f"인형 {did}"
+            )
+            # A stored illustration path belongs to the source Doll.  Clearing it
+            # lets the normal REST-asset resolver select the target form's image.
+            mirrored["illustration_path"] = None
+            mirrored["_ownership_source_doll_id"] = int(source_id)
+            mirrored["_linked_ownership"] = True
+            expanded.append(mirrored)
+    return expanded
+
+
 class DollCharacterResolver:
     """Lightweight doll -> 리몰딩 추천 identity/level resolver.
 
@@ -55,11 +105,16 @@ class DollCharacterResolver:
             for key, base in self.recommendation.base_characters.items()
         ]
         self._recommendation_by_norm = {_norm(key): key for key, _char in chars}
-        self._recommendation_by_ko = {
-            str(char.get("nameKR") or "").strip(): key
-            for key, char in chars
-            if char.get("nameKR")
-        }
+        self._recommendation_by_ko: dict[str, str] = {}
+        for key, char in chars:
+            # Recommendation data and API display data are sourced from different
+            # tables.  The visible Korean name can therefore differ (e.g. 토로롱
+            # vs 토로로, 벨카 vs 비욜카).  phenomenonSourceName is the stable
+            # bridge supplied by the remolding rules for those cases.
+            for alias in (char.get("nameKR"), char.get("phenomenonSourceName")):
+                text = str(alias or "").strip()
+                if text:
+                    self._recommendation_by_ko.setdefault(text, key)
         self._character_key_by_doll_id: dict[int, str | None] = {}
         self._favorite_character_key_cache: frozenset[str] | None = None
         self._character_level_cache: dict[str, int] | None = None
@@ -85,11 +140,19 @@ class DollCharacterResolver:
 
         # Fast/common path: bundled aliases and imported display names cover the
         # known roster.  Only unresolved/new dolls touch runtime_master.json.
-        hit = self._match_name(reference.bundled_doll_display_names().get(did))
-        if not hit:
-            hit = self._match_name(reference.bundled_dolls().get(did))
-        if not hit:
-            hit = self._match_name(str((self.owned_doll_rows.get(did) or {}).get("name") or ""))
+        program_meta = reference.program_dolls().get(did, {})
+        candidates = (
+            reference.bundled_doll_display_names().get(did),
+            reference.bundled_dolls().get(did),
+            program_meta.get("name_ko"),
+            program_meta.get("resource_name"),
+            (self.owned_doll_rows.get(did) or {}).get("name"),
+        )
+        hit = None
+        for candidate in candidates:
+            hit = self._match_name(str(candidate or ""))
+            if hit:
+                break
         self._character_key_by_doll_id[did] = hit
         return hit
 

@@ -6,7 +6,7 @@
     "repair_ocr.bat": "ed54104a1c1cf0528388e893115147f61eb2f748a983ae10fbc26d12b22b0c05",
     "reset_environment.bat": "170783a3897a52ed80047c399c153b2439cd98221fdc218f97320f77df711357",
     "src/gfl2tool/__init__.py": "0ac56b6a8e63d4137feaf4753032161197336e5d993d1fb08797e114c72b4980",
-    "src/gfl2tool/_version.py": "efaff9ba77f8dc3134d653269fa7d786565ac027531328c509ed409d76f85f7b",
+    "src/gfl2tool/_version.py": "766403258aa6a19d027b4677f7da69d478b05e504dc2cd2c12c3c96c34d383a7",
     "src/gfl2tool/atomic_io.py": "c444734f63a5e4f1c3df77b50480c3513d9a08e387361a1f4888c8db6725d661",
     "src/gfl2tool/cli.py": "18c5d705f983c70f622bd5a1da78da15f899c55a3253e25a8ee1b4937066cffd",
     "src/gfl2tool/cooking.py": "a57861a619b831147846f8b0e6a1129fd4cf374b93e9f29b76f727fc797f2b5d",
@@ -15,7 +15,7 @@
     "src/gfl2tool/qtgui.py": "7ac93cbfc33dd1457883948acda2a25063451c9f5bf6a3a760d2c54f2e518b1a",
     "src/gfl2tool/qtui/__init__.py": "ab24b4d8903194e62127f2e72d74e15149ff6276aadf35a9290ee75a8893fe2a",
     "src/gfl2tool/qtui/app_settings.py": "3274a536f25f50186ec87810156556e0271ee9afc209815ae6eeeba8b18f5814",
-    "src/gfl2tool/qtui/data.py": "d3bcfad5d0ff69a1b50db4d5117bc9a7be046535e17fa96742e5f988c3e1ed3d",
+    "src/gfl2tool/qtui/data.py": "d22dcfa686096a461cd64b7b3b29d46379d53b3ab17930c4de77ae13ff110463",
     "src/gfl2tool/qtui/data_entry.py": "a798218b5d6e6ff541e3a401919877418a7edabdbea84f514c6845f42ba69b01",
     "src/gfl2tool/qtui/dialogs/__init__.py": "d663de54dc9481b5358bf58274cea2c6e6cd80780766cd20b65f44df3ece5acd",
     "src/gfl2tool/qtui/dialogs/category_assign.py": "2859a7cb77f6b7d250b14ebdda1353ca931ce123489035a0e1fbe93b5e495807",
@@ -50,7 +50,7 @@
     "src/gfl2tool/qtui/pages/dashboard.py": "75a96d7d16f307b631df0334d0252bf97b9fd77cefc7c6c3d93cc2ad321c8b03",
     "src/gfl2tool/qtui/pages/data_sync.py": "0e75cae39d4a25b9b1faf23b85878566210e28cdf0c2914986bb60c128e71a2d",
     "src/gfl2tool/qtui/pages/formation.py": "5ed7d2e49fc050708ac898e5f025fff5b9909d72d753589aeacc9627fd59d980",
-    "src/gfl2tool/qtui/pages/inventory.py": "65b29cb9006d029c57be607087c4c337ecd1c212fdc29412e363f1a6eb5ea1bf",
+    "src/gfl2tool/qtui/pages/inventory.py": "3c4b4b6fff0ed58d004e7b85964039f0b168ae9544f69c9a4bcbcd11df5afa89",
     "src/gfl2tool/qtui/pages/remolding_optimizer.py": "ecdc2925c8a3381d5d7e5b0a70b8ce728ed40889da4633d80b83749a5545babe",
     "src/gfl2tool/qtui/pages/settings.py": "9f2c790f7188404d442b73967f589c076656a47319fdf6b913150649df008ead",
     "src/gfl2tool/qtui/pages/tactics.py": "05fbd0cf39cb56444426a47b2d9bf9d4eafbab15a21f2f47ab6896f33206ece2",
@@ -79,7 +79,7 @@
     "src/gfl2tool/services/data_exchange.py": "cded22e2d9130a5ce002bad57fb37f4eb7f6594dd719467825aa5aae02e68581",
     "src/gfl2tool/services/doll_categories.py": "077860ebf40a46c8d5a1a123f49977d43971e987d7dc26ef0c1a8d802fac0c02",
     "src/gfl2tool/services/doll_skill_cycles.py": "d02994d97c9037d4bc1624431a4dfd49c76d982db579d206155896d18aaa9cb9",
-    "src/gfl2tool/services/dolls.py": "82f6406f229665c463aaabca2795754f257973e2d6791763f6f1eb519e1e0fec",
+    "src/gfl2tool/services/dolls.py": "3b7aa4d775d5431e87bbe9ed8b9a7539212d2ffa94242305b404bd10ab47a6ba",
     "src/gfl2tool/services/formation_preferences.py": "a1f074cc8a659f0e40645fe19739bad38c8d6d6ba93e7c9ad37313d9651e52d8",
     "src/gfl2tool/services/formations.py": "a869dc00e3f86761e1252ea32e3e82b32b1b6e0417d20fda5a632dd8c47f976b",
     "src/gfl2tool/services/ocr_import.py": "009ac8907c9ab5eb39c924c773e32b4ebc9190f4857f8237ccec3672aa771c30",
@@ -200,6 +200,7 @@
     "tests/test_data_exchange.py",
     "tests/test_dependency_contract.py",
     "tests/test_doll_categories.py",
+    "tests/test_doll_identity_regressions.py",
     "tests/test_doll_skill_cycles.py",
     "tests/test_executable_release_contract.py",
     "tests/test_level_overrides_and_tactic_retry.py",
@@ -236,5 +237,5 @@
     "tools/package_release.py"
   ],
   "schema": 2,
-  "version": "1.0.1"
+  "version": "1.0.2"
 }

@@ -1,6 +1,6 @@
 # Third-party software notices
 
-This file summarizes the principal third-party software used by GFL2 Tools 1.0.1. It is an engineering checklist, not legal advice. Always review the exact license texts for the versions you distribute.
+This file summarizes the principal third-party software used by GFL2 Tools 1.0.2. It is an engineering checklist, not legal advice. Always review the exact license texts for the versions you distribute.
 
 ## Distribution model
 

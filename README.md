@@ -6,7 +6,7 @@ GFL2 Tools는 **소녀전선 2: 망명(Girls' Frontline 2)** 플레이에 필요
 
 메인 프로그램은 **게임 프로세스, 게임 메모리, 네트워크 패킷, 게임 설치 파일을 직접 읽거나 수정하지 않습니다.** 사용자 데이터는 수동 입력, OCR, 호환 CSV 번들 또는 GF2Tools 백업을 통해 관리하고, 인형·무기·키·이미지 등 프로그램 기본 데이터는 GF2Tools 전용 데이터 패키지에서 내려받습니다.
 
-**현재 프로그램 버전: 1.0.1**  
+**현재 프로그램 버전: 1.0.2**  
 **라이선스: GNU GPL v3.0 (`GPL-3.0-only`)**
 
 ---
@@ -789,5 +789,5 @@ GFL2 Tools 1.0.0은 다음 원칙을 기준으로 유지됩니다.
 
 ---
 
-**GFL2 Tools 1.0.1**  
+**GFL2 Tools 1.0.2**  
 Local-first planning, remolding, OCR, tactic and data-management tools for Girls' Frontline 2.

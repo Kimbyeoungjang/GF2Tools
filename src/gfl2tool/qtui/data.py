@@ -8,7 +8,7 @@ from typing import Any
 from .. import reference
 from ..repository import Repository
 from ..services.remote_assets import remote_asset_cache_path
-from ..services.dolls import DollCharacterResolver
+from ..services.dolls import DollCharacterResolver, expand_linked_owned_doll_rows
 
 
 def _normalized(value: str | None) -> str:
@@ -95,7 +95,15 @@ class OwnedDollCatalog:
         token = self._presentation_signature()
         if self._token == token and self._resolver is not None:
             return self._entries
-        raw_rows = self.repo.rows("dolls", order_by="favorite DESC, COALESCE(name,'~'), doll_id")
+        stored_rows = self.repo.rows("dolls", order_by="favorite DESC, COALESCE(name,'~'), doll_id")
+        raw_rows = expand_linked_owned_doll_rows(stored_rows)
+        raw_rows.sort(
+            key=lambda row: (
+                0 if bool(int(row.get("favorite") or 0)) else 1,
+                str(row.get("name") or "").casefold(),
+                int(row.get("doll_id") or 0),
+            )
+        )
         owned_rows = {int(row["doll_id"]): dict(row) for row in raw_rows}
         resolver = DollCharacterResolver(self.repo, owned_doll_rows=owned_rows)
         factor_names = reference.remolding_rules().get("factor_names", {})
@@ -127,6 +135,8 @@ class OwnedDollCatalog:
                 "element_type": element,
                 "element_label": str(element_names.get(element, element)) if element else "속성 미확인",
                 "favorite": bool(int(row.get("favorite") or 0)),
+                "ownership_source_doll_id": int(row.get("_ownership_source_doll_id") or did),
+                "linked_ownership": bool(row.get("_linked_ownership")),
                 "program_meta": program_meta,
                 "weapon_type_label": str(program_meta.get("weapon_type_ko") or ""),
                 "rarity": int(program_meta.get("rarity") or 0),
@@ -144,9 +154,10 @@ class OwnedDollCatalog:
     def toggle_favorite(self, doll_id: int) -> bool:
         did = int(doll_id)
         cached = self._entry_by_doll_id.get(did)
-        current = bool(cached.get("favorite")) if cached is not None else self.repo.is_doll_favorite(did)
+        source_did = int((cached or {}).get("ownership_source_doll_id") or did)
+        current = bool(cached.get("favorite")) if cached is not None else self.repo.is_doll_favorite(source_did)
         new_value = not current
-        self.repo.set_doll_favorite(did, new_value)
+        self.repo.set_doll_favorite(source_did, new_value)
         self.invalidate()
         return new_value
 

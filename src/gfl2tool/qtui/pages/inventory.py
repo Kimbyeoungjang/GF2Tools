@@ -749,7 +749,7 @@ class InventoryPage(DeferredRefreshPage):
             if owned_count:
                 self.doll_reference_status.setText(
                     f"보유 인형 {owned_count:,}명 · 기본 인형 레퍼런스 {basic_count:,}명 로드됨. "
-                    "이 화면은 보유로 등록된 인형만 표시합니다."
+                    "이 화면은 보유로 등록된 인형만 표시합니다. 단, 동일 소체의 연동 개조형은 사용 가능한 별도 형태로 함께 표시합니다."
                 )
                 self.doll_groups.empty.setText("조건에 맞는 보유 인형이 없습니다.")
             else:
