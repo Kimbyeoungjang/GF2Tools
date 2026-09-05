@@ -1,10 +1,20 @@
 from __future__ import annotations
 
-from PySide6.QtCore import Signal
-from PySide6.QtWidgets import QFrame, QGridLayout, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
+from PySide6.QtCore import Qt, QTimer, Signal
+from PySide6.QtWidgets import (
+    QCheckBox,
+    QFrame,
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QSizePolicy,
+    QVBoxLayout,
+)
 
 from ... import reference
 from ...repository import Repository
+from ...services.checklist import CATEGORIES, CATEGORY_LABELS, ChecklistStore
 from ..widgets import MetricCard, page_layout, section_panel
 from .base import DeferredRefreshPage
 
@@ -26,17 +36,56 @@ _WORKFLOWS = (
 )
 
 
+class _ImmediateCheckBox(QCheckBox):
+    """Toggle on mouse press so fast checklist sweeps never lose a click.
+
+    QAbstractButton normally changes state on mouse release. When users rapidly
+    sweep through several checklist rows, a release can land outside the row
+    after the pointer has already moved to the next item. Toggling on press
+    makes the visual state immediate while keyboard interaction keeps Qt's
+    normal checkbox behaviour.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._left_press_toggled = False
+
+    def mousePressEvent(self, event):  # noqa: N802
+        if event.button() == Qt.MouseButton.LeftButton and self.isEnabled():
+            self._left_press_toggled = True
+            self.setChecked(not self.isChecked())
+            self.update()
+            event.accept()
+            return
+        super().mousePressEvent(event)
+
+    def mouseReleaseEvent(self, event):  # noqa: N802
+        if event.button() == Qt.MouseButton.LeftButton and self._left_press_toggled:
+            self._left_press_toggled = False
+            event.accept()
+            return
+        super().mouseReleaseEvent(event)
+
+
 class DashboardPage(DeferredRefreshPage):
     navigateRequested = Signal(str)
 
     def __init__(self, repo: Repository, parent=None):
         super().__init__(parent)
         self.repo = repo
+        self.checklist = ChecklistStore(repo.path.parent)
         self._hero_target = "data_sync"
+        self._checklist_payload: dict | None = None
+        self._checklist_dirty = False
+        self._checklist_save_timer = QTimer(self)
+        self._checklist_save_timer.setSingleShot(True)
+        self._checklist_save_timer.setInterval(1200)
+        self._checklist_save_timer.timeout.connect(self._flush_checklist_changes)
 
         root = page_layout(self, "대시보드")
         root.addWidget(self._build_status_hero())
         root.addLayout(self._build_metrics_grid())
+        root.addWidget(self._build_checklist_panel())
         root.addWidget(self._build_workflow_panel())
         root.addWidget(self._build_status_panel())
         root.addStretch(1)
@@ -74,6 +123,125 @@ class DashboardPage(DeferredRefreshPage):
             self.cards[key] = card
             grid.addWidget(card, 0, index)
         return grid
+
+    def _build_checklist_panel(self) -> QFrame:
+        panel, layout = section_panel("체크리스트")
+        heading = QHBoxLayout()
+        self.checklist_summary = QLabel("")
+        self.checklist_summary.setObjectName("Muted")
+        heading.addWidget(self.checklist_summary)
+        heading.addStretch(1)
+        manage = QPushButton("체크리스트 관리")
+        manage.clicked.connect(lambda: self.navigateRequested.emit("checklist"))
+        heading.addWidget(manage)
+        layout.addLayout(heading)
+
+        self.checklist_grid = QGridLayout()
+        self.checklist_grid.setHorizontalSpacing(16)
+        self.checklist_grid.setVerticalSpacing(12)
+        layout.addLayout(self.checklist_grid)
+        return panel
+
+    @staticmethod
+    def _clear_layout(layout) -> None:
+        while layout.count():
+            item = layout.takeAt(0)
+            child = item.widget()
+            if child is not None:
+                child.deleteLater()
+            nested = item.layout()
+            if nested is not None:
+                DashboardPage._clear_layout(nested)
+
+    def _render_checklist(self) -> None:
+        # A refresh can arrive while the user is rapidly checking rows. Never
+        # force a synchronous disk write or replace the live in-memory state in
+        # that case; doing so made the checkbox appear to lag or briefly ignore
+        # clicks on Windows. Calendar/reset reloads still happen whenever there
+        # are no unsaved local edits.
+        if self._checklist_dirty and self._checklist_payload is not None:
+            payload = self._checklist_payload
+        else:
+            payload = self.checklist.load()
+            self._checklist_payload = payload
+        self._clear_layout(self.checklist_grid)
+        for column, category in enumerate(CATEGORIES):
+            box = QFrame()
+            box.setObjectName("ChecklistCategoryCard")
+            box.setMinimumWidth(300)
+            box.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+            box_layout = QVBoxLayout(box)
+            box_layout.setContentsMargins(14, 12, 14, 14)
+            box_layout.setSpacing(8)
+            box_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+            rows = payload["items"][category]
+            done = sum(1 for row in rows if row.get("checked"))
+            title = QLabel(f"{CATEGORY_LABELS[category]}  {done}/{len(rows)}")
+            title.setObjectName("SectionTitle")
+            title.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+            box_layout.addWidget(title)
+            for row in rows:
+                checkbox = _ImmediateCheckBox(str(row.get("label") or ""))
+                checkbox.setObjectName("ChecklistCheckBox")
+                checkbox.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+                checkbox.setChecked(bool(row.get("checked")))
+                checkbox.setToolTip(str(row.get("label") or ""))
+                item_id = str(row.get("id") or "")
+                checkbox.toggled.connect(
+                    lambda checked, c=category, i=item_id: self._checklist_toggled(c, i, checked)
+                )
+                box_layout.addWidget(checkbox)
+            # Daily has more rows than weekly/monthly. Keep every category
+            # anchored to the top and leave the remaining shared card height
+            # genuinely blank instead of stretching the few rows vertically.
+            box_layout.addStretch(1)
+            self.checklist_grid.addWidget(box, 0, column, alignment=Qt.AlignmentFlag.AlignTop)
+        for column in range(len(CATEGORIES)):
+            self.checklist_grid.setColumnStretch(column, 1)
+        self._update_checklist_summary(payload)
+
+    def _update_checklist_summary(self, payload: dict) -> None:
+        self.checklist_summary.setText(
+            " · ".join(
+                f"{CATEGORY_LABELS[category]} "
+                f"{sum(1 for row in payload['items'][category] if row.get('checked'))}/{len(payload['items'][category])}"
+                for category in CATEGORIES
+            )
+        )
+
+    def _checklist_toggled(self, category: str, item_id: str, checked: bool) -> None:
+        payload = self._checklist_payload
+        if payload is None or category not in CATEGORIES:
+            self.request_refresh()
+            return
+        for item in payload["items"][category]:
+            if str(item.get("id") or "") == str(item_id):
+                item["checked"] = bool(checked)
+                self._checklist_dirty = True
+                self._update_checklist_summary(payload)
+                # Re-arm a deliberately relaxed timer for every click. Mouse
+                # state changes are immediate; disk I/O happens only after the
+                # user has stopped interacting for a moment.
+                self._checklist_save_timer.start()
+                return
+        self.request_refresh()
+
+    def _flush_checklist_changes(self, *, durable: bool = False) -> None:
+        if not self._checklist_dirty or self._checklist_payload is None:
+            return
+        payload = self._checklist_payload
+        try:
+            self.checklist.save(payload, durable=durable)
+        except Exception as exc:
+            self._checklist_dirty = True
+            self.refreshFailed.emit(f"체크리스트 저장에 실패했습니다: {exc}")
+            return
+        self._checklist_dirty = False
+
+    def on_deactivated(self) -> None:
+        if self._checklist_save_timer.isActive():
+            self._checklist_save_timer.stop()
+        self._flush_checklist_changes(durable=True)
 
     def _build_workflow_panel(self) -> QFrame:
         panel, layout = section_panel("주요 작업")
@@ -114,6 +282,7 @@ class DashboardPage(DeferredRefreshPage):
         return panel
 
     def refresh(self) -> None:
+        self._render_checklist()
         summary = self.repo.inventory_summary()
         doll_count = int(summary.get("dolls", 0))
         remolding_count = int(summary.get("remoldings", 0))

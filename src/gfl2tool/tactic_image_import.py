@@ -21,6 +21,66 @@ MAX_INPUT_PIXELS = 64_000_000
 Progress = Callable[[str], None]
 
 
+# GF2Tools export arrows use #F26C1C. Boss fills use the same accent, so arrow
+# suppression is applied only outside cells already classified as boss cells.
+# The tolerance intentionally stays narrow: this is a recognition safeguard for
+# our own exported sheets, not a generic "erase orange" filter.
+_EXPORT_ARROW_RGB = (242, 108, 28)
+
+
+def _is_export_arrow_pixel(pixel: tuple[int, ...] | list[int]) -> bool:
+    if len(pixel) < 3:
+        return False
+    r, g, b = int(pixel[0]), int(pixel[1]), int(pixel[2])
+    return (
+        218 <= r <= 255
+        and 78 <= g <= 145
+        and 0 <= b <= 82
+        and r - g >= 82
+        and g - b >= 34
+    )
+
+
+def _boss_local_boxes(board: "DetectedBoard") -> tuple[tuple[int, int, int, int], ...]:
+    boxes: list[tuple[int, int, int, int]] = []
+    local_box = (0, 0, int(board.box[2]), int(board.box[3]))
+    for marker in board.markers:
+        if marker.kind != "boss":
+            continue
+        left, top, _right, _bottom = _cell_bounds(local_box, board.rows, board.cols, marker.row, marker.col)
+        end_row = min(board.rows - 1, marker.row + max(1, marker.height) - 1)
+        end_col = min(board.cols - 1, marker.col + max(1, marker.width) - 1)
+        _l2, _t2, right, bottom = _cell_bounds(local_box, board.rows, board.cols, end_row, end_col)
+        boxes.append((left, top, right, bottom))
+    return tuple(boxes)
+
+
+def _mask_export_arrow_pixels(
+    image: Image.Image,
+    *,
+    preserve_boxes: Iterable[tuple[int, int, int, int]] = (),
+) -> tuple[Image.Image, int]:
+    """Whiten GF2Tools arrow strokes so they cannot poison OCR votes."""
+    rgb = image.convert("RGB").copy()
+    pixels = rgb.load()
+    preserved = tuple(preserve_boxes)
+    masked = 0
+    for y in range(rgb.height):
+        for x in range(rgb.width):
+            if preserved and any(left <= x < right and top <= y < bottom for left, top, right, bottom in preserved):
+                continue
+            if _is_export_arrow_pixel(pixels[x, y]):
+                pixels[x, y] = (255, 255, 255)
+                masked += 1
+    return rgb, masked
+
+
+def _board_ocr_crop(source: Image.Image, board: "DetectedBoard") -> tuple[Image.Image, int]:
+    x, y, width, height = board.box
+    crop = source.crop((x, y, x + width, y + height)).convert("RGB")
+    return _mask_export_arrow_pixels(crop, preserve_boxes=_boss_local_boxes(board))
+
+
 def _safe_progress(progress: Progress | None, text: str) -> None:
     if progress is not None:
         progress(str(text))
@@ -327,7 +387,7 @@ def _detect_blocked(gray: Image.Image, box: tuple[int, int, int, int], rows: int
     return markers
 
 
-def _edge_fraction(gray: Image.Image, bounds: tuple[int, int, int, int], edge: str) -> float:
+def _edge_fraction(gray: Image.Image, bounds: tuple[int, int, int, int], edge: str, *, rgb: Image.Image | None = None) -> float:
     left, top, right, bottom = bounds
     width = right - left
     height = bottom - top
@@ -349,6 +409,10 @@ def _edge_fraction(gray: Image.Image, bounds: tuple[int, int, int, int], edge: s
     for y in range(t, b):
         for x in range(l, r):
             total += 1
+            if rgb is not None and _is_export_arrow_pixel(rgb.getpixel((x, y))):
+                # Export arrows can cross a cell edge at a shallow angle. Treat
+                # those orange pixels as blank instead of a cover vote.
+                continue
             value = pixels[x, y]
             if 75 <= value <= 185:
                 matched += 1
@@ -361,6 +425,8 @@ def _detect_cover(
     rows: int,
     cols: int,
     boss: TacticMarker | None,
+    *,
+    rgb: Image.Image | None = None,
 ) -> list[TacticMarker]:
     markers: list[TacticMarker] = []
     for row in range(rows):
@@ -370,7 +436,7 @@ def _detect_cover(
             if row in {0, rows - 1} or col in {0, cols - 1}:
                 continue
             bounds = _cell_bounds(box, rows, cols, row, col)
-            edges = "".join(edge for edge in "NESW" if _edge_fraction(gray, bounds, edge) >= 0.58)
+            edges = "".join(edge for edge in "NESW" if _edge_fraction(gray, bounds, edge, rgb=rgb) >= 0.58)
             if edges:
                 markers.append(TacticMarker(kind="cover", row=row, col=col, edges=edges))
     return markers
@@ -1049,7 +1115,12 @@ def _ocr_unit_cell(
         right -= pad_x
         top += pad_y
         bottom -= pad_y
-    crop = _normalize_ocr_polarity(source.crop((left, top, right, bottom)).convert("L"))
+    raw_crop = source.crop((left, top, right, bottom)).convert("RGB")
+    # A unit cell is never a boss cell, so GF2Tools orange arrow pixels can be
+    # safely removed before single-glyph OCR. The arrow itself is intentionally
+    # not reconstructed by image import.
+    raw_crop, _masked_arrows = _mask_export_arrow_pixels(raw_crop)
+    crop = _normalize_ocr_polarity(raw_crop.convert("L"))
     scale = min(10.0, max(5.5, 320 / max(1, min(crop.size))))
     crop = crop.resize(
         (max(1, round(crop.width * scale)), max(1, round(crop.height * scale))),
@@ -1135,7 +1206,8 @@ def _ocr_unit_board_labels(
     executable: str, source: Image.Image, board: DetectedBoard
 ) -> dict[tuple[int, int], tuple[str, float]]:
     x, y, width, height = board.box
-    board_crop = _normalize_ocr_polarity(source.crop((x, y, x + width, y + height)).convert("L"))
+    raw_board_crop, _masked_arrows = _board_ocr_crop(source, board)
+    board_crop = _normalize_ocr_polarity(raw_board_crop.convert("L"))
     scale = min(6.0, max(3.0, 1500 / max(1, max(board_crop.size))))
     board_crop = board_crop.resize(
         (max(1, round(board_crop.width * scale)), max(1, round(board_crop.height * scale))),
@@ -1384,7 +1456,7 @@ def detect_tactic_boards(path: str | Path) -> list[DetectedBoard]:
         if boss:
             markers.append(boss)
         markers.extend(_detect_blocked(gray, box, rows, cols, boss))
-        markers.extend(_detect_cover(gray, box, rows, cols, boss))
+        markers.extend(_detect_cover(gray, box, rows, cols, boss, rgb=source))
         occupied: set[tuple[int, int]] = set()
         if boss:
             for rr in range(boss.row, boss.row + boss.height):
@@ -1503,6 +1575,24 @@ def reimport_tactic_region(
         warnings=local.warnings,
     )
 
+def _contains_ignored_export_arrows(path: str | Path, boards: Iterable[DetectedBoard]) -> bool:
+    rows = tuple(boards)
+    if not rows:
+        return False
+    try:
+        with Image.open(path) as opened:
+            source = ImageOps.exif_transpose(opened).convert("RGB")
+    except OSError:
+        return False
+    for board in rows:
+        _crop, masked = _board_ocr_crop(source, board)
+        # A normal numbered arrow easily clears this threshold, while a few
+        # antialiased boss-edge pixels outside the preserved boss cell do not.
+        if masked >= max(24, round(min(board.box[2], board.box[3]) * 0.12)):
+            return True
+    return False
+
+
 def import_tactic_image(
     path: str | Path,
     *,
@@ -1513,6 +1603,7 @@ def import_tactic_image(
     boards = detect_tactic_boards(path)
     if not boards:
         raise ValueError("격자 영역을 찾지 못했습니다. 격자 선이 선명한 원본 이미지를 사용해 주세요.")
+    ignored_export_arrows = _contains_ignored_export_arrows(path, boards)
     _safe_progress(progress, f"배치 OCR 중… ({len(boards)}개 격자)")
     labeled_boards, unit_ocr_available = detect_unit_labels(path, boards)
     boards = list(labeled_boards)
@@ -1586,6 +1677,11 @@ def import_tactic_image(
         warnings.append("스킬 사이클 표가 없어 제대 배치형 택틱으로 인식했습니다. 사이클 정보는 추가하지 않습니다.")
     else:
         warnings.append("스킬 사이클 OCR 엔진(Tesseract)을 찾지 못해 사이클 자동 인식은 건너뛰었습니다. 편집기에서 직접 입력할 수 있습니다.")
+    if ignored_export_arrows:
+        warnings.append(
+            "GF2Tools 이동 화살표는 다른 칸의 OCR을 방해하지 않도록 인식 대상에서 제외했습니다. "
+            "화살표는 가져오기 후 편집기에서 다시 지정해 주세요."
+        )
     warnings.append("자동 인식된 엄폐 방향과 이동 불가 칸은 이미지 스타일에 따라 오검출될 수 있으므로 편집기에서 확인하세요.")
     _safe_progress(progress, "인식 결과 정리 중…")
     return TacticImageImportResult(tactic=tactic, boards=tuple(boards), warnings=tuple(warnings))

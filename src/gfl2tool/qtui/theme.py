@@ -322,19 +322,19 @@ def _rgba(hex_color: str, alpha: int) -> str:
 # Share-image palette. This intentionally differs from common community sheet
 # colors so exported GF2Tools images keep their own visual identity while
 # remaining high contrast enough for screenshot/OCR round trips.
-EXPORT_BACKGROUND = "#eef3f6"
-EXPORT_PANEL = "#fbfcfd"
-EXPORT_PANEL_ALT = "#e7eef2"
+EXPORT_BACKGROUND = "#FFFFFF"
+EXPORT_PANEL = "#FFFFFF"
+EXPORT_PANEL_ALT = "#F7F7F7"
 EXPORT_BORDER = "#b7c4cd"
 EXPORT_GRID = "#8295a2"
-EXPORT_TEXT = "#17242d"
+EXPORT_TEXT = "#111111"
 EXPORT_MUTED = "#667681"
 EXPORT_BOSS = "#F26C1C"
-EXPORT_BLOCKED = "#687780"
-EXPORT_COVER = "#53656f"
+EXPORT_BLOCKED = "#8D8D8D"
+EXPORT_COVER = "#A0A0A0"
 EXPORT_ARROW = "#F26C1C"
-EXPORT_SUMMON = "#E85F14"
-EXPORT_SCALE = 2.0
+EXPORT_SUMMON = "#000000"
+EXPORT_SCALE = 3.0
 
 def stylesheet() -> str:
     return f"""
@@ -377,6 +377,12 @@ def stylesheet() -> str:
         background: {PANEL_ALT};
         border: 1px solid {BORDER};
         border-radius: 4px;
+    }}
+    QFrame#ChecklistCategoryCard {{
+        background: {PANEL_ALT};
+        border: 1px solid {BORDER};
+        border-top: 2px solid {INFO};
+        border-radius: 6px;
     }}
     QGroupBox {{
         margin-top: 10px;
@@ -713,6 +719,64 @@ def stylesheet() -> str:
     QCheckBox {{
         spacing: 6px;
     }}
+    QCheckBox#ChecklistCheckBox {{
+        background: {PANEL};
+        border: 1px solid {BORDER};
+        border-radius: 5px;
+        padding: 8px 10px;
+        spacing: 10px;
+        min-height: 22px;
+        font-size: 10.5pt;
+    }}
+    QCheckBox#ChecklistCheckBox:hover {{
+        border-color: {INFO};
+        background: {BUTTON_HOVER};
+    }}
+    QCheckBox#ChecklistCheckBox:checked {{
+        background: {SELECT};
+        border-color: {INFO};
+    }}
+    QCheckBox#ChecklistCheckBox::indicator {{
+        width: 18px;
+        height: 18px;
+        border: 1px solid {BUTTON_BORDER};
+        border-radius: 4px;
+        background: {PANEL_ALT};
+    }}
+    QCheckBox#ChecklistCheckBox::indicator:hover {{
+        border-color: {INFO};
+    }}
+    QCheckBox#ChecklistCheckBox::indicator:checked {{
+        background: {ACCENT};
+        border: 2px solid {ACCENT_HOVER};
+    }}
+    QListWidget#ChecklistList {{
+        background: {PANEL_ALT};
+        alternate-background-color: {PANEL};
+        border: 1px solid {BORDER};
+        border-radius: 6px;
+        padding: 5px;
+        font-size: 11pt;
+    }}
+    QListWidget#ChecklistList::item {{
+        min-height: 28px;
+        padding: 10px 12px;
+        margin: 2px 0;
+        border-bottom: 1px solid {_rgba(BORDER, 150)};
+    }}
+    QListWidget#ChecklistList::item:hover {{
+        background: {BUTTON_HOVER};
+    }}
+    QListWidget#ChecklistList::item:selected {{
+        background: {SELECT};
+        border-left: 4px solid {ACCENT};
+        font-weight: 650;
+    }}
+    QTabWidget#ChecklistTabs QTabBar::tab {{
+        font-size: 11pt;
+        font-weight: 650;
+        padding: 10px 18px;
+    }}
     QTableView, QTreeView, QTreeWidget, QListView {{
         background: {PANEL};
         alternate-background-color: {PANEL_ALT};
@@ -723,7 +787,7 @@ def stylesheet() -> str:
         selection-background-color: {SELECT};
         selection-color: {TEXT};
     }}
-    QScrollArea#ResultScroll, QScrollArea#GroupedDollScroll,
+    QScrollArea#PageScroll, QScrollArea#ResultScroll, QScrollArea#GroupedDollScroll,
     QScrollArea#FormationMemberScroll, QScrollArea#TargetProfileScroll,
     QScrollArea#DictionaryDollScroll {{
         background: {BG};
@@ -741,7 +805,7 @@ def stylesheet() -> str:
         border-radius: 6px;
         padding: 8px;
     }}
-    QWidget#ResultBody, QWidget#GroupedDollBody, QWidget#FormationMemberBody,
+    QWidget#PageBody, QWidget#ResultBody, QWidget#GroupedDollBody, QWidget#FormationMemberBody,
     QWidget#DictionaryDollBody {{
         background: {BG};
     }}

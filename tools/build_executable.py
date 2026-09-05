@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -50,11 +51,28 @@ def _pyinstaller(*args: str) -> None:
     subprocess.run(command, cwd=ROOT, check=True)
 
 
+def _windows_numeric_version(version: str) -> tuple[int, int, int, int]:
+    """Return a Windows-compatible four-part numeric version.
+
+    Windows VERSIONINFO requires integer components, while the application
+    version may contain a prerelease suffix such as ``1.0.4-RC0``.  Keep the
+    full prerelease string in FileVersion/ProductVersion, but use only the
+    numeric release components for filevers/prodvers.
+    """
+    match = re.match(
+        r"^\s*[vV]?(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:\.(\d+))?",
+        version,
+    )
+    if match is None:
+        raise ValueError(f"invalid application version: {version!r}")
+    parts = [int(value) if value is not None else 0 for value in match.groups()]
+    if any(part > 65535 for part in parts):
+        raise ValueError(f"Windows version component exceeds 65535: {version!r}")
+    return tuple(parts)  # type: ignore[return-value]
+
+
 def _version_file(version: str, target: Path) -> Path:
-    parts = [int(part) for part in version.split(".")]
-    while len(parts) < 4:
-        parts.append(0)
-    a, b, c, d = parts[:4]
+    a, b, c, d = _windows_numeric_version(version)
     payload = f'''VSVersionInfo(\n  ffi=FixedFileInfo(filevers=({a},{b},{c},{d}), prodvers=({a},{b},{c},{d}), mask=0x3f, flags=0x0, OS=0x40004, fileType=0x1, subtype=0x0, date=(0, 0)),\n  kids=[StringFileInfo([StringTable('040904B0', [\n    StringStruct('CompanyName', 'GFL2 Tools'),\n    StringStruct('FileDescription', 'GFL2 Tools'),\n    StringStruct('FileVersion', '{version}'),\n    StringStruct('InternalName', 'GF2Tools'),\n    StringStruct('LegalCopyright', 'GNU GPL v3'),\n    StringStruct('OriginalFilename', 'GF2Tools.exe'),\n    StringStruct('ProductName', 'GFL2 Tools'),\n    StringStruct('ProductVersion', '{version}')\n  ])]), VarFileInfo([VarStruct('Translation', [1033, 1200])])])\n'''
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(payload, encoding="utf-8")
@@ -87,6 +105,7 @@ def _collect_licenses(bundle: Path) -> None:
     shutil.copy2(ROOT / "licenses" / "LGPL-3.0.txt", target / "Qt-LGPL-3.0.txt")
     shutil.copy2(ROOT / "licenses" / "Pillow-LICENSE.txt", target / "Pillow-LICENSE.txt")
     shutil.copy2(ROOT / "licenses" / "Apache-2.0.txt", target / "Tesseract-Apache-2.0.txt")
+    shutil.copy2(ROOT / "licenses" / "Pretendard-OFL-1.1.txt", target / "Pretendard-OFL-1.1.txt")
 
     for dist_name in ("PySide6-Essentials", "shiboken6", "PyInstaller"):
         _copy_dist_license(dist_name, target)
@@ -185,7 +204,11 @@ def build(output: Path, *, skip_tests: bool = False) -> dict[str, str]:
         raise RuntimeError(json.dumps(report, ensure_ascii=False, indent=2))
     package_release.refresh_source_manifest(version)
     if not skip_tests:
-        package_release.run_tests()
+        # Do not invoke pytest from the Windows executable build. Python 3.13
+        # can crash natively during pytest collection on some systems, even
+        # with assertion rewriting disabled. Use stdlib-only release smoke
+        # checks here; the full pytest suite remains available to developers.
+        package_release.run_build_checks()
 
     work = ROOT / "build" / "pyinstaller-release"
     shutil.rmtree(work, ignore_errors=True)

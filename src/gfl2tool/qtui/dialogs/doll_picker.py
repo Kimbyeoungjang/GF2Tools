@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
+    QMessageBox,
     QPushButton,
     QWidget,
 )
@@ -37,6 +38,8 @@ class DollPickerDialog(QDialog):
         multi_select: bool = False,
         selected_ids: set[int] | None = None,
         include_unowned: bool = False,
+        excluded_ids: set[int] | None = None,
+        max_selection: int | None = None,
     ):
         super().__init__(parent)
         self.repo = repo
@@ -46,6 +49,8 @@ class DollPickerDialog(QDialog):
         self.selected_id = selected_id
         self.multi_select = bool(multi_select)
         self.include_unowned = bool(include_unowned)
+        self.excluded_ids = {int(value) for value in (excluded_ids or set())}
+        self.max_selection = max(1, int(max_selection)) if max_selection else None
         self.initial_selected_ids = {int(value) for value in (selected_ids or set())}
         self._multi_selected_ids = set(self.initial_selected_ids)
         self._syncing_multi_selection = False
@@ -64,7 +69,11 @@ class DollPickerDialog(QDialog):
             page_title(
                 "사용 인형 선택" if self.multi_select else "인형 선택",
                 (
-                    "여러 인형을 한 번에 선택할 수 있습니다. 선택된 인형은 아래에 바로 표시됩니다."
+                    (
+                        f"여러 인형을 한 번에 선택할 수 있습니다. 최대 {self.max_selection}명까지 선택할 수 있습니다."
+                        if self.max_selection
+                        else "여러 인형을 한 번에 선택할 수 있습니다. 선택된 인형은 아래에 바로 표시됩니다."
+                    )
                     if self.multi_select
                     else (
                         "전체 인형을 속성별로 확인하고 검색·직업·속성으로 좁혀 선택합니다."
@@ -128,6 +137,11 @@ class DollPickerDialog(QDialog):
         self.select_visible.clicked.connect(self._select_visible)
         self.select_all.clicked.connect(self._select_all)
         self.clear_selection.clicked.connect(self._clear_multi_selection)
+        if self.max_selection:
+            # Formation picking has a strict small cap; bulk-select actions are
+            # more confusing than useful there and can immediately overflow it.
+            self.select_visible.setVisible(False)
+            self.select_all.setVisible(False)
         select_row.addWidget(self.select_visible)
         select_row.addWidget(self.select_all)
         select_row.addWidget(self.clear_selection)
@@ -221,8 +235,23 @@ class DollPickerDialog(QDialog):
             for entry in self.groups.visible_entries()
             if entry.get("doll_id") is not None
         }
-        self._multi_selected_ids.difference_update(visible_ids)
-        self._multi_selected_ids.update(selected_ids)
+        hidden_ids = set(self._multi_selected_ids) - visible_ids
+        candidate = hidden_ids | selected_ids
+        if self.max_selection and len(candidate) > self.max_selection:
+            latest = int((self._selected_entry or {}).get("doll_id") or 0)
+            if latest in candidate and latest not in self._multi_selected_ids:
+                candidate.discard(latest)
+            else:
+                candidate = set(sorted(candidate)[: self.max_selection])
+            self._multi_selected_ids = candidate
+            self._syncing_multi_selection = True
+            try:
+                self.groups.select_many_by("doll_id", self._multi_selected_ids)
+            finally:
+                self._syncing_multi_selection = False
+            self._render_multi_selection()
+            return
+        self._multi_selected_ids = candidate
         self._render_multi_selection()
 
     def _render_multi_selection(self) -> None:
@@ -251,6 +280,13 @@ class DollPickerDialog(QDialog):
                 extra = QLabel(f"+{len(selected) - 8}")
                 extra.setObjectName("SelectionChip")
                 self.selection_bar_layout.addWidget(extra)
+        count = QLabel(
+            f"선택 {len(selected)}/{self.max_selection}"
+            if self.max_selection
+            else f"선택 {len(selected)}명"
+        )
+        count.setObjectName("Muted")
+        self.selection_bar_layout.addWidget(count)
         self.selection_bar_layout.addStretch(1)
 
     def _select_doll(self, doll_id: int | None) -> bool:
@@ -279,6 +315,12 @@ class DollPickerDialog(QDialog):
                     0, str(entry.get("name") or "").casefold(), int(entry.get("doll_id") or 0)
                 )
                 entries.append(entry)
+        if self.excluded_ids:
+            entries = [
+                entry
+                for entry in entries
+                if int(entry.get("doll_id") or 0) not in self.excluded_ids
+            ]
         self.model.set_entries(entries)
         if preserve_id is not None and hasattr(self, "groups"):
             self.groups.refresh_sections()
@@ -312,6 +354,13 @@ class DollPickerDialog(QDialog):
         if self.multi_select:
             self.result_ids = sorted(self._multi_selected_ids)
             if not self.result_ids:
+                return
+            if self.max_selection and len(self.result_ids) > self.max_selection:
+                QMessageBox.information(
+                    self,
+                    "인형 선택",
+                    f"인형은 최대 {self.max_selection}명까지 선택할 수 있습니다. 현재 {len(self.result_ids)}명이 선택되어 있습니다.",
+                )
                 return
             wanted = set(self.result_ids)
             self.result_entries = [

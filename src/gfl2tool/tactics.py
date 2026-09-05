@@ -66,6 +66,7 @@ class TacticMarker:
     to_col: int | None = None
     edges: str = ""
     unit_key: str = ""
+    caption: str = ""
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any], *, rows: int, cols: int) -> "TacticMarker | None":
@@ -79,6 +80,7 @@ class TacticMarker:
         width = min(width, cols - col)
         height = min(height, rows - row)
         label = str(raw.get("label") or "")[:24]
+        caption = str(raw.get("caption") or "")[:24]
         to_row: int | None = None
         to_col: int | None = None
         if kind == "arrow":
@@ -100,6 +102,7 @@ class TacticMarker:
             to_col=to_col,
             edges=edges,
             unit_key=str(raw.get("unit_key") or "")[:64],
+            caption=caption,
         )
 
 

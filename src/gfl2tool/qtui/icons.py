@@ -45,6 +45,15 @@ def _home(p: QPainter) -> None:
     p.drawLine(QPointF(12.0, 12.0), QPointF(12.0, 16.5))
 
 
+
+def _checklist(p: QPainter) -> None:
+    p.drawRoundedRect(QRectF(3.5, 2.8, 13.0, 14.5), 1.6, 1.6)
+    for y in (6.0, 10.0, 14.0):
+        p.drawRoundedRect(QRectF(5.3, y - 1.1, 2.2, 2.2), 0.4, 0.4)
+        p.drawLine(QPointF(8.8, y), QPointF(14.3, y))
+    p.drawLine(QPointF(5.7, 5.9), QPointF(6.3, 6.5))
+    p.drawLine(QPointF(6.3, 6.5), QPointF(7.2, 5.2))
+
 def _inventory(p: QPainter) -> None:
     p.drawRoundedRect(QRectF(3.2, 4.0, 13.6, 12.6), 1.5, 1.5)
     p.drawLine(QPointF(3.7, 8.0), QPointF(16.3, 8.0))
@@ -130,6 +139,7 @@ def _settings(p: QPainter) -> None:
 
 _DRAWERS: dict[str, Callable[[QPainter], None]] = {
     "dashboard": _home,
+    "checklist": _checklist,
     "inventory": _inventory,
     "formation": _formation,
     "remolding_optimizer": _optimizer,

@@ -38,3 +38,24 @@ def test_frozen_runtime_uses_executable_directory_as_install_root():
     source = (ROOT / "src/gfl2tool/runtime_paths.py").read_text(encoding="utf-8")
     assert 'getattr(sys, "frozen", False)' in source
     assert "Path(sys.executable).resolve().parent" in source
+
+
+def test_release_test_runner_avoids_pytest_assertion_rewrite_on_windows_builds():
+    source = (ROOT / "tools/package_release.py").read_text(encoding="utf-8")
+    assert '"--assert=plain"' in source
+    assert 'PYTEST_DISABLE_PLUGIN_AUTOLOAD' in source
+
+
+
+def test_windows_executable_build_does_not_invoke_pytest():
+    source = (ROOT / "tools/build_executable.py").read_text(encoding="utf-8")
+    assert "package_release.run_build_checks()" in source
+    assert "package_release.run_tests()" not in source
+
+
+def test_build_optional_dependencies_do_not_require_pytest():
+    with (ROOT / "pyproject.toml").open("rb") as handle:
+        project = tomllib.load(handle)["project"]
+    build = project["optional-dependencies"]["build"]
+    assert any(item.startswith("pyinstaller") for item in build)
+    assert not any(item.startswith("pytest") for item in build)

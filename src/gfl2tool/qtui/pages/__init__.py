@@ -1,6 +1,7 @@
 from .backup import BackupPage
 from .data_sync import DataSyncPage
 from .cooking import CookingPage
+from .checklist import ChecklistPage
 from .dashboard import DashboardPage
 from .formation import FormationPage
 from .inventory import InventoryPage
@@ -16,6 +17,7 @@ __all__ = [
     "TacticsPage",
     "DataSyncPage",
     "CookingPage",
+    "ChecklistPage",
     "BackupPage",
     "SettingsPage",
 ]

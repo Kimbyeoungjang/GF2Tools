@@ -1,6 +1,6 @@
 # Third-party software notices
 
-This file summarizes the principal third-party software used by GFL2 Tools 1.0.3. It is an engineering checklist, not legal advice. Always review the exact license texts for the versions you distribute.
+This file summarizes the principal third-party software used by GFL2 Tools 1.0.4. It is an engineering checklist, not legal advice. Always review the exact license texts for the versions you distribute.
 
 ## Distribution model
 
@@ -34,6 +34,15 @@ The official GFL2 Tools **source Release ZIP does not bundle** Python, Qt/PySide
 - Upstream: https://github.com/tesseract-ocr/tesseract
 - License: Apache License 2.0
 - Korean/English OCR language data may be downloaded separately; review the license/notice files from the exact tessdata source used by the release.
+
+## Noto Sans KR
+
+- Project: Noto Sans KR / Noto Sans CJK Korean subset
+- Upstream: https://github.com/notofonts/noto-cjk
+- Version used by the Windows release builder: Noto Sans CJK 2.004
+- License: SIL Open Font License 1.1 (OFL-1.1)
+- The source Release ZIP does not vendor the font binary. `build_release.bat` downloads the pinned upstream TTF and PyInstaller embeds it into the Windows executable bundle so tactic-sheet rendering is independent of fonts installed on the user's PC.
+- License copy: `licenses/NotoSansKR-OFL-1.1.txt` in source releases and `THIRD_PARTY_LICENSES/NotoSansKR-OFL-1.1.txt` in executable releases.
 
 ## Python packaging tools
 

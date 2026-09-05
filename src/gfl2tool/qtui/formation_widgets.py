@@ -269,15 +269,16 @@ class MemberCard(QFrame):
         self.portrait_change = QPushButton("초상화 변경…")
         self.portrait_change.setToolTip("이 인형의 portrait 변형 중 제대 카드에 표시할 초상화를 선택합니다.")
         self.portrait_change.clicked.connect(lambda: self.portraitRequested.emit(self.position))
-        self.change = QPushButton("인형 변경")
         self.clear = QPushButton("비우기")
         self.clear.setObjectName("DangerButton")
         actions_bottom.addWidget(self.portrait_change)
-        actions_bottom.addWidget(self.change)
         actions_bottom.addWidget(self.clear)
         actions_bottom.addStretch(1)
         content.addLayout(actions_bottom)
         outer.addLayout(content, 1)
+        # Empty slots are an implementation detail.  FormationPage reveals a
+        # card only after a doll is actually assigned to that position.
+        self.setVisible(False)
 
     def set_member(
         self,
@@ -302,9 +303,11 @@ class MemberCard(QFrame):
             self.portrait_change.setEnabled(False)
             self.setCursor(Qt.CursorShape.ArrowCursor)
             self.setToolTip("")
+            self.setVisible(False)
             return
 
         self._has_member = True
+        self.setVisible(True)
         self.clear.setEnabled(True)
         self.detail.setEnabled(True)
         self.level.setEnabled(True)

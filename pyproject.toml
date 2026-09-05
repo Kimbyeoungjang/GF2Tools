@@ -13,7 +13,7 @@ dependencies = ["PySide6-Essentials>=6.8,<7", "Pillow>=10"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
-build = ["pytest>=8", "pyinstaller>=6.11,<7"]
+build = ["pyinstaller>=6.11,<7"]
 
 [project.scripts]
 gfl2tool = "gfl2tool.cli:main"

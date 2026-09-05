@@ -13,9 +13,11 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QHeaderView,
     QLabel,
+    QLayout,
     QMessageBox,
     QPushButton,
     QScrollArea,
+    QSizePolicy,
     QToolButton,
     QToolTip,
     QTableView,
@@ -29,6 +31,8 @@ from . import theme
 
 PAGE_MARGINS = (20, 18, 20, 18)
 PAGE_SPACING = 10
+PAGE_MIN_CONTENT_WIDTH = 1020
+PAGE_MIN_CONTENT_HEIGHT = 620
 DIALOG_MARGINS = (16, 16, 16, 16)
 DIALOG_SPACING = 10
 RESULT_DIALOG_SIZE = (980, 720)
@@ -253,11 +257,43 @@ def page_title(title: str, subtitle: str = "") -> QWidget:
 
 
 def page_layout(parent: QWidget, title: str, subtitle: str = "") -> QVBoxLayout:
-    """Create the common top-level layout used by every primary page."""
-    layout = QVBoxLayout(parent)
+    """Create a scroll-safe top-level layout used by every primary page.
+
+    Dense pages previously allowed Qt to keep compressing labels, cards and
+    controls as the window became narrow or short.  That made Korean text look
+    clipped or visually crushed.  Primary pages now preserve a practical
+    minimum content canvas and let the page itself scroll instead of shrinking
+    below that point.  Existing page code still receives the inner layout, so
+    callers do not need special scroll handling.
+    """
+    outer = QVBoxLayout(parent)
+    outer.setContentsMargins(0, 0, 0, 0)
+    outer.setSpacing(0)
+
+    scroll = QScrollArea(parent)
+    scroll.setObjectName("PageScroll")
+    scroll.setWidgetResizable(True)
+    scroll.setFrameShape(QFrame.Shape.NoFrame)
+    scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+    scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+
+    body = QWidget()
+    body.setObjectName("PageBody")
+    body.setMinimumSize(PAGE_MIN_CONTENT_WIDTH, PAGE_MIN_CONTENT_HEIGHT)
+    body.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+
+    layout = QVBoxLayout(body)
     layout.setContentsMargins(*PAGE_MARGINS)
     layout.setSpacing(PAGE_SPACING)
+    layout.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
     layout.addWidget(page_title(title, subtitle))
+
+    scroll.setWidget(body)
+    outer.addWidget(scroll, 1)
+    # Keep references available for pages/tests that need to adjust scrolling
+    # without changing the public page_layout() return contract.
+    parent._page_scroll = scroll  # type: ignore[attr-defined]
+    parent._page_body = body  # type: ignore[attr-defined]
     return layout
 
 

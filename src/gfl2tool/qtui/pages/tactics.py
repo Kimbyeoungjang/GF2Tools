@@ -301,6 +301,20 @@ class TacticsPage(DeferredRefreshPage):
         self.custom_label.setPlaceholderText("임의 문구")
         self.custom_label.textEdited.connect(self._custom_label_changed)
 
+        self.arrow_order_title = QLabel("화살표 순서")
+        self.arrow_order_combo = QComboBox()
+        self.arrow_order_combo.setMinimumWidth(92)
+        for order in range(1, 6):
+            self.arrow_order_combo.addItem(f"{order}번째", str(order))
+        self.arrow_order_combo.currentIndexChanged.connect(self._arrow_order_changed)
+
+        self.arrow_caption_title = QLabel("화살표 문구")
+        self.arrow_caption = QLineEdit()
+        self.arrow_caption.setMaximumWidth(170)
+        self.arrow_caption.setMaxLength(24)
+        self.arrow_caption.setPlaceholderText("예: 진입 / 후퇴 / 버프")
+        self.arrow_caption.textEdited.connect(self._arrow_caption_changed)
+
         self.boss_size_title = QLabel("보스 W/H")
         self.boss_w = QSpinBox()
         self.boss_h = QSpinBox()
@@ -320,6 +334,10 @@ class TacticsPage(DeferredRefreshPage):
             self.summon_label,
             self.custom_label_title,
             self.custom_label,
+            self.arrow_order_title,
+            self.arrow_order_combo,
+            self.arrow_caption_title,
+            self.arrow_caption,
             self.boss_size_title,
             self.boss_w,
             self.boss_h,
@@ -640,6 +658,7 @@ class TacticsPage(DeferredRefreshPage):
         is_unit = tool == "unit"
         is_summon = tool == "summon"
         is_custom = tool == "custom"
+        is_arrow = tool == "arrow"
         is_boss = tool == "boss"
         is_cover = tool == "cover"
         self.unit_label_title.setVisible(is_unit)
@@ -648,6 +667,10 @@ class TacticsPage(DeferredRefreshPage):
         self.summon_label.setVisible(is_summon)
         self.custom_label_title.setVisible(is_custom)
         self.custom_label.setVisible(is_custom)
+        self.arrow_order_title.setVisible(is_arrow)
+        self.arrow_order_combo.setVisible(is_arrow)
+        self.arrow_caption_title.setVisible(is_arrow)
+        self.arrow_caption.setVisible(is_arrow)
         self.boss_size_title.setVisible(is_boss)
         self.boss_w.setVisible(is_boss)
         self.boss_h.setVisible(is_boss)
@@ -659,7 +682,7 @@ class TacticsPage(DeferredRefreshPage):
             "boss": "시작 칸을 클릭해 보스 점유 영역을 배치합니다.",
             "blocked": "클릭 또는 드래그로 이동 불가 칸을 칠하거나 지웁니다. 첫 칸 상태에 맞춰 같은 동작이 이어집니다.",
             "cover": "마우스 포인터와 가장 가까운 격자 변에 엄폐선을 그립니다. 클릭 또는 드래그로 칠하고, 이미 칠해진 변에서 시작하면 같은 방식으로 지웁니다.",
-            "arrow": "출발 칸과 도착 칸을 차례로 클릭합니다.",
+            "arrow": "1~5번째 화살표 순서와 선택 문구를 지정한 뒤 출발 칸과 도착 칸을 차례로 클릭합니다. 번호는 순서를, 문구는 역할/의미를 표시하며 격자와 내보낸 이미지에 함께 표시됩니다.",
             "clear": "클릭 또는 드래그로 칸의 요소를 지웁니다. 어떤 도구에서도 우클릭 드래그로 빠르게 지울 수 있습니다.",
         }.get(tool, "")
         self.tool_help.setToolTip(help_text)
@@ -676,6 +699,13 @@ class TacticsPage(DeferredRefreshPage):
 
     def _custom_label_changed(self, text: str) -> None:
         self.grid.custom_label = (str(text or "").strip() or "기타")[:24]
+
+    def _arrow_order_changed(self, *_args) -> None:
+        value = str(self.arrow_order_combo.currentData() or "1")
+        self.grid.arrow_label = value if value in {"1", "2", "3", "4", "5"} else "1"
+
+    def _arrow_caption_changed(self, text: str) -> None:
+        self.grid.arrow_caption = str(text or "").strip()[:24]
 
     def _refresh_roster_summary(self) -> None:
         tactic = self._current_tactic()
@@ -1126,26 +1156,17 @@ class TacticsPage(DeferredRefreshPage):
         if tactic is None:
             return
 
-        # One overlay per application page. Older builds could create several
-        # windows through repeated clicks, so normalize any survivors before
-        # creating a new one and bring the existing window forward instead.
-        visible: list[TacticOverlayWindow] = []
+        # Always restart the overlay from the current tactic snapshot.  This is
+        # deliberately stronger than merely raising an existing window: tactic
+        # edits can invalidate/close the old window, and stale Qt references
+        # used to leave the launch button unable to recover it.
         for overlay in list(self.overlays):
             try:
-                if overlay.isVisible():
-                    visible.append(overlay)
+                overlay.close()
             except RuntimeError:
-                self._forget_overlay(overlay)
-        if visible:
-            keeper = visible[0]
-            for extra in visible[1:]:
-                extra.close()
-            self.overlay_button.setEnabled(False)
-            keeper.raise_()
-            keeper.activateWindow()
-            return
+                pass
+        self.overlays.clear()
 
-        self.overlay_button.setEnabled(False)
         self._flush_save()
         overlay = TacticOverlayWindow(
             tactic,
@@ -1173,14 +1194,9 @@ class TacticsPage(DeferredRefreshPage):
         except ValueError:
             pass
         if hasattr(self, "overlay_button"):
-            self.overlay_button.setEnabled(not any(self._overlay_is_visible(item) for item in self.overlays))
-
-    @staticmethod
-    def _overlay_is_visible(overlay: TacticOverlayWindow) -> bool:
-        try:
-            return bool(overlay.isVisible())
-        except RuntimeError:
-            return False
+            # Overlay launch is a restart action, so it remains available even
+            # while another overlay window is visible.
+            self.overlay_button.setEnabled(True)
 
     def apply_runtime_settings(self) -> None:
         self.grid.refresh_theme()

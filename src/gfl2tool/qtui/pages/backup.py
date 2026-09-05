@@ -4,10 +4,14 @@ from datetime import datetime
 from pathlib import Path
 
 from PySide6.QtCore import QThreadPool, Signal
-from PySide6.QtWidgets import QFileDialog, QHBoxLayout, QLabel, QMessageBox, QProgressBar, QPushButton
+from PySide6.QtWidgets import (
+    QCheckBox, QFileDialog, QFormLayout, QHBoxLayout, QLabel, QMessageBox,
+    QProgressBar, QPushButton, QSpinBox,
+)
 
 from ... import reference
 from ...repository import Repository
+from ...services.automatic_backup import automatic_backup_directory, read_auto_backup_state
 from ...services.data_backup import (
     cancel_pending_restore,
     create_data_backup,
@@ -43,6 +47,7 @@ _LEGACY_BACKUP_TERMS = (
 class BackupPage(DeferredRefreshPage):
     dataChanged = Signal()
     exitRequested = Signal()
+    autoBackupSettingsChanged = Signal()
 
     def __init__(self, repo: Repository, settings: AppSettings, parent=None):
         super().__init__(parent)
@@ -59,12 +64,40 @@ class BackupPage(DeferredRefreshPage):
             "백업 · 복원",
             "필요한 범위만 골라 백업합니다. 일반적으로 '사용자 데이터'만 주기적으로 백업하고, 업데이트 데이터까지 보관하려면 '모두'를 사용하면 됩니다.",
         )
+        root.addWidget(self._build_auto_backup_panel())
         root.addWidget(self._build_all_panel())
         root.addWidget(self._build_user_panel())
         root.addWidget(self._build_program_panel())
         root.addWidget(self._build_tactic_panel())
         root.addWidget(self._build_status_panel())
         root.addStretch(1)
+
+    def _build_auto_backup_panel(self):
+        panel, layout = section_panel(
+            "자동 백업",
+            "전체 데이터를 백그라운드에서 누적 백업합니다. 최초 사용자 CSV 묶음 가져오기 후 초기 백업을 만들고, 이후 마지막 성공 백업으로부터 설정한 날짜가 지나면 프로그램 시작 시 다시 백업합니다.",
+        )
+        form = QFormLayout()
+        form.setHorizontalSpacing(18)
+        form.setVerticalSpacing(8)
+        self.auto_backup_enabled = QCheckBox("자동 백업 사용")
+        self.auto_backup_interval = QSpinBox()
+        self.auto_backup_interval.setRange(1, 365)
+        self.auto_backup_interval.setSuffix(" 일")
+        self.auto_backup_interval.setToolTip("마지막 자동 백업 성공 시점으로부터 며칠 뒤 다시 백업할지 설정합니다.")
+        form.addRow("사용 여부", self.auto_backup_enabled)
+        form.addRow("백업 주기", self.auto_backup_interval)
+        layout.addLayout(form)
+        row = QHBoxLayout()
+        self.auto_backup_info = QLabel("")
+        self.auto_backup_info.setObjectName("Muted")
+        self.auto_backup_info.setWordWrap(True)
+        save = QPushButton("자동 백업 설정 저장")
+        save.clicked.connect(self._save_auto_backup_settings)
+        row.addWidget(self.auto_backup_info, 1)
+        row.addWidget(save)
+        layout.addLayout(row)
+        return panel
 
     def _build_all_panel(self):
         panel, layout = section_panel(
@@ -163,6 +196,20 @@ class BackupPage(DeferredRefreshPage):
         return panel
 
     def refresh(self) -> None:
+        self.auto_backup_enabled.setChecked(self.settings.automatic_backup_enabled())
+        self.auto_backup_interval.setValue(self.settings.automatic_backup_interval_days())
+        state = read_auto_backup_state(self.repo.path.parent)
+        last = str(state.get("last_success_at") or "").strip()
+        destination = automatic_backup_directory(self.repo.path)
+        if last:
+            try:
+                display = datetime.fromisoformat(last).astimezone().strftime("%Y-%m-%d %H:%M")
+            except ValueError:
+                display = last
+            self.auto_backup_info.setText(f"마지막 자동 백업: {display} · 누적 폴더: {destination}")
+        else:
+            self.auto_backup_info.setText(f"아직 자동 백업 기록이 없습니다. · 누적 폴더: {destination}")
+
         info = pending_restore_info(self.repo.path.parent)
         self.cancel_restore_btn.setEnabled(info is not None and not self._job_active)
         if info is not None:
@@ -170,6 +217,18 @@ class BackupPage(DeferredRefreshPage):
             self.status.setText(f"다음 실행 시 전체 복원 예정 · {source}")
         elif not self._job_active:
             self.status.setText("대기 중")
+
+    def _save_auto_backup_settings(self) -> None:
+        self.settings.set_automatic_backup_enabled(self.auto_backup_enabled.isChecked())
+        self.settings.set_automatic_backup_interval_days(self.auto_backup_interval.value())
+        self.settings.sync()
+        self.autoBackupSettingsChanged.emit()
+        QMessageBox.information(
+            self,
+            "자동 백업",
+            f"자동 백업 설정을 저장했습니다.\n주기: {self.settings.automatic_backup_interval_days()}일 · "
+            + ("사용" if self.settings.automatic_backup_enabled() else "사용 안 함"),
+        )
 
     def _set_job_active(self, active: bool, button: BusyButton | None = None, text: str = "처리 중…") -> None:
         self._job_active = active

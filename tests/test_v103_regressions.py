@@ -155,7 +155,7 @@ def test_continuous_ocr_uses_queue_as_the_only_option_apply_surface():
 def test_tactic_export_preserves_layout_while_scaling_pixels_without_forced_dpi():
     source = open("src/gfl2tool/qtui/tactic_widgets.py", encoding="utf-8").read()
     theme_source = open("src/gfl2tool/qtui/theme.py", encoding="utf-8").read()
-    assert "cell_panel: QSize = QSize(322, 388)" in source
+    assert "cell_panel: QSize = QSize(360, 420)" in source
     assert "export_scale: float = theme.EXPORT_SCALE" in source
     assert "painter.scale(scale, scale)" in source
     assert "setDotsPerMeterX" not in source
@@ -164,7 +164,7 @@ def test_tactic_export_preserves_layout_while_scaling_pixels_without_forced_dpi(
     assert 'EXPORT_GRID = "#8295a2"' in theme_source
     assert 'EXPORT_BOSS = "#F26C1C"' in theme_source
     assert '_export_step_label(step.name, index)' in source
-    assert 'return "제대\\n배치"' in source
+    assert 'return "제대 배치"' in source
     assert 'ratios = (0.15, 0.18, 0.24, 0.14, 0.20, 0.09)' in source
 
 

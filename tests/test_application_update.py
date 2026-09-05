@@ -203,3 +203,21 @@ def test_update_helper_replaces_binary_bundle_and_preserves_data(tmp_path):
     assert (root / "data/user.txt").read_text(encoding="utf-8") == "keep"
     installed = json.loads((root / "release-binary.json").read_text(encoding="utf-8"))
     assert installed["version"] == "1.0.1"
+
+
+def test_application_update_check_carries_release_notes(monkeypatch, tmp_path):
+    updater = ApplicationUpdater(tmp_path)
+    monkeypatch.setattr(
+        updater,
+        "_latest_release",
+        lambda _url: {
+            "version": "9.9.9",
+            "tag": "v9.9.9",
+            "asset_name": "GF2Tools-v9.9.9-win64.zip",
+            "download_url": "https://example/app.zip",
+            "release_notes": "- added checklist fixes\n- improved OCR",
+        },
+    )
+    result = updater.check_for_update("https://github.com/example/project/releases")
+    assert result.update_available is True
+    assert "checklist fixes" in result.release_notes

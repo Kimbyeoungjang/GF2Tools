@@ -8,8 +8,10 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_tactic_overlay_is_single_instance_and_delete_on_close():
     page = (ROOT / "src/gfl2tool/qtui/pages/tactics.py").read_text(encoding="utf-8")
     overlay = (ROOT / "src/gfl2tool/qtui/tactic_overlay.py").read_text(encoding="utf-8")
-    assert 'self.overlay_button.setEnabled(False)' in page
-    assert 'for extra in visible[1:]' in page
+    assert 'self.overlay_button.setEnabled(False)' not in page
+    assert 'for overlay in list(self.overlays):' in page
+    assert 'overlay.close()' in page
+    assert 'self.overlays.clear()' in page
     assert 'Qt.WidgetAttribute.WA_DeleteOnClose' in overlay
     assert 'stateSaved.emit(self.tactic.tactic_id, self._state())' in overlay
 

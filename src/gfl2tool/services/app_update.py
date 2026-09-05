@@ -10,7 +10,7 @@ import re
 import shutil
 import subprocess
 import sys
-from typing import Any
+from typing import Any, Callable
 from urllib.request import Request, urlopen
 import zipfile
 import io
@@ -42,6 +42,7 @@ class ApplicationUpdateCheck:
     tag: str = ""
     asset_name: str = ""
     download_url: str = ""
+    release_notes: str = ""
 
 
 @dataclass(frozen=True)
@@ -89,21 +90,42 @@ class ApplicationUpdater:
         return (owner, repo) if owner and repo else None
 
     @staticmethod
-    def _version_tuple(value: str) -> tuple[int, ...]:
-        return tuple(int(part) for part in re.findall(r"\d+", str(value or "")))
+    def _version_key(value: str) -> tuple[tuple[int, ...], int, int]:
+        text = str(value or "").strip().lower()
+        core_match = re.search(r"(\d+(?:\.\d+)+)", text)
+        if core_match is None:
+            return (), -1, 0
+        core = tuple(int(part) for part in core_match.group(1).split("."))
+        suffix = text[core_match.end():]
+        prerelease = re.search(r"(?:[-_.]?)\b(alpha|a|beta|b|rc)(\d*)\b", suffix)
+        if prerelease is None:
+            return core, 3, 0
+        label = prerelease.group(1)
+        rank = 0 if label in {"alpha", "a"} else 1 if label in {"beta", "b"} else 2
+        number = int(prerelease.group(2) or 0)
+        return core, rank, number
 
     @classmethod
     def version_is_newer(cls, latest: str, current: str) -> bool:
-        latest_parts = cls._version_tuple(latest)
-        current_parts = cls._version_tuple(current)
-        if not latest_parts:
+        latest_core, latest_rank, latest_pre = cls._version_key(latest)
+        current_core, current_rank, current_pre = cls._version_key(current)
+        if not latest_core:
             return False
-        if not current_parts:
+        if not current_core:
             return True
-        width = max(len(latest_parts), len(current_parts))
-        return latest_parts + (0,) * (width - len(latest_parts)) > current_parts + (0,) * (width - len(current_parts))
+        width = max(len(latest_core), len(current_core))
+        latest_core = latest_core + (0,) * (width - len(latest_core))
+        current_core = current_core + (0,) * (width - len(current_core))
+        return (latest_core, latest_rank, latest_pre) > (current_core, current_rank, current_pre)
 
-    def _download(self, url: str, *, accept: str = "application/octet-stream") -> bytes:
+    def _download(
+        self,
+        url: str,
+        *,
+        accept: str = "application/octet-stream",
+        progress: Callable[[str], None] | None = None,
+        progress_label: str = "다운로드",
+    ) -> bytes:
         request = Request(
             url,
             headers={
@@ -122,6 +144,8 @@ class ApplicationUpdater:
                         raise
             chunks: list[bytes] = []
             total = 0
+            expected = int(length) if length and str(length).isdigit() else 0
+            last_percent = -1
             while True:
                 chunk = response.read(1024 * 1024)
                 if not chunk:
@@ -130,6 +154,14 @@ class ApplicationUpdater:
                 if total > MAX_UPDATE_BYTES:
                     raise ValueError("업데이트 패키지가 허용 크기(1 GiB)를 초과합니다.")
                 chunks.append(chunk)
+                if progress is not None:
+                    if expected > 0:
+                        percent = min(100, int(total * 100 / expected))
+                        if percent >= last_percent + 5 or percent == 100:
+                            last_percent = percent
+                            progress(f"{progress_label} {percent}% ({total / (1024 * 1024):.1f} MB)")
+                    elif total == len(chunk) or total % (8 * 1024 * 1024) < len(chunk):
+                        progress(f"{progress_label} 중… {total / (1024 * 1024):.1f} MB")
             return b"".join(chunks)
 
     @staticmethod
@@ -137,7 +169,7 @@ class ApplicationUpdater:
         tag = str(raw.get("tag_name") or "").strip()
         name = str(raw.get("name") or "").strip()
         source = tag or name
-        match = re.search(r"(?<!\d)(\d+\.\d+\.\d+(?:\.\d+)?)(?!\d)", source)
+        match = re.search(r"(?<!\d)(\d+\.\d+\.\d+(?:\.\d+)?(?:[-_.]?(?:alpha|beta|rc)\d*)?)(?!\d)", source, flags=re.IGNORECASE)
         return (match.group(1) if match else "", tag)
 
     @staticmethod
@@ -162,7 +194,7 @@ class ApplicationUpdater:
                 score -= 30
             if "rebuild" in lower:
                 score += 10
-            if version and version in lower:
+            if version and version.lower() in lower:
                 score += 30
             if "offline-table" in lower or "api" in lower:
                 score -= 200
@@ -181,9 +213,9 @@ class ApplicationUpdater:
             raise ValueError("프로그램 업데이트 Release 주소가 설정되지 않았습니다.")
         if url.lower().endswith(".zip"):
             name = url.rsplit("/", 1)[-1]
-            version_match = re.search(r"(\d+\.\d+\.\d+(?:\.\d+)?)", name)
+            version_match = re.search(r"(\d+\.\d+\.\d+(?:\.\d+)?(?:[-_.]?(?:alpha|beta|rc)\d*)?)", name, flags=re.IGNORECASE)
             version = version_match.group(1) if version_match else ""
-            return {"version": version, "tag": "", "asset_name": name, "download_url": url}
+            return {"version": version, "tag": "", "asset_name": name, "download_url": url, "release_notes": ""}
         slug = self._github_repo_slug(url)
         if slug is None:
             raise ValueError("GitHub Release 주소에서 owner/repo를 확인할 수 없습니다.")
@@ -201,6 +233,7 @@ class ApplicationUpdater:
             "tag": tag,
             "asset_name": asset_name,
             "download_url": download_url,
+            "release_notes": str(raw.get("body") or "").strip(),
         }
 
     def check_for_update(self, release_url: str) -> ApplicationUpdateCheck:
@@ -226,6 +259,7 @@ class ApplicationUpdater:
                 str(latest.get("tag") or ""),
                 str(latest.get("asset_name") or ""),
                 str(latest.get("download_url") or ""),
+                str(latest.get("release_notes") or ""),
             )
         except Exception as exc:
             return ApplicationUpdateCheck(True, False, False, f"프로그램 업데이트 서버에 접근하지 못했습니다.\n{exc}", __version__)
@@ -332,16 +366,33 @@ class ApplicationUpdater:
         with zipfile.ZipFile(io.BytesIO(payload), "r") as archive:
             return "binary" if _BINARY_MANIFEST_NAME in archive.namelist() else "source"
 
-    def stage_latest(self, release_url: str) -> StagedApplicationUpdate:
+    def stage_latest(
+        self,
+        release_url: str,
+        *,
+        progress: Callable[[str], None] | None = None,
+    ) -> StagedApplicationUpdate:
+        if progress is not None:
+            progress("최신 Release 정보 확인 중…")
         latest = self._latest_release(release_url)
         version = str(latest.get("version") or "").strip()
         if not self.version_is_newer(version, __version__):
             raise ValueError(f"현재 v{__version__}보다 새로운 프로그램 Release가 아닙니다.")
-        payload = self._download(str(latest.get("download_url") or ""))
+        if progress is not None:
+            progress("업데이트 ZIP 다운로드 시작…")
+        payload = self._download(
+            str(latest.get("download_url") or ""),
+            progress=progress,
+            progress_label="업데이트 다운로드",
+        )
+        if progress is not None:
+            progress("업데이트 ZIP 무결성 검증 중…")
         source_version, digest = self.validate_release_package(payload, expected_version=version)
         package_kind = self._package_kind(payload)
         self.update_dir.mkdir(parents=True, exist_ok=True)
         package_path = self.update_dir / f"gfl2-tools-update-v{source_version}.zip"
+        if progress is not None:
+            progress("검증된 업데이트 파일 저장 중…")
         atomic_write_bytes(package_path, payload)
         atomic_write_json(
             self.update_dir / "pending.json",
@@ -358,6 +409,8 @@ class ApplicationUpdater:
             ensure_ascii=False,
             indent=2,
         )
+        if progress is not None:
+            progress("업데이트 적용 준비 완료")
         return StagedApplicationUpdate(
             source_version,
             str(latest.get("tag") or ""),

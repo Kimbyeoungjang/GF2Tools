@@ -189,10 +189,10 @@ class TacticOverlayWindow(QWidget):
         self.title_label = QLabel()
         self.title_label.setObjectName("OverlayTitle")
         title_row.addWidget(self.title_label, 1)
-        appearance = QPushButton("⚙ 표시 설정")
-        appearance.setToolTip("오버레이가 떠 있는 상태에서 크기·투명도를 조절하고 색상 설정 창을 엽니다.")
-        appearance.clicked.connect(self._show_appearance_dialog)
-        title_row.addWidget(appearance)
+        self.appearance_button = QPushButton("⚙ 표시 설정")
+        self.appearance_button.setToolTip("오버레이가 떠 있는 상태에서 크기·투명도를 조절하고 색상 설정 창을 엽니다.")
+        self.appearance_button.clicked.connect(self._show_appearance_dialog)
+        title_row.addWidget(self.appearance_button)
         root.addLayout(title_row)
 
         self.grid = TacticGridWidget(self.tactic, editable=False)
@@ -209,31 +209,39 @@ class TacticOverlayWindow(QWidget):
         self.note.setObjectName("OverlayNote")
         root.addWidget(self.note)
 
-        controls = QHBoxLayout()
-        previous = QPushButton("◀ 이전")
-        following = QPushButton("다음 ▶")
+        self.controls_widget = QWidget(self)
+        controls = QHBoxLayout(self.controls_widget)
+        controls.setContentsMargins(0, 0, 0, 0)
+        self.previous_button = QPushButton("◀ 이전")
+        self.next_button = QPushButton("다음 ▶")
         self.lock_button = QPushButton("🔓 조작 가능")
-        close = QPushButton("닫기")
-        previous.clicked.connect(self.previous_step)
-        following.clicked.connect(self.next_step)
+        self.close_button = QPushButton("닫기")
+        self.size_grip = QSizeGrip(self.controls_widget)
+        # Keep the visual affordance compact but give the lower-right resize
+        # handle a more forgiving mouse hit area than Qt's tiny default.
+        self.size_grip.setFixedSize(26, 26)
+        self.size_grip.setToolTip("끌어서 오버레이 크기 조절")
+        self.previous_button.clicked.connect(self.previous_step)
+        self.next_button.clicked.connect(self.next_step)
         self.lock_button.clicked.connect(self.toggle_lock)
-        close.clicked.connect(self.close)
-        controls.addWidget(previous)
-        controls.addWidget(following)
+        self.close_button.clicked.connect(self.close)
+        controls.addWidget(self.previous_button)
+        controls.addWidget(self.next_button)
         controls.addWidget(self.lock_button)
         controls.addStretch(1)
-        controls.addWidget(close)
-        controls.addWidget(QSizeGrip(self))
-        root.addLayout(controls)
+        controls.addWidget(self.close_button)
+        controls.addWidget(self.size_grip)
+        root.addWidget(self.controls_widget)
 
-        opacity_row = QHBoxLayout()
-        opacity_row.addWidget(QLabel("투명도"))
+        # Opacity is adjusted from the display-settings dialog.  Keep the
+        # slider as an internal value/signal source for saved-state backwards
+        # compatibility, but do not duplicate the control in the overlay.
         self.opacity_slider = QSlider(Qt.Orientation.Horizontal)
+        self.opacity_slider.setParent(self)
         self.opacity_slider.setRange(25, 100)
         self.opacity_slider.setValue(84)
         self.opacity_slider.valueChanged.connect(self._opacity_changed)
-        opacity_row.addWidget(self.opacity_slider, 1)
-        root.addLayout(opacity_row)
+        self.opacity_slider.hide()
 
         QShortcut(QKeySequence("Left"), self, activated=self.previous_step)
         QShortcut(QKeySequence("Right"), self, activated=self.next_step)
@@ -253,8 +261,9 @@ class TacticOverlayWindow(QWidget):
     def _refresh(self) -> None:
         step = self.tactic.steps[self.index]
         self.grid.set_step_index(self.index)
+        turn, total = self._turn_counter()
         self.title_label.setText(
-            f"{self.tactic.title}  ·  {step.name}  ({self.index + 1}/{len(self.tactic.steps)})"
+            f"{self.tactic.title}  ·  {step.name}  ({turn}/{total})"
         )
         has_cycles = any(item.cycle.strip() for item in self.tactic.steps)
         self.cycle.setVisible(has_cycles)
@@ -262,6 +271,22 @@ class TacticOverlayWindow(QWidget):
         note = step.note.strip()
         self.note.setVisible(bool(note))
         self.note.setText(note)
+
+    @staticmethod
+    def _is_formation_step_name(value: str) -> bool:
+        normalized = "".join(str(value or "").split())
+        return normalized in {"제대배치", "제대편성", "배치"}
+
+    def _turn_counter(self) -> tuple[int, int]:
+        """Return an overlay page counter with formation placement as turn 0."""
+        formation_flags = [self._is_formation_step_name(step.name) for step in self.tactic.steps]
+        if not any(formation_flags):
+            return self.index + 1, len(self.tactic.steps)
+        total = sum(1 for flag in formation_flags if not flag)
+        if formation_flags[self.index]:
+            return 0, total
+        current = sum(1 for flag in formation_flags[: self.index + 1] if not flag)
+        return current, total
 
     def previous_step(self) -> None:
         self.index = max(0, self.index - 1)
@@ -274,7 +299,13 @@ class TacticOverlayWindow(QWidget):
     def toggle_lock(self) -> None:
         self.locked = not self.locked
         self.lock_button.setText("🔒 클릭 통과" if self.locked else "🔓 조작 가능")
+        self._set_chrome_visible(not self.locked)
         self._set_click_through(self.locked)
+
+    def _set_chrome_visible(self, visible: bool) -> None:
+        """Hide interaction chrome while click-through mode is active."""
+        self.appearance_button.setVisible(bool(visible))
+        self.controls_widget.setVisible(bool(visible))
 
     def _set_click_through(self, enabled: bool) -> None:
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, enabled)

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 from pathlib import Path
 
 from PySide6.QtCore import QThreadPool, QTimer
@@ -12,6 +13,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QMainWindow,
     QMessageBox,
+    QProgressBar,
     QPushButton,
     QStackedWidget,
     QVBoxLayout,
@@ -22,6 +24,7 @@ from .. import __version__, reference
 from ..repository import Repository
 from ..runtime_paths import install_root
 from ..services.app_update import ApplicationUpdater
+from ..services.automatic_backup import auto_backup_due, create_automatic_backup
 from ..services.remote_catalog import RemoteCatalogBootstrap
 from ..settings import recommended_worker_count
 from . import theme
@@ -32,6 +35,7 @@ from .images import PortraitLoader
 from .icons import nav_icon, nav_icon_size
 from .pages import (
     BackupPage,
+    ChecklistPage,
     DataSyncPage,
     CookingPage,
     DashboardPage,
@@ -42,7 +46,7 @@ from .pages import (
     TacticsPage,
 )
 from .widgets import show_error
-from .workers import active_worker_count, run_worker
+from .workers import active_worker_count, run_cancellable_progress_worker, run_progress_worker, run_worker
 
 
 PROJECT_ROOT = install_root()
@@ -55,6 +59,7 @@ class MainWindow(QMainWindow):
 
     PAGE_ORDER = [
         ("dashboard", "대시보드"),
+        ("checklist", "체크리스트"),
         ("inventory", "보유 현황"),
         ("formation", "제대 편성"),
         ("remolding_optimizer", "리몰딩 최적화"),
@@ -76,6 +81,9 @@ class MainWindow(QMainWindow):
         self.remote_catalog = RemoteCatalogBootstrap(self.repo.path.parent)
         self.application_updater = ApplicationUpdater(PROJECT_ROOT)
         self._app_update_checking = False
+        self._background_activity_owner: str | None = None
+        self._auto_backup_running = False
+        self._auto_backup_handle = None
         self._applied_theme: str | None = None
         self._close_prepared = False
         self._repo_closed = False
@@ -93,6 +101,7 @@ class MainWindow(QMainWindow):
         # Program self-update is checked first. Program-data updates start only
         # after that check completes, avoiding two startup update dialogs at once.
         QTimer.singleShot(0, self._initialize_startup_updates)
+        QTimer.singleShot(2500, self._maybe_start_auto_backup)
 
     def _build_ui(self) -> None:
         root = QWidget()
@@ -126,6 +135,7 @@ class MainWindow(QMainWindow):
             sidebar_layout.addWidget(self._nav_button(key, label))
 
         sidebar_layout.addStretch(1)
+        sidebar_layout.addWidget(self._build_background_activity())
         separator = QFrame()
         separator.setObjectName("SidebarSeparator")
         separator.setFrameShape(QFrame.Shape.HLine)
@@ -140,6 +150,7 @@ class MainWindow(QMainWindow):
 
         self.pages = {
             "dashboard": DashboardPage(self.repo),
+            "checklist": ChecklistPage(self.repo),
             "inventory": InventoryPage(self.repo, self.catalog, self.portraits),
             "formation": FormationPage(self.repo, self.catalog, self.portraits),
             "remolding_optimizer": RemoldingOptimizerPage(self.repo, self.catalog, self.portraits),
@@ -157,13 +168,128 @@ class MainWindow(QMainWindow):
             )
 
         self.pages["dashboard"].navigateRequested.connect(self.show_page)
+        self.pages["checklist"].dataChanged.connect(self.pages["dashboard"].invalidate_cache)
         self.pages["data_sync"].dataChanged.connect(self._shared_data_changed)
+        self.pages["data_sync"].userBundleImported.connect(lambda: self._maybe_start_auto_backup(reason="user-import"))
         self.pages["backup"].dataChanged.connect(self._shared_data_changed)
         self.pages["backup"].exitRequested.connect(self.close)
+        self.pages["backup"].autoBackupSettingsChanged.connect(lambda: self._maybe_start_auto_backup(reason="settings-enabled"))
         self.pages["settings"].settingsChanged.connect(self._apply_runtime_settings)
         self.pages["settings"].updateCheckRequested.connect(lambda: self._initialize_application_update(manual=True))
         self.pages["settings"].dataChanged.connect(self._shared_data_changed)
         self.current_page = "dashboard"
+
+    def _build_background_activity(self) -> QFrame:
+        frame = QFrame()
+        frame.setObjectName("PanelAlt")
+        layout = QVBoxLayout(frame)
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(5)
+        self.background_activity_label = QLabel("")
+        self.background_activity_label.setObjectName("Muted")
+        self.background_activity_label.setWordWrap(True)
+        self.background_activity_progress = QProgressBar()
+        self.background_activity_progress.setRange(0, 0)
+        self.background_activity_progress.setTextVisible(False)
+        self.background_activity_progress.setFixedHeight(8)
+        layout.addWidget(self.background_activity_label)
+        layout.addWidget(self.background_activity_progress)
+        frame.setVisible(False)
+        self.background_activity_frame = frame
+        return frame
+
+    def _set_background_activity(self, owner: str, text: str) -> None:
+        self._background_activity_owner = str(owner)
+        self.background_activity_label.setText(str(text or "처리 중…"))
+        self.background_activity_progress.setRange(0, 0)
+        self.background_activity_frame.setVisible(True)
+
+    def _update_background_activity(self, owner: str, text: str) -> None:
+        if self._background_activity_owner != str(owner):
+            return
+        message = str(text or "처리 중…")
+        self.background_activity_label.setText(message)
+        match = re.search(r"(?<!\d)(\d{1,3})%", message)
+        if match is not None:
+            self.background_activity_progress.setRange(0, 100)
+            self.background_activity_progress.setValue(max(0, min(100, int(match.group(1)))))
+        else:
+            self.background_activity_progress.setRange(0, 0)
+
+    def _clear_background_activity(self, owner: str, *, delay_ms: int = 0) -> None:
+        owner = str(owner)
+        def clear() -> None:
+            if self._background_activity_owner != owner:
+                return
+            self._background_activity_owner = None
+            self.background_activity_frame.setVisible(False)
+            self.background_activity_label.clear()
+        if delay_ms > 0:
+            QTimer.singleShot(delay_ms, clear)
+        else:
+            clear()
+
+    def _has_user_data_for_backup(self) -> bool:
+        try:
+            summary = self.repo.inventory_summary()
+            if int(summary.get("dolls", 0)) > 0 or int(summary.get("remoldings", 0)) > 0:
+                return True
+            return bool(self.repo.rows("formation_plans", order_by="id"))
+        except Exception:
+            return False
+
+    def _maybe_start_auto_backup(self, *, reason: str = "startup") -> None:
+        if self._auto_backup_running or not self.settings.automatic_backup_enabled():
+            return
+        if not self._has_user_data_for_backup():
+            return
+        if self._app_update_checking or self._background_activity_owner is not None:
+            QTimer.singleShot(1000, lambda r=reason: self._maybe_start_auto_backup(reason=r))
+            return
+        interval = self.settings.automatic_backup_interval_days()
+        if not auto_backup_due(self.repo.path.parent, interval):
+            return
+
+        self._auto_backup_running = True
+        self._set_background_activity("auto-backup", "자동 백업 · 준비 중…")
+
+        def progress(text: str) -> None:
+            self._update_background_activity("auto-backup", f"자동 백업 · {text}")
+
+        def completed(result) -> None:
+            path = str(result.get("path") or "") if isinstance(result, dict) else ""
+            self._update_background_activity("auto-backup", "자동 백업 · 완료")
+            backup_page = self.pages.get("backup")
+            if backup_page is not None:
+                backup_page.status.setText(f"자동 백업 완료 · {path}")
+                backup_page.request_refresh()
+            self._clear_background_activity("auto-backup", delay_ms=3500)
+
+        def failed(message: str) -> None:
+            self._update_background_activity("auto-backup", "자동 백업 · 실패")
+            backup_page = self.pages.get("backup")
+            if backup_page is not None:
+                backup_page.status.setText("자동 백업 실패 · 백업 · 복원 화면에서 설정을 확인하세요.")
+            self._clear_background_activity("auto-backup", delay_ms=7000)
+
+        def finished() -> None:
+            self._auto_backup_running = False
+            self._auto_backup_handle = None
+
+        self._auto_backup_handle = run_cancellable_progress_worker(
+            QThreadPool.globalInstance(),
+            lambda report, should_cancel: create_automatic_backup(
+                self.repo.path,
+                settings_payload=self.settings.snapshot(),
+                reason=reason,
+                progress=report,
+                should_cancel=should_cancel,
+            ),
+            on_progress=progress,
+            on_result=completed,
+            on_error=failed,
+            on_finished=finished,
+        )
 
     def _initialize_startup_updates(self) -> None:
         self._initialize_application_update(manual=False, on_done=self._initialize_remote_catalog)
@@ -207,13 +333,18 @@ class MainWindow(QMainWindow):
                     QMessageBox.information(self, "프로그램 업데이트", result.message)
                 finish_startup()
                 return
+            release_notes = str(getattr(result, "release_notes", "") or "").strip()
+            if len(release_notes) > 5000:
+                release_notes = release_notes[:5000].rstrip() + "\n… (Release 설명이 길어 일부만 표시합니다.)"
+            notes_block = f"\n\n업데이트 내용\n{release_notes}" if release_notes else ""
             answer = QMessageBox.question(
                 self,
                 "GFL2 Tools 업데이트",
                 f"새 프로그램 버전이 있습니다.\n"
                 f"현재: v{result.current_version}\n"
                 f"최신: v{result.latest_version}\n"
-                f"Release: {result.tag or result.asset_name or result.latest_version}\n\n"
+                f"Release: {result.tag or result.asset_name or result.latest_version}"
+                f"{notes_block}\n\n"
                 "다운로드한 ZIP의 source manifest와 SHA-256을 검증한 뒤 프로그램을 재시작해 자동 적용합니다.\n"
                 "지금 업데이트할까요?",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
@@ -227,6 +358,7 @@ class MainWindow(QMainWindow):
                 try:
                     self.application_updater.launch_staged_update(staged_update, parent_pid=os.getpid())
                 except Exception as exc:
+                    self._clear_background_activity("program-update")
                     show_error(self, "프로그램 업데이트 준비 실패", exc)
                     finish_startup()
                     return
@@ -236,6 +368,7 @@ class MainWindow(QMainWindow):
                     f"GFL2 Tools v{staged_update.version} 업데이트를 검증했습니다.\n"
                     "프로그램을 종료한 뒤 파일을 교체하고 자동으로 다시 실행합니다.",
                 )
+                self._update_background_activity("program-update", "프로그램 업데이트 · 적용 준비 완료")
                 self._app_update_checking = False
                 self.close()
 
@@ -245,13 +378,17 @@ class MainWindow(QMainWindow):
                     "프로그램 업데이트 실패",
                     "새 버전 다운로드 또는 검증에 실패했습니다. 현재 버전은 그대로 유지됩니다.\n\n" + str(message),
                 )
+                self._clear_background_activity("program-update")
                 finish_startup()
 
-            run_worker(
+            self._set_background_activity("program-update", "프로그램 업데이트 · 다운로드 준비 중…")
+            run_progress_worker(
                 QThreadPool.globalInstance(),
-                lambda: self.application_updater.stage_latest(release_url),
+                lambda progress: self.application_updater.stage_latest(release_url, progress=progress),
+                on_progress=lambda text: self._update_background_activity("program-update", f"프로그램 업데이트 · {text}"),
                 on_result=staged,
                 on_error=stage_failed,
+                on_finished=lambda: None,
             )
 
         def check_failed(message: str) -> None:
@@ -473,6 +610,8 @@ class MainWindow(QMainWindow):
                 event.ignore()
                 return
             self._close_prepared = True
+            if self._auto_backup_handle is not None:
+                self._auto_backup_handle.cancel()
 
         worker_count = active_worker_count()
         if worker_count > 0:

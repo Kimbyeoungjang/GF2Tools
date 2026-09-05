@@ -72,7 +72,7 @@ class FormationPage(DeferredRefreshPage):
         self.import_game = QPushButton("게임 제대 가져오기")
         self.delete = QPushButton("삭제")
         self.delete.setObjectName("DangerButton")
-        self.optimize = QPushButton("자동 배치")
+        self.optimize = QPushButton("리몰딩 자동배치")
         self.optimize.setObjectName("AccentButton")
 
         for button in (
@@ -120,6 +120,10 @@ class FormationPage(DeferredRefreshPage):
         heading.setObjectName("SectionTitle")
         heading_row.addWidget(heading)
         heading_row.addStretch(1)
+        self.add_members = QPushButton("인형 추가")
+        self.add_members.setObjectName("AccentButton")
+        self.add_members.setToolTip("보유 인형 목록에서 남은 제대 자리만큼 한 번에 추가합니다. 최대 6명까지 편성할 수 있습니다.")
+        heading_row.addWidget(self.add_members)
         right_layout.addLayout(heading_row)
 
         scroll = QScrollArea()
@@ -135,9 +139,6 @@ class FormationPage(DeferredRefreshPage):
         self.cards: list[MemberCard] = []
         for position in range(1, self.svc.MAX_MEMBERS + 1):
             card = MemberCard(position, self.portraits)
-            card.change.clicked.connect(
-                lambda _checked=False, slot=position: self._change_member(slot)
-            )
             card.clear.clicked.connect(
                 lambda _checked=False, slot=position: self._clear_member(slot)
             )
@@ -160,6 +161,7 @@ class FormationPage(DeferredRefreshPage):
         self.import_game.clicked.connect(self._import_game)
         self.delete.clicked.connect(self._delete)
         self.optimize.clicked.connect(self._optimize)
+        self.add_members.clicked.connect(self._add_members)
         self.calculation_level.valueChanged.connect(self._calculation_level_pending)
         self.calculation_level_apply.clicked.connect(self._apply_calculation_level)
         self.plans.currentItemChanged.connect(self._plan_selected)
@@ -193,6 +195,7 @@ class FormationPage(DeferredRefreshPage):
         if not self.plans.count():
             self.plan_id = None
             self._render_members(None)
+        self._update_formation_actions()
         self._refresh_token = token
 
     def _plan_selected(self, current, _previous) -> None:
@@ -203,6 +206,23 @@ class FormationPage(DeferredRefreshPage):
         )
         plan = self.svc.get(self.plan_id) if self.plan_id else None
         self._render_members(plan)
+        self._update_formation_actions(plan)
+
+    def _update_formation_actions(self, plan: dict | None = None) -> None:
+        if not hasattr(self, "add_members"):
+            return
+        if self.plan_id is None:
+            self.add_members.setEnabled(False)
+            self.optimize.setEnabled(False)
+            return
+        if plan is None:
+            try:
+                plan = self.svc.get(self.plan_id)
+            except Exception:
+                plan = None
+        count = len((plan or {}).get("members", []))
+        self.add_members.setEnabled(count < self.svc.MAX_MEMBERS)
+        self.optimize.setEnabled(count > 0)
 
     def _global_level_override(self) -> int:
         return max(1, min(60, int(self._applied_calculation_level)))
@@ -430,6 +450,7 @@ class FormationPage(DeferredRefreshPage):
                 piece_summary=piece_summary,
                 level_text=self._member_level_text(member) if member else "",
             )
+        self._update_formation_actions(plan)
 
     def _member_at(self, plan: dict, position: int) -> dict | None:
         return next(
@@ -641,6 +662,10 @@ class FormationPage(DeferredRefreshPage):
         except Exception as exc:
             show_error(self, "생성 실패", exc)
             return
+        self._refresh_token = None
+        # A new formation immediately opens the owned-doll roster so users can
+        # build the squad in one step instead of creating six empty slot cards.
+        self._add_members()
         self.request_refresh()
 
     def _rename(self) -> None:
@@ -690,46 +715,49 @@ class FormationPage(DeferredRefreshPage):
         self._refresh_token = None
         self.request_refresh()
 
-    def _change_member(self, position: int) -> None:
+    def _add_members(self) -> None:
         if not self.plan_id:
             return
-        plan = self.svc.get(self.plan_id)
-        current = self._member_at(plan, position)
-        current_doll_id = int(current["doll_id"]) if current else None
-
+        try:
+            plan = self.svc.get(self.plan_id)
+        except Exception as exc:
+            show_error(self, "제대 불러오기 실패", exc)
+            return
+        existing_ids = {
+            int(member.get("doll_id") or 0)
+            for member in plan.get("members", [])
+            if int(member.get("doll_id") or 0) > 0
+        }
+        remaining = self.svc.MAX_MEMBERS - len(plan.get("members", []))
+        if remaining <= 0:
+            QMessageBox.information(self, "인형 추가", "이 제대에는 이미 6명이 편성되어 있습니다.")
+            return
         dialog = DollPickerDialog(
             self.repo,
             self.catalog,
             self.portraits,
-            current_doll_id,
-            self,
+            parent=self,
+            multi_select=True,
+            excluded_ids=existing_ids,
+            max_selection=remaining,
         )
-        dialog.exec()
-        if not dialog.result_id:
+        if dialog.exec() != dialog.DialogCode.Accepted or not dialog.result_ids:
             return
-
-        previous = current or {}
-        same_doll = bool(
-            current
-            and int(current.get("doll_id") or 0) == int(dialog.result_id)
-        )
-        if not same_doll:
-            self.member_preferences.clear_member(self.plan_id, position)
+        # result_entries follows the roster presentation order, which is more
+        # intuitive for slot assignment than sorting numeric doll IDs.
+        ordered_ids = [
+            int(entry.get("doll_id") or 0)
+            for entry in dialog.result_entries
+            if int(entry.get("doll_id") or 0) > 0
+        ]
+        if not ordered_ids:
+            ordered_ids = [int(value) for value in dialog.result_ids]
         try:
-            self.svc.set_member(
-                self.plan_id,
-                position,
-                dialog.result_id,
-                remolding_uids=(
-                    list(previous.get("remolding_uids", [])) if same_doll else []
-                ),
-                remolding_targets=(
-                    dict(previous.get("remolding_targets", {})) if same_doll else {}
-                ),
-            )
+            self.svc.add_members(self.plan_id, ordered_ids)
         except Exception as exc:
-            show_error(self, "슬롯 저장 실패", exc)
+            show_error(self, "인형 추가 실패", exc)
             return
+        self._refresh_token = None
         self.request_refresh()
 
     def _clear_member(self, position: int) -> None:

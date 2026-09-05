@@ -43,6 +43,7 @@ class DataSyncPage(DeferredRefreshPage):
     """Three explicit synchronization paths: user bundle, GF2Tools backup, REST catalog."""
 
     dataChanged = Signal()
+    userBundleImported = Signal()
 
     def __init__(
         self, repo: Repository, catalog: OwnedDollCatalog | None = None,
@@ -232,6 +233,7 @@ class DataSyncPage(DeferredRefreshPage):
             show_error(self, "사용자 CSV 묶음 가져오기 실패", exc)
             return
         self._changed()
+        self.userBundleImported.emit()
         summary = " · ".join(
             f"{label} {counts.get(key, 0):,}" for key, label in (
                 ("dolls", "인형"), ("remoldings", "리몰딩"), ("formations", "제대"),

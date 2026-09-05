@@ -163,6 +163,33 @@ class FormationService:
                 remolding_targets=remolding_targets,
             )
 
+    def add_members(self, plan_id: int, doll_ids: list[int]) -> dict[str, Any]:
+        """Append owned dolls to the first free formation slots atomically."""
+        plan = self.get(plan_id)
+        occupied_positions = {int(row["position"]) for row in plan["members"]}
+        occupied_dolls = {int(row["doll_id"]) for row in plan["members"]}
+        free_positions = [
+            position
+            for position in range(1, self.MAX_MEMBERS + 1)
+            if position not in occupied_positions
+        ]
+        requested: list[int] = []
+        seen = set(occupied_dolls)
+        for raw in doll_ids:
+            doll_id = int(raw)
+            if doll_id <= 0 or doll_id in seen:
+                continue
+            requested.append(doll_id)
+            seen.add(doll_id)
+        if not requested:
+            return plan
+        if len(requested) > len(free_positions):
+            raise ValueError(f"남은 제대 자리는 {len(free_positions)}칸입니다.")
+        with self.repo.transaction():
+            for position, doll_id in zip(free_positions, requested):
+                self._set_member_uncommitted(plan_id, position, doll_id)
+        return self.get(plan_id)
+
 
     def _normalize_remolding_targets(self, targets: dict[str, Any]) -> dict[str, dict[str, int]]:
         from .remolding_recommendation import RemoldingRecommendationService

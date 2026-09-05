@@ -240,7 +240,8 @@ def test_release_bytecode_cleanup_repairs_same_timestamp_same_size_overlay(monke
     init_file = package_dir / "__init__.py"
     version_file = package_dir / "_version.py"
     init_file.write_text("from ._version import __version__\n", encoding="utf-8")
-    version_file.write_text('__version__ = "0.9.9"\n', encoding="utf-8")
+    stale_version = "0.0.0-RC0" if "RC" in bootstrap.APP_VERSION.upper() else "0.9.9"
+    version_file.write_text(f'__version__ = "{stale_version}"\n', encoding="utf-8")
 
     fixed_timestamp = 315532800
     os.utime(init_file, (fixed_timestamp, fixed_timestamp))
@@ -254,7 +255,7 @@ def test_release_bytecode_cleanup_repairs_same_timestamp_same_size_overlay(monke
     os.utime(version_file, (fixed_timestamp, fixed_timestamp))
     probe = "import sys; sys.path.insert(0, {!r}); import gfl2tool; print(gfl2tool.__version__)".format(str(tmp_path / "src"))
     stale = subprocess.check_output([sys.executable, "-c", probe], text=True).strip()
-    assert stale == "0.9.9"
+    assert stale == stale_version
 
     manifest = tmp_path / "release-source.json"
     manifest.write_text("{}\n", encoding="utf-8")

@@ -30,6 +30,8 @@ class AppSettings:
     _KEY_THEME = "appearance/theme"
     _KEY_APP_UPDATE_RELEASE_URL = "updates/program_release_url"
     _KEY_APP_UPDATE_AUTO_CHECK = "updates/program_auto_check"
+    _KEY_AUTO_BACKUP_ENABLED = "backup/automatic_enabled"
+    _KEY_AUTO_BACKUP_INTERVAL_DAYS = "backup/automatic_interval_days"
     _KEY_HOTKEY_PREVIOUS = "overlay/hotkey_previous"
     _KEY_HOTKEY_NEXT = "overlay/hotkey_next"
     _KEY_HOTKEY_LOCK = "overlay/hotkey_toggle_lock"
@@ -80,6 +82,26 @@ class AppSettings:
 
     def set_program_update_auto_check(self, enabled: bool) -> None:
         self._settings.setValue(self._KEY_APP_UPDATE_AUTO_CHECK, bool(enabled))
+
+
+    def automatic_backup_enabled(self) -> bool:
+        value = self._settings.value(self._KEY_AUTO_BACKUP_ENABLED, True)
+        if isinstance(value, bool):
+            return value
+        return str(value or "").strip().lower() not in {"0", "false", "no", "off"}
+
+    def set_automatic_backup_enabled(self, enabled: bool) -> None:
+        self._settings.setValue(self._KEY_AUTO_BACKUP_ENABLED, bool(enabled))
+
+    def automatic_backup_interval_days(self) -> int:
+        try:
+            value = int(self._settings.value(self._KEY_AUTO_BACKUP_INTERVAL_DAYS, 14))
+        except (TypeError, ValueError):
+            value = 14
+        return max(1, min(365, value))
+
+    def set_automatic_backup_interval_days(self, days: int) -> None:
+        self._settings.setValue(self._KEY_AUTO_BACKUP_INTERVAL_DAYS, max(1, min(365, int(days))))
 
     def overlay_hotkeys(self) -> OverlayHotkeys:
         hotkeys = OverlayHotkeys(
@@ -148,6 +170,8 @@ class AppSettings:
         self.set_theme(self.DEFAULT_THEME)
         self.set_program_update_release_url(self.DEFAULT_PROGRAM_UPDATE_RELEASE_URL)
         self.set_program_update_auto_check(True)
+        self.set_automatic_backup_enabled(True)
+        self.set_automatic_backup_interval_days(14)
         self.set_overlay_hotkeys(self.DEFAULT_HOTKEYS)
         self.set_overlay_appearance(self.DEFAULT_OVERLAY_APPEARANCE)
         self.set_tactic_visuals(self.DEFAULT_TACTIC_VISUALS)
@@ -159,6 +183,8 @@ class AppSettings:
             "theme": self.theme(),
             "program_update_release_url": self.program_update_release_url(),
             "program_update_auto_check": self.program_update_auto_check(),
+            "automatic_backup_enabled": self.automatic_backup_enabled(),
+            "automatic_backup_interval_days": self.automatic_backup_interval_days(),
             "overlay_hotkeys": self.overlay_hotkeys().as_dict(),
             "overlay_appearance": self.overlay_appearance().as_dict(),
             "tactic_visuals": self.tactic_visuals().as_dict(),
@@ -174,6 +200,13 @@ class AppSettings:
             self.set_program_update_release_url(str(payload.get("program_update_release_url") or ""))
         if "program_update_auto_check" in payload:
             self.set_program_update_auto_check(bool(payload.get("program_update_auto_check")))
+        if "automatic_backup_enabled" in payload:
+            self.set_automatic_backup_enabled(bool(payload.get("automatic_backup_enabled")))
+        if "automatic_backup_interval_days" in payload:
+            try:
+                self.set_automatic_backup_interval_days(int(payload.get("automatic_backup_interval_days") or 14))
+            except (TypeError, ValueError):
+                self.set_automatic_backup_interval_days(14)
         # ``worker_count`` existed in older snapshots.  Runtime concurrency is
         # now derived automatically from the CPU, so legacy values are accepted
         # by simply ignoring them instead of re-introducing a dead preference.
